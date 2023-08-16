@@ -13,13 +13,14 @@ public static partial class WPFExtensions
     /// <typeparam name="T">父级类型</typeparam>
     /// <param name="reference">源控件</param>
     /// <returns></returns>
-    public static DependencyObject FindParent<T>(this DependencyObject reference)
+    public static T FindVisuaParent<T>(this DependencyObject reference)
+        where T : DependencyObject
     {
         var temp = reference;
         while ((temp = VisualTreeHelper.GetParent(temp)) is not null)
         {
-            if (temp is T)
-                return temp;
+            if (temp is T t)
+                return t;
         }
         return null!;
     }

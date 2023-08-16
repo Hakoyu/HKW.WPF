@@ -54,7 +54,7 @@ public class ScrollToControlAction : TriggerAction<FrameworkElement>
         if (TargetControl is null || ScrollViewer is null)
             throw new ArgumentNullException($"{ScrollViewer} or {TargetControl} cannot be null");
         // 检查指定的控件是否在指定的 ScrollViewer 中
-        var result = TargetControl.FindParent<ScrollViewer>();
+        var result = TargetControl.FindVisuaParent<ScrollViewer>();
         if (result is null || result != ScrollViewer)
             throw new Exception("The TargetControl is not in the target ScrollViewer");
 

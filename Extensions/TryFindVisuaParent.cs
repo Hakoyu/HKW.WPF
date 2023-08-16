@@ -11,12 +11,13 @@ public static partial class WPFExtensions
     /// <param name="reference">源控件</param>
     /// <param name="outValue">找到的父级</param>
     /// <returns>找到为 <see langword="true"/> 否则为 <see langword="false"/></returns>
-    public static bool TryFindParent<T>(
+    public static bool TryFindVisuaParent<T>(
         this DependencyObject reference,
-        [NotNullWhen(true)] out DependencyObject? outValue
+        [NotNullWhen(true)] out T? outValue
     )
+        where T : DependencyObject
     {
-        var result = reference.FindParent<T>();
+        var result = reference.FindVisuaParent<T>();
         if (result is not null)
         {
             outValue = result;

@@ -3,6 +3,7 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:h="clr-namespace:HKW.WPF.Helpers"
   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:local="clr-namespace:HKW.WPF"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -18,11 +19,8 @@
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <StackPanel>
-      <Button Content="1" />
-      <Button Content="2" />
-      <Button Content="3" />
-      <Button Content="4" />
-      <Button Content="5">
+      <ToggleButton h:ToggleButtonHelper.CanNotUncheckOnClick="True" Content="114514" />
+      <Button Content="1">
         <i:Interaction.Triggers>
           <i:EventTrigger EventName="Click">
             <t:ScrollToControlAction ScrollViewer="{Binding ElementName=ScrollViewer_Main}" TargetControl="{Binding ElementName=Button_4}" />
@@ -34,28 +32,22 @@
       x:Name="ScrollViewer_Main"
       Grid.Column="1"
       VerticalScrollBarVisibility="Auto">
-      <StackPanel>
-        <Button
-          Height="100"
-          Margin="10"
-          Content="111" />
-        <Button
-          Height="100"
-          Margin="10"
-          Content="222" />
-        <Button
-          Height="100"
-          Margin="10"
-          Content="333" />
+      <StackPanel
+        h:StackPanelHelper.IgnoreButtomMargen="True"
+        h:StackPanelHelper.IgnoreLeftMargen="True"
+        h:StackPanelHelper.IgnoreRightMargen="True"
+        h:StackPanelHelper.IgnoreTopMargen="True"
+        h:StackPanelHelper.Margen="10">
+        <Button Height="100" Content="111" />
+        <Button Height="100" Content="222" />
+        <Button Height="100" Content="333" />
         <Button
           x:Name="Button_4"
           Height="100"
-          Margin="10"
           Content="444" />
         <Button
           x:Name="Button_5"
           Height="100"
-          Margin="10"
           Content="555" />
       </StackPanel>
     </ScrollViewer>
