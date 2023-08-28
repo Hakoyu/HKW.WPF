@@ -1,6 +1,6 @@
 ﻿using HKW.WPF.Extensions;
 
-namespace HKW.WPF.Triggers;
+namespace HKW.WPF.Behaviors;
 
 /// <summary>
 /// 在 ScrollViewer 中定位到指定的控件
