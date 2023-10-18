@@ -13,24 +13,9 @@
   Height="450"
   x:ClassModifier="internal"
   mc:Ignorable="d">
+  <Window.Resources />
   <Grid>
-    <StackPanel>
-      <TextBox
-        x:Name="TextBox_1"
-        HorizontalAlignment="Left"
-        h:FrameworkElementHelper.UniformWidthGroup="AAA"
-        Text="111" />
-      <TextBox
-        x:Name="TextBox_2"
-        HorizontalAlignment="Left"
-        h:FrameworkElementHelper.UniformWidthGroup="AAA"
-        Text="222" />
-      <TextBox
-        x:Name="TextBox_3"
-        HorizontalAlignment="Left"
-        h:FrameworkElementHelper.UniformWidthGroup="AAA"
-        Text="333" />
-    </StackPanel>
+    <StackPanel />
     <!--<Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="100" />
       <ColumnDefinition />

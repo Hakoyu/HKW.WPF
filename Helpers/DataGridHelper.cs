@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 namespace HKW.WPF.Helpers;
 
 /// <summary>
-/// 列表框助手
+///
 /// </summary>
-public static class ListBoxHelper
+public static class DataGridHelper
 {
     #region SelectedItems
     /// <summary>
     ///
     /// </summary>
-    /// <param name="listBox"></param>
+    /// <param name="dataGrid"></param>
     /// <returns></returns>
-    public static IList GetSelectedItems(ListBox listBox)
+    public static IList GetSelectedItems(DataGrid dataGrid)
     {
-        return (IList)listBox.GetValue(SelectedItemsProperty);
+        return (IList)dataGrid.GetValue(SelectedItemsProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
     /// <exception cref="Exception">禁止使用此方法</exception>
-    public static void SetSelectedItems(ListBox listBox, IList value)
+    public static void SetSelectedItems(DataGrid dataGrid, IList value)
     {
         throw new Exception(
             "This property is read-only. To bind to it you must use 'Mode=OneWayToSource'."
@@ -41,7 +41,7 @@ public static class ListBoxHelper
         DependencyProperty.RegisterAttached(
             "SelectedItems",
             typeof(IList),
-            typeof(ListBoxHelper),
+            typeof(DataGridHelper),
             new FrameworkPropertyMetadata(null, SelectedItemsPropertyChangedCallback)
         );
 
@@ -50,24 +50,24 @@ public static class ListBoxHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not ListBox listBox)
+        if (obj is not DataGrid dataGrid)
             return;
-        InitializeSelectedItems(listBox);
-        listBox.SelectionChanged += ListBox_SelectionChanged;
+        InitializeSelectedItems(dataGrid);
+        dataGrid.SelectionChanged += DataGrid_SelectionChanged;
 
-        static void InitializeSelectedItems(ListBox listBox)
+        static void InitializeSelectedItems(DataGrid dataGrid)
         {
-            if (GetSelectedItems(listBox) is not IList list)
+            if (GetSelectedItems(dataGrid) is not IList list)
                 return;
             list.Clear();
-            foreach (var item in listBox.SelectedItems)
+            foreach (var item in dataGrid.SelectedItems)
                 list.Add(item);
         }
-        static void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        static void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is not ListBox listBox)
+            if (sender is not DataGrid dataGrid)
                 return;
-            if (GetSelectedItems(listBox) is not IList list)
+            if (GetSelectedItems(dataGrid) is not IList list)
                 return;
             foreach (var item in e.RemovedItems)
                 list.Remove(item);

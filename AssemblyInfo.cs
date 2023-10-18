@@ -9,4 +9,6 @@ using System.Windows.Markup;
 // app, or any theme specific resource dictionaries)
 )]
 
-[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Triggers")]
+//[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Triggers")]
+[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Behaviors")]
+[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Helpers")]

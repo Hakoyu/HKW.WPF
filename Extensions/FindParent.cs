@@ -9,37 +9,38 @@ namespace HKW.WPF.Extensions;
 public static partial class WPFExtensions
 {
     /// <summary>
-    /// 寻找视觉父级
+    /// 寻找父级
     /// </summary>
     /// <typeparam name="T">父级类型</typeparam>
-    /// <param name="reference">源控件</param>
+    /// <param name="frameworkElement">源控件</param>
     /// <returns>指定类型的父级</returns>
-    public static T FindVisuaParent<T>(this DependencyObject reference)
-        where T : DependencyObject
+    public static T FindParent<T>(this FrameworkElement frameworkElement)
+        where T : FrameworkElement
     {
-        var temp = reference;
-        while ((temp = VisualTreeHelper.GetParent(temp)) is not null)
+        var temp = (FrameworkElement)frameworkElement.Parent;
+        while (temp is not null)
         {
             if (temp is T t)
                 return t;
+            temp = (FrameworkElement)temp.Parent;
         }
         return null!;
     }
 
     /// <summary>
-    /// 尝试寻找视觉父级
+    /// 尝试寻找父级
     /// </summary>
     /// <typeparam name="T">父级类型</typeparam>
-    /// <param name="reference">源控件</param>
+    /// <param name="frameworkElement">源控件</param>
     /// <param name="outValue">找到的父级</param>
     /// <returns>成功为 <see langword="true"/> 失败为 <see langword="false"/></returns>
-    public static bool TryFindVisuaParent<T>(
-        this DependencyObject reference,
+    public static bool TryFindParent<T>(
+        this FrameworkElement frameworkElement,
         [MaybeNullWhen(true)] out T? outValue
     )
-        where T : DependencyObject
+        where T : FrameworkElement
     {
-        var result = reference.FindVisuaParent<T>();
+        var result = frameworkElement.FindParent<T>();
         if (result is not null)
         {
             outValue = result;
