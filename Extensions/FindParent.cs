@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Windows.Media;
 
 namespace HKW.WPF.Extensions;
 

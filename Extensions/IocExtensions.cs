@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Threading;
 
-namespace I18nResourceManager;
+namespace HKW.WPF.Extensions;
 
 /// <summary>
 /// IOC拓展

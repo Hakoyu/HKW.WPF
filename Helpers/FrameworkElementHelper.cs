@@ -1,11 +1,4 @@
 ﻿using HKW.WPF.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Automation;
 
 namespace HKW.WPF.Helpers;
 
