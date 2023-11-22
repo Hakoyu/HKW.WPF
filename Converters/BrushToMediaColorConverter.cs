@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace VPet.ModMaker.Converters;
+namespace HKW.WPF.Converters;
 
 /// <summary>
 /// 画笔颜色至媒体颜色转换器

@@ -10,5 +10,6 @@ using System.Windows.Markup;
 )]
 
 //[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Triggers")]
+[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Converters")]
 [assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Behaviors")]
 [assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Helpers")]

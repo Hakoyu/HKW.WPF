@@ -1,6 +1,6 @@
 ﻿using System.Windows.Data;
 
-namespace VPet.ModMaker.Converters;
+namespace HKW.WPF.Converters;
 
 /// <summary>
 /// 不相等转换器

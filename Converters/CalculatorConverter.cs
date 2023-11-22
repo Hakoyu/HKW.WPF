@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace VPet.ModMaker.Converters;
+namespace HKW.WPF.Converters;
 
 /// <summary>
 /// 计算器转换器
