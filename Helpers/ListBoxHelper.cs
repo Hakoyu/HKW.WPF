@@ -11,18 +11,18 @@ public static class ListBoxHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="listBox"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static IList GetSelectedItems(ListBox listBox)
+    public static IList GetSelectedItems(ListBox element)
     {
-        return (IList)listBox.GetValue(SelectedItemsProperty);
+        return (IList)element.GetValue(SelectedItemsProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
     /// <exception cref="Exception">禁止使用此方法</exception>
-    public static void SetSelectedItems(ListBox listBox, IList value)
+    public static void SetSelectedItems(ListBox element, IList value)
     {
         throw new Exception(
             "This property is read-only. To bind to it you must use 'Mode=OneWayToSource'."
@@ -45,24 +45,24 @@ public static class ListBoxHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not ListBox listBox)
+        if (obj is not ListBox element)
             return;
-        InitializeSelectedItems(listBox);
-        listBox.SelectionChanged += ListBox_SelectionChanged;
+        InitializeSelectedItems(element);
+        element.SelectionChanged += ListBox_SelectionChanged;
 
-        static void InitializeSelectedItems(ListBox listBox)
+        static void InitializeSelectedItems(ListBox element)
         {
-            if (GetSelectedItems(listBox) is not IList list)
+            if (GetSelectedItems(element) is not IList list)
                 return;
             list.Clear();
-            foreach (var item in listBox.SelectedItems)
+            foreach (var item in element.SelectedItems)
                 list.Add(item);
         }
         static void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is not ListBox listBox)
+            if (sender is not ListBox element)
                 return;
-            if (GetSelectedItems(listBox) is not IList list)
+            if (GetSelectedItems(element) is not IList list)
                 return;
             foreach (var item in e.RemovedItems)
                 list.Remove(item);

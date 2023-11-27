@@ -12,21 +12,21 @@ public static class ToggleButtonHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="toggleButton"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static bool GetCannotUncheckOnClick(ToggleButton toggleButton)
+    public static bool GetCannotUncheckOnClick(ToggleButton element)
     {
-        return (bool)toggleButton.GetValue(CannotUncheckOnClickProperty);
+        return (bool)element.GetValue(CannotUncheckOnClickProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="toggleButton"></param>
+    /// <param name="element"></param>
     /// <param name="value"></param>
-    public static void SetCannotUncheckOnClick(ToggleButton toggleButton, bool value)
+    public static void SetCannotUncheckOnClick(ToggleButton element, bool value)
     {
-        toggleButton.SetValue(CannotUncheckOnClickProperty, value);
+        element.SetValue(CannotUncheckOnClickProperty, value);
     }
 
     /// <summary>
@@ -48,16 +48,16 @@ public static class ToggleButtonHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not ToggleButton toggleButton)
+        if (obj is not ToggleButton element)
             return;
         if (e.NewValue is true)
-            toggleButton.Click += OnClick;
+            element.Click += OnClick;
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
-            if (sender is not ToggleButton toggleButton)
+            if (sender is not ToggleButton element)
                 return;
-            toggleButton.IsChecked = true;
+            element.IsChecked = true;
         }
     }
     #endregion
@@ -66,21 +66,21 @@ public static class ToggleButtonHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="toggleButton"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static string GetRadioGroup(ToggleButton toggleButton)
+    public static string GetRadioGroup(ToggleButton element)
     {
-        return (string)toggleButton.GetValue(RadioGroupProperty);
+        return (string)element.GetValue(RadioGroupProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="toggleButton"></param>
+    /// <param name="element"></param>
     /// <param name="value"></param>
-    public static void SetRadioGroup(ToggleButton toggleButton, string value)
+    public static void SetRadioGroup(ToggleButton element, string value)
     {
-        toggleButton.SetValue(RadioGroupProperty, value);
+        element.SetValue(RadioGroupProperty, value);
     }
 
     /// <summary>
@@ -104,13 +104,13 @@ public static class ToggleButtonHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not ToggleButton toggleButton)
+        if (obj is not ToggleButton element)
             return;
-        var group = GetRadioGroup(toggleButton);
+        var group = GetRadioGroup(element);
         FrameworkElement domain;
-        if (toggleButton.TryFindParent<Window>(out var window))
+        if (element.TryFindParent<Window>(out var window))
             domain = window;
-        else if (toggleButton.TryFindParent<Page>(out var page))
+        else if (element.TryFindParent<Page>(out var page))
             domain = page;
         else
             domain = null!;
@@ -119,44 +119,44 @@ public static class ToggleButtonHelper
         var domainData = _domains[domain];
         domainData.TryAdd(group, new());
         var groupData = domainData[group];
-        groupData.Add(toggleButton);
-        toggleButton.Click += OnClick;
-        toggleButton.Dispatcher.ShutdownStarted += Button_ShutdownStarted;
+        groupData.Add(element);
+        element.Click += OnClick;
+        element.Dispatcher.ShutdownStarted += Button_ShutdownStarted;
         domain.Dispatcher.ShutdownStarted += Domain_ShutdownStarted;
 
         static void OnClick(object sender, RoutedEventArgs e)
         {
-            if (sender is not ToggleButton toggleButton)
+            if (sender is not ToggleButton element)
                 return;
-            var group = GetRadioGroup(toggleButton);
+            var group = GetRadioGroup(element);
             FrameworkElement domain;
-            if (toggleButton.TryFindParent<Window>(out var window))
+            if (element.TryFindParent<Window>(out var window))
                 domain = window;
-            else if (toggleButton.TryFindParent<Page>(out var page))
+            else if (element.TryFindParent<Page>(out var page))
                 domain = page;
             else
                 throw new NotImplementedException();
             foreach (var button in _domains[domain][group].Cast<ToggleButton>())
             {
-                if (button != toggleButton)
+                if (button != element)
                     button.IsChecked = false;
             }
         }
 
         static void Button_ShutdownStarted(object? sender, EventArgs e)
         {
-            if (sender is not ToggleButton toggleButton)
+            if (sender is not ToggleButton element)
                 return;
-            var group = GetRadioGroup(toggleButton);
+            var group = GetRadioGroup(element);
             FrameworkElement domain;
-            if (toggleButton.TryFindParent<Window>(out var window))
+            if (element.TryFindParent<Window>(out var window))
                 domain = window;
-            else if (toggleButton.TryFindParent<Page>(out var page))
+            else if (element.TryFindParent<Page>(out var page))
                 domain = page;
             else
                 throw new NotImplementedException();
             var domainData = _domains[domain];
-            domainData[group].Remove(toggleButton);
+            domainData[group].Remove(element);
         }
         static void Domain_ShutdownStarted(object? sender, EventArgs e)
         {

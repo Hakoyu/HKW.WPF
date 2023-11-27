@@ -36,7 +36,7 @@ public static partial class WPFExtensions
     /// <returns>成功为 <see langword="true"/> 失败为 <see langword="false"/></returns>
     public static bool TryFindVisualChild<T>(
         this DependencyObject obj,
-        [MaybeNullWhen(true)] out T? outValue
+        [MaybeNullWhen(false)] out T outValue
     )
         where T : DependencyObject
     {

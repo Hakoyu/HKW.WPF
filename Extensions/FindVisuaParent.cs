@@ -35,7 +35,7 @@ public static partial class WPFExtensions
     /// <returns>成功为 <see langword="true"/> 失败为 <see langword="false"/></returns>
     public static bool TryFindVisuaParent<T>(
         this DependencyObject reference,
-        [MaybeNullWhen(true)] out T? outValue
+        [MaybeNullWhen(false)] out T outValue
     )
         where T : DependencyObject
     {

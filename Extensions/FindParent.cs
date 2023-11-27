@@ -35,7 +35,7 @@ public static partial class WPFExtensions
     /// <returns>成功为 <see langword="true"/> 失败为 <see langword="false"/></returns>
     public static bool TryFindParent<T>(
         this FrameworkElement frameworkElement,
-        [MaybeNullWhen(true)] out T? outValue
+        [MaybeNullWhen(false)] out T outValue
     )
         where T : FrameworkElement
     {

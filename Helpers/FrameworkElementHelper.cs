@@ -11,19 +11,19 @@ public static class FrameworkElementHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="fe"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static string GetUniformMinWidthGroup(FrameworkElement fe)
+    public static string GetUniformMinWidthGroup(FrameworkElement element)
     {
-        return (string)fe.GetValue(UniformWidthGroupProperty);
+        return (string)element.GetValue(UniformWidthGroupProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static void SetUniformMinWidthGroup(FrameworkElement fe, string value)
+    public static void SetUniformMinWidthGroup(FrameworkElement element, string value)
     {
-        fe.SetValue(UniformWidthGroupProperty, value);
+        element.SetValue(UniformWidthGroupProperty, value);
     }
 
     /// <summary>
@@ -42,133 +42,133 @@ public static class FrameworkElementHelper
     /// </summary>
     private readonly static Dictionary<
         FrameworkElement,
-        Dictionary<string, FEInfos>
-    > rs_uniformMinWidthGroupDomains = new();
+        Dictionary<string, ElementInfo>
+    > _uniformMinWidthGroupDomains = new();
 
     private static void UniformMinWidthGroupPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not FrameworkElement fe)
+        if (obj is not FrameworkElement element)
             return;
-        var feDomain = GetDomain(fe);
-        if (feDomain == null)
+        var elementDomain = GetDomain(element);
+        if (elementDomain == null)
             return;
-        var currentDomain = rs_uniformMinWidthGroupDomains[feDomain];
-        var groupName = GetUniformMinWidthGroup(fe);
+        var currentDomain = _uniformMinWidthGroupDomains[elementDomain];
+        var groupName = GetUniformMinWidthGroup(element);
         currentDomain.TryAdd(groupName, new());
         var currentGroup = currentDomain[groupName];
-        fe.Tag = false;
-        currentGroup.FEs.Add(fe);
-        fe.SizeChanged += UniformMinWidthGroup_FE_SizeChanged;
-        fe.Unloaded += UniformMinWidthGroup_FE_Unloaded;
-        if (feDomain is Window window)
+        element.Tag = false;
+        currentGroup.Elements.Add(element);
+        element.SizeChanged += UniformMinWidthGroup_FE_SizeChanged;
+        element.Unloaded += UniformMinWidthGroup_FE_Unloaded;
+        if (elementDomain is Window window)
             window.Closed += UniformMinWidthGroup_Window_Closed;
         else
-            feDomain.Unloaded += UniformMinWidthGroup_Domain_Unloaded;
+            elementDomain.Unloaded += UniformMinWidthGroup_Domain_Unloaded;
     }
 
     private static void UniformMinWidthGroup_Window_Closed(object? sender, EventArgs e)
     {
-        if (sender is not FrameworkElement fe)
+        if (sender is not FrameworkElement element)
             return;
-        rs_uniformMinWidthGroupDomains.Remove(fe);
+        _uniformMinWidthGroupDomains.Remove(element);
     }
 
     private static void UniformMinWidthGroup_Domain_Unloaded(object sender, RoutedEventArgs e)
     {
-        if (sender is not FrameworkElement fe)
+        if (sender is not FrameworkElement element)
             return;
-        rs_uniformMinWidthGroupDomains.Remove(fe);
+        _uniformMinWidthGroupDomains.Remove(element);
     }
 
     private static void UniformMinWidthGroup_FE_Unloaded(object sender, RoutedEventArgs e)
     {
-        if (sender is not FrameworkElement fe)
+        if (sender is not FrameworkElement element)
             return;
-        var currentDomain = rs_uniformMinWidthGroupDomains[GetDomain(fe)];
-        var groupName = GetUniformMinWidthGroup(fe);
-        currentDomain[groupName].FEs.Remove(fe);
+        var currentDomain = _uniformMinWidthGroupDomains[GetDomain(element)];
+        var groupName = GetUniformMinWidthGroup(element);
+        currentDomain[groupName].Elements.Remove(element);
     }
 
     private static void UniformMinWidthGroup_FE_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (sender is not FrameworkElement fe)
+        if (sender is not FrameworkElement element)
             return;
-        var domain = GetDomain(fe);
-        var currentDomain = rs_uniformMinWidthGroupDomains[domain];
-        var groupName = GetUniformMinWidthGroup(fe);
+        var domain = GetDomain(element);
+        var currentDomain = _uniformMinWidthGroupDomains[domain];
+        var groupName = GetUniformMinWidthGroup(element);
         var currentGroup = currentDomain[groupName];
-        var maxWidthFE = currentDomain[groupName].FEs.MaxBy(i => i.ActualWidth);
+        var maxWidthFE = currentDomain[groupName].Elements.MaxBy(i => i.ActualWidth);
         if (maxWidthFE is null)
             return;
-        if (maxWidthFE.ActualWidth == fe.ActualWidth)
-            maxWidthFE = fe;
-        if (maxWidthFE.ActualWidth > currentGroup.LastMax)
+        if (maxWidthFE.ActualWidth == element.ActualWidth)
+            maxWidthFE = element;
+        if (maxWidthFE.ActualWidth > currentGroup.MaxWidth)
         {
             // 如果当前控件最大宽度的超过历史最大宽度, 表面非最大宽度列表中的控件超过了历史最大宽度
-            foreach (var item in currentGroup.FEs)
+            foreach (var item in currentGroup.Elements)
                 item.MinWidth = maxWidthFE.ActualWidth;
             // 将当前控件最小宽度设为0
             maxWidthFE.MinWidth = 0;
-            currentGroup.MaxFEs.Clear();
+            currentGroup.MaxWidthElements.Clear();
             // 设为最大宽度的唯一控件
-            currentGroup.MaxFEs.Add(maxWidthFE);
-            currentGroup.LastMax = maxWidthFE.ActualWidth;
+            currentGroup.MaxWidthElements.Add(maxWidthFE);
+            currentGroup.MaxWidth = maxWidthFE.ActualWidth;
         }
-        else if (currentGroup.MaxFEs.Count == 1)
+        else if (currentGroup.MaxWidthElements.Count == 1)
         {
-            var current = currentGroup.MaxFEs.First();
+            var current = currentGroup.MaxWidthElements.First();
             // 当最大宽度控件只有一个时, 并且当前控件宽度小于历史最大宽度时, 表明需要降低全体宽度
-            if (currentGroup.LastMax > current.ActualWidth)
+            if (currentGroup.MaxWidth > current.ActualWidth)
             {
                 // 最小宽度设为0以自适应宽度
-                foreach (var item in currentGroup.FEs)
+                foreach (var item in currentGroup.Elements)
                     item.MinWidth = 0;
                 // 清空最大宽度列表, 让其刷新
-                currentGroup.MaxFEs.Clear();
+                currentGroup.MaxWidthElements.Clear();
             }
         }
         else
         {
             // 将 FEInfos.LastMax 设置为 double.MaxValue 时, 可以让首次加载时进入此处
-            foreach (var item in currentGroup.FEs)
+            foreach (var item in currentGroup.Elements)
             {
                 // 当控件最小宽度为0(表示其为主导宽度的控件), 并且其宽度等于最大宽度, 加入最大宽度列表
                 if (item.MinWidth == 0 && item.ActualWidth == maxWidthFE.ActualWidth)
                 {
-                    currentGroup.MaxFEs.Add(item);
+                    currentGroup.MaxWidthElements.Add(item);
                 }
                 else
                 {
                     // 如果不是, 则从最大宽度列表删除, 并设置最小宽度为当前最大宽度
-                    currentGroup.MaxFEs.Remove(item);
+                    currentGroup.MaxWidthElements.Remove(item);
                     item.MinWidth = maxWidthFE.ActualWidth;
                 }
             }
-            currentGroup.LastMax = maxWidthFE.ActualWidth;
+            currentGroup.MaxWidth = maxWidthFE.ActualWidth;
         }
     }
 
-    private static FrameworkElement GetDomain(FrameworkElement fe)
+    private static FrameworkElement GetDomain(FrameworkElement element)
     {
-        FrameworkElement feParent;
-        if (fe.FindParent<Window>() is Window window)
+        FrameworkElement elementParent;
+        if (element.FindParent<Window>() is Window window)
         {
-            feParent = window;
-            rs_uniformMinWidthGroupDomains.TryAdd(window, new());
+            elementParent = window;
+            _uniformMinWidthGroupDomains.TryAdd(window, new());
         }
-        else if (fe.FindParent<Page>() is Page page)
+        else if (element.FindParent<Page>() is Page page)
         {
-            feParent = page;
-            rs_uniformMinWidthGroupDomains.TryAdd(page, new());
+            elementParent = page;
+            _uniformMinWidthGroupDomains.TryAdd(page, new());
         }
         else
         {
             return null!;
         }
-        return feParent;
+        return elementParent;
     }
     #endregion
 }
@@ -176,20 +176,20 @@ public static class FrameworkElementHelper
 /// <summary>
 /// 控件信息
 /// </summary>
-public class FEInfos
+public class ElementInfo
 {
     /// <summary>
     /// 所有控件
     /// </summary>
-    public HashSet<FrameworkElement> FEs { get; } = new();
+    public HashSet<FrameworkElement> Elements { get; } = new();
 
     /// <summary>
     /// 最后一个最大宽度
     /// </summary>
-    public double LastMax { get; set; } = double.MaxValue;
+    public double MaxWidth { get; set; } = double.MaxValue;
 
     /// <summary>
     /// 最大宽度的控件
     /// </summary>
-    public HashSet<FrameworkElement> MaxFEs { get; } = new();
+    public HashSet<FrameworkElement> MaxWidthElements { get; } = new();
 }

@@ -10,16 +10,16 @@ public static class StackPanelHelper
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static Thickness GetMargen(StackPanel obj) =>
-        obj is not null ? (Thickness)obj.GetValue(MargenProperty) : new Thickness();
+    public static Thickness GetMargen(StackPanel element) =>
+        element is not null ? (Thickness)element.GetValue(MargenProperty) : new Thickness();
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <param name="value"></param>
-    public static void SetMargen(StackPanel obj, Thickness value) =>
-        obj?.SetValue(MargenProperty, value);
+    public static void SetMargen(StackPanel element, Thickness value) =>
+        element?.SetValue(MargenProperty, value);
 
     /// <summary>
     ///
@@ -34,18 +34,18 @@ public static class StackPanelHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static bool GetIgnoreTopMargen(StackPanel obj) =>
-        obj is not null && (bool)obj.GetValue(IgnoreTopMargenProperty);
+    public static bool GetIgnoreTopMargen(StackPanel element) =>
+        element is not null && (bool)element.GetValue(IgnoreTopMargenProperty);
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <param name="value"></param>
-    public static void SetIgnoreTopMargen(StackPanel obj, bool value) =>
-        obj.SetValue(IgnoreTopMargenProperty, value);
+    public static void SetIgnoreTopMargen(StackPanel element, bool value) =>
+        element.SetValue(IgnoreTopMargenProperty, value);
 
     /// <summary>
     ///
@@ -60,18 +60,18 @@ public static class StackPanelHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static bool GetIgnoreLeftMargen(StackPanel obj) =>
-        obj is not null && (bool)obj.GetValue(IgnoreLeftMargenProperty);
+    public static bool GetIgnoreLeftMargen(StackPanel element) =>
+        element is not null && (bool)element.GetValue(IgnoreLeftMargenProperty);
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <param name="value"></param>
-    public static void SetIgnoreLeftMargen(StackPanel obj, bool value) =>
-        obj.SetValue(IgnoreLeftMargenProperty, value);
+    public static void SetIgnoreLeftMargen(StackPanel element, bool value) =>
+        element.SetValue(IgnoreLeftMargenProperty, value);
 
     /// <summary>
     ///
@@ -86,18 +86,18 @@ public static class StackPanelHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static bool GetIgnoreRightMargen(StackPanel obj) =>
-        obj is not null && (bool)obj.GetValue(IgnoreRightMargenProperty);
+    public static bool GetIgnoreRightMargen(StackPanel element) =>
+        element is not null && (bool)element.GetValue(IgnoreRightMargenProperty);
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <param name="value"></param>
-    public static void SetIgnoreRightMargen(StackPanel obj, bool value) =>
-        obj.SetValue(IgnoreRightMargenProperty, value);
+    public static void SetIgnoreRightMargen(StackPanel element, bool value) =>
+        element.SetValue(IgnoreRightMargenProperty, value);
 
     /// <summary>
     ///
@@ -112,18 +112,18 @@ public static class StackPanelHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static bool GetIgnoreButtomMargen(StackPanel obj) =>
-        obj is not null && (bool)obj.GetValue(IgnoreButtomMargenProperty);
+    public static bool GetIgnoreButtomMargen(StackPanel element) =>
+        element is not null && (bool)element.GetValue(IgnoreButtomMargenProperty);
 
     /// <summary>
     ///
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="element"></param>
     /// <param name="value"></param>
-    public static void SetIgnoreButtomMargen(StackPanel obj, bool value) =>
-        obj.SetValue(IgnoreButtomMargenProperty, value);
+    public static void SetIgnoreButtomMargen(StackPanel element, bool value) =>
+        element.SetValue(IgnoreButtomMargenProperty, value);
 
     /// <summary>
     ///
@@ -141,7 +141,7 @@ public static class StackPanelHelper
     /// <param name="obj"></param>
     /// <param name="e"></param>
     public static void MargenPropertyChangedCallback(
-        object obj,
+        DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
     {
