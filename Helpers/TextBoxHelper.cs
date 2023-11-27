@@ -36,7 +36,7 @@ public static class TextBoxHelper
     /// <para>需要在<code><![CDATA[
     /// Text="{Binding Text, UpdateSourceTrigger=LostFocus}"
     /// ]]></code>
-    /// 时使用 (<see cref="TextBox.Text"/>绑定属性默认 <see cref="Binding.UpdateSourceTrigger"/> 为 <see cref="UpdateSourceTrigger.LostFocus"/> )
+    /// 时使用 (<see cref="TextBox.Text"/> 绑定属性 <see cref="Binding.UpdateSourceTrigger"/> 默认为 <see cref="UpdateSourceTrigger.LostFocus"/> )
     /// </para>
     /// </summary>
     public static readonly DependencyProperty UpdateBindingTextOnKeyDownProperty =
