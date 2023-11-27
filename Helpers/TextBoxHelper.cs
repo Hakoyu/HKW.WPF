@@ -13,18 +13,18 @@ public static class TextBoxHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="control"></param>
+    /// <param name="element"></param>
     /// <returns></returns>
-    public static string GetUpdateBindingTextOnKeyDown(TextBox control)
+    public static string GetUpdateBindingTextOnKeyDown(TextBox element)
     {
-        return (string)control.GetValue(UpdateBindingTextOnKeyDownProperty);
+        return (string)element.GetValue(UpdateBindingTextOnKeyDownProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
     /// <exception cref="Exception">禁止使用此方法</exception>
-    public static void SetUpdateBindingTextOnKeyDown(TextBox control, string value)
+    public static void SetUpdateBindingTextOnKeyDown(TextBox element, string value)
     {
         throw new Exception(
             "This property is read-only. To bind to it you must use 'Mode=OneWayToSource'."
@@ -52,28 +52,28 @@ public static class TextBoxHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not TextBox control)
+        if (obj is not TextBox element)
             return;
-        var keyName = GetUpdateBindingTextOnKeyDown(control);
+        var keyName = GetUpdateBindingTextOnKeyDown(element);
         if (string.IsNullOrWhiteSpace(keyName))
             return;
         if (Enum.TryParse<Key>(keyName, false, out _) is false)
             throw new Exception($"Unknown key name {keyName}");
-        control.KeyDown -= Control_KeyDown;
-        control.KeyDown += Control_KeyDown;
+        element.KeyDown -= Control_KeyDown;
+        element.KeyDown += Control_KeyDown;
     }
 
     private static void Control_KeyDown(object sender, KeyEventArgs e)
     {
-        if (sender is not TextBox control)
+        if (sender is not TextBox element)
             return;
-        var keyName = GetUpdateBindingTextOnKeyDown(control);
+        var keyName = GetUpdateBindingTextOnKeyDown(element);
         var key = Enum.Parse<Key>(keyName);
         if (e.Key == key)
         {
-            control.Focus();
+            element.Focus();
             // 清除控件焦点
-            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(control), null);
+            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(element), null);
             // 清除键盘焦点
             Keyboard.ClearFocus();
         }
