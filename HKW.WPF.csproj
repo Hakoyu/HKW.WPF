@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<Version>0.1.6</Version>
+		<Version>0.1.8</Version>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
@@ -11,6 +11,10 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<IncludeSymbols>False</IncludeSymbols>
+		<Authors>HKW</Authors>
+		<Company>HKW</Company>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -33,5 +37,12 @@
 		<Using Include="Microsoft.Xaml.Behaviors" />
 		<Using Include="System.Windows" />
 		<Using Include="System.Windows.Controls" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>

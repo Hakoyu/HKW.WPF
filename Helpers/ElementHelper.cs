@@ -7,8 +7,50 @@ namespace HKW.WPF.Helpers;
 /// <summary>
 ///
 /// </summary>
-public static class FrameworkElementHelper
+public static class ElementHelper
 {
+    #region IsEnabled
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="element"></param>
+    /// <returns></returns>
+    public static bool GetIsEnabled(FrameworkElement element)
+    {
+        return (bool)element.GetValue(IsEnabledProperty);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <exception cref="Exception">禁止使用此方法</exception>
+    public static void SetIsEnabled(FrameworkElement element, bool value)
+    {
+        element.SetValue(IsEnabledProperty, value);
+    }
+
+    /// <summary>
+    /// 在按下指定按键时清除选中状态
+    /// </summary>
+    public static readonly DependencyProperty IsEnabledProperty =
+        DependencyProperty.RegisterAttached(
+            "IsEnabled",
+            typeof(bool),
+            typeof(ElementHelper),
+            new FrameworkPropertyMetadata(default(bool), IsEnabledPropertyChangedCallback)
+        );
+
+    private static void IsEnabledPropertyChangedCallback(
+        DependencyObject obj,
+        DependencyPropertyChangedEventArgs e
+    )
+    {
+        if (obj is not FrameworkElement element)
+            return;
+        element.IsEnabled = GetIsEnabled(element);
+    }
+    #endregion
+
     #region ClearFocusOnKeyDown
     /// <summary>
     ///
@@ -26,9 +68,7 @@ public static class FrameworkElementHelper
     /// <exception cref="Exception">禁止使用此方法</exception>
     public static void SetClearFocusOnKeyDown(FrameworkElement element, string value)
     {
-        throw new Exception(
-            "This property is read-only. To bind to it you must use 'Mode=OneWayToSource'."
-        );
+        element.SetValue(ClearFocusOnKeyDownProperty, value);
     }
 
     /// <summary>
@@ -38,8 +78,11 @@ public static class FrameworkElementHelper
         DependencyProperty.RegisterAttached(
             "ClearFocusOnKeyDown",
             typeof(string),
-            typeof(FrameworkElementHelper),
-            new FrameworkPropertyMetadata(null, ClearFocusOnKeyDownPropertyChangedCallback)
+            typeof(ElementHelper),
+            new FrameworkPropertyMetadata(
+                default(string),
+                ClearFocusOnKeyDownPropertyChangedCallback
+            )
         );
 
     private static void ClearFocusOnKeyDownPropertyChangedCallback(
@@ -72,7 +115,6 @@ public static class FrameworkElementHelper
             }
         }
     }
-
     #endregion
 
     #region UniformMinWidthGroup
@@ -101,7 +143,7 @@ public static class FrameworkElementHelper
         DependencyProperty.RegisterAttached(
             "UniformMinWidthGroup",
             typeof(string),
-            typeof(FrameworkElementHelper),
+            typeof(ElementHelper),
             new FrameworkPropertyMetadata(null, UniformMinWidthGroupPropertyChanged)
         );
 

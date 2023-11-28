@@ -37,7 +37,7 @@ public static class ListBoxHelper
             "SelectedItems",
             typeof(IList),
             typeof(ListBoxHelper),
-            new FrameworkPropertyMetadata(null, SelectedItemsPropertyChangedCallback)
+            new FrameworkPropertyMetadata(default(IList), SelectedItemsPropertyChangedCallback)
         );
 
     private static void SelectedItemsPropertyChangedCallback(
