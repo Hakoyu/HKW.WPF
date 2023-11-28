@@ -30,7 +30,7 @@ public static class ToggleButtonHelper
     }
 
     /// <summary>
-    /// 无法在 <see cref="ToggleButton.OnClick"/> 中取消 <see cref="ToggleButton.IsChecked"/> 状态,只能手动设置 <see cref="ToggleButton.IsChecked"/>
+    /// 无法在 <see cref="ToggleButton.OnClick"/> 中取消 <see cref="ToggleButton.IsChecked"/> 状态, 只能手动设置 <see cref="ToggleButton.IsChecked"/>
     /// </summary>
     public static readonly DependencyProperty CannotUncheckOnClickProperty =
         DependencyProperty.RegisterAttached(
@@ -84,7 +84,7 @@ public static class ToggleButtonHelper
     }
 
     /// <summary>
-    /// ToggleButton 单选分组m
+    /// ToggleButton 单选分组
     /// </summary>
     public static readonly DependencyProperty RadioGroupProperty =
         DependencyProperty.RegisterAttached(
@@ -94,37 +94,33 @@ public static class ToggleButtonHelper
             new FrameworkPropertyMetadata(default(string), RadioGroupPropertyChanged)
         );
 
+    /// <summary>
+    /// (TopElement, (GroupName, Elements))
+    /// </summary>
     private static readonly Dictionary<
         FrameworkElement,
         Dictionary<string, HashSet<FrameworkElement>>
-    > _domains = new();
+    > _radioGroupDatas = new();
 
     private static void RadioGroupPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not ToggleButton element)
+        if (obj is not ToggleButton button)
             return;
-        var group = GetRadioGroup(element);
-        FrameworkElement domain;
-        if (element.TryFindParent<Window>(out var window))
-            domain = window;
-        else if (element.TryFindParent<Page>(out var page))
-            domain = page;
-        else
-            domain = null!;
-        //throw new NotImplementedException();
-        _domains.TryAdd(domain, new());
-        var domainData = _domains[domain];
-        domainData.TryAdd(group, new());
-        var groupData = domainData[group];
-        groupData.Add(element);
-        element.Click += OnClick;
-        element.Dispatcher.ShutdownStarted += Button_ShutdownStarted;
-        domain.Dispatcher.ShutdownStarted += Domain_ShutdownStarted;
+        var group = GetRadioGroup(button);
+        var topElement = button.GetTopElement();
+        _radioGroupDatas.TryAdd(topElement, new());
+        var topElementData = _radioGroupDatas[topElement];
+        topElementData.TryAdd(group, new());
+        var groupData = topElementData[group];
+        groupData.Add(button);
+        button.Click += Button_Click;
+        button.Dispatcher.ShutdownStarted += Button_ShutdownStarted;
+        topElement.Dispatcher.ShutdownStarted += Domain_ShutdownStarted;
 
-        static void OnClick(object sender, RoutedEventArgs e)
+        static void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not ToggleButton element)
                 return;
@@ -136,7 +132,7 @@ public static class ToggleButtonHelper
                 domain = page;
             else
                 throw new NotImplementedException();
-            foreach (var button in _domains[domain][group].Cast<ToggleButton>())
+            foreach (var button in _radioGroupDatas[domain][group].Cast<ToggleButton>())
             {
                 if (button != element)
                     button.IsChecked = false;
@@ -148,21 +144,16 @@ public static class ToggleButtonHelper
             if (sender is not ToggleButton element)
                 return;
             var group = GetRadioGroup(element);
-            FrameworkElement domain;
-            if (element.TryFindParent<Window>(out var window))
-                domain = window;
-            else if (element.TryFindParent<Page>(out var page))
-                domain = page;
-            else
-                throw new NotImplementedException();
-            var domainData = _domains[domain];
-            domainData[group].Remove(element);
+            var topElement = element.GetTopElement();
+            var topElementData = _radioGroupDatas[topElement];
+            topElementData[group].Remove(element);
         }
+
         static void Domain_ShutdownStarted(object? sender, EventArgs e)
         {
             if (sender is not FrameworkElement fe)
                 return;
-            _domains.Remove(fe);
+            _radioGroupDatas.Remove(fe);
         }
     }
 

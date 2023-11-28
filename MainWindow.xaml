@@ -12,10 +12,19 @@
   Width="800"
   Height="450"
   x:ClassModifier="internal"
+  Background="Gray"
   mc:Ignorable="d">
   <Window.Resources />
   <Grid>
-    <StackPanel />
+    <StackPanel
+      Width="100"
+      h:StackPanelHelper.Padding="10,0,10,0"
+      Background="White">
+      <TextBox h:FrameworkElementHelper.UniformMinWidthGroup="AAA" />
+      <TextBox h:FrameworkElementHelper.UniformMinWidthGroup="AAA" />
+      <TextBox h:FrameworkElementHelper.UniformMinWidthGroup="AAA" />
+    </StackPanel>
+    <ItemsControl />
     <!--<Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="100" />
       <ColumnDefinition />

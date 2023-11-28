@@ -12,9 +12,9 @@ public static partial class WPFExtensions
     /// <summary>
     /// 清除控件焦点
     /// </summary>
-    /// <param name="element">控件</param>
-    public static void ClearFocus(this UIElement element)
+    /// <param name="obj">控件</param>
+    public static void ClearFocus(this DependencyObject obj)
     {
-        FocusManager.SetFocusedElement(FocusManager.GetFocusScope(element), null);
+        FocusManager.SetFocusedElement(FocusManager.GetFocusScope(obj), null);
     }
 }
