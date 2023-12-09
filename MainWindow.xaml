@@ -26,9 +26,9 @@
     </Grid.ColumnDefinitions>
     <StackPanel>
       <CheckBox
+        h:CheckBoxHelper.AnyCanCheckFalseOnLeaderCheckedCommand="{Binding FailedCheckAllCommand}"
         h:CheckBoxHelper.CheckGroup="AAA"
         h:CheckBoxHelper.CheckGroupLeader="AAA"
-        h:CheckBoxHelper.FailedToCheckAllCommand="{Binding FailedCheckAllCommand}"
         Content="1" />
       <CheckBox
         h:CheckBoxHelper.CanCheck="False"
