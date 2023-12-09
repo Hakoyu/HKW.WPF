@@ -12,7 +12,7 @@ public static partial class WPFExtensions
     /// 获取一个元素的顶级元素, 他们肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
     /// </summary>
     /// <param name="element">元素</param>
-    public static FrameworkElement GetTopElement(this FrameworkElement element)
+    public static FrameworkElement GetTopParent(this FrameworkElement element)
     {
         if (element is Window || element is Page || element is UserControl)
             return element;
@@ -36,6 +36,6 @@ public static partial class WPFExtensions
         var type = typeof(T);
         if (type != typeof(Window) && type != typeof(Page) && type != typeof(UserControl))
             throw new Exception("T type must be Window, Page or UserControl");
-        return (T)GetTopElement(element);
+        return (T)GetTopParent(element);
     }
 }

@@ -148,7 +148,7 @@ public static class ElementHelper
         );
 
     /// <summary>
-    /// (Domain ,(GroupName, UniformMinWidthGroupElementInfo))
+    /// (TopElement ,(GroupName, UniformMinWidthGroupElementInfo))
     /// </summary>
     private readonly static Dictionary<
         FrameworkElement,
@@ -162,20 +162,20 @@ public static class ElementHelper
     {
         if (obj is not FrameworkElement element)
             return;
-        var elementDomain = UniformMinWidthGroupGetDomain(element);
-        if (elementDomain == null)
+        var elementTopElement = UniformMinWidthGroupGetTopElement(element);
+        if (elementTopElement == null)
             return;
-        var currentDomain = _uniformMinWidthGroups[elementDomain];
+        var currentTopElement = _uniformMinWidthGroups[elementTopElement];
         var groupName = GetUniformMinWidthGroup(element);
-        currentDomain.TryAdd(groupName, new());
-        var currentGroup = currentDomain[groupName];
+        currentTopElement.TryAdd(groupName, new());
+        var currentGroup = currentTopElement[groupName];
         currentGroup.Elements.Add(element);
         element.SizeChanged += FrameworkElement_SizeChanged;
         element.Unloaded += FrameworkElement_Unloaded;
-        if (elementDomain is Window window)
+        if (elementTopElement is Window window)
             window.Closed += Window_Closed;
         else
-            elementDomain.Unloaded += Domain_Unloaded;
+            elementTopElement.Unloaded += TopElement_Unloaded;
 
         static void Window_Closed(object? sender, EventArgs e)
         {
@@ -184,7 +184,7 @@ public static class ElementHelper
             _uniformMinWidthGroups.Remove(element);
         }
 
-        static void Domain_Unloaded(object sender, RoutedEventArgs e)
+        static void TopElement_Unloaded(object sender, RoutedEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
@@ -195,20 +195,22 @@ public static class ElementHelper
         {
             if (sender is not FrameworkElement element)
                 return;
-            var currentDomain = _uniformMinWidthGroups[UniformMinWidthGroupGetDomain(element)];
+            var currentTopElement = _uniformMinWidthGroups[
+                UniformMinWidthGroupGetTopElement(element)
+            ];
             var groupName = GetUniformMinWidthGroup(element);
-            currentDomain[groupName].Elements.Remove(element);
+            currentTopElement[groupName].Elements.Remove(element);
         }
 
         static void FrameworkElement_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
-            var domain = UniformMinWidthGroupGetDomain(element);
-            var currentDomain = _uniformMinWidthGroups[domain];
+            var domain = UniformMinWidthGroupGetTopElement(element);
+            var currentTopElement = _uniformMinWidthGroups[domain];
             var groupName = GetUniformMinWidthGroup(element);
-            var currentGroup = currentDomain[groupName];
-            var maxWidthFE = currentDomain[groupName].Elements.MaxBy(i => i.ActualWidth);
+            var currentGroup = currentTopElement[groupName];
+            var maxWidthFE = currentTopElement[groupName].Elements.MaxBy(i => i.ActualWidth);
             if (maxWidthFE is null)
                 return;
             if (maxWidthFE.ActualWidth == element.ActualWidth)
@@ -260,9 +262,9 @@ public static class ElementHelper
         }
     }
 
-    private static FrameworkElement UniformMinWidthGroupGetDomain(FrameworkElement element)
+    private static FrameworkElement UniformMinWidthGroupGetTopElement(FrameworkElement element)
     {
-        var parent = element.GetTopElement();
+        var parent = element.GetTopParent();
         _uniformMinWidthGroups.TryAdd(parent, new());
         return parent;
     }

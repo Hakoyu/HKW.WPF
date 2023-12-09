@@ -110,7 +110,7 @@ public static class ToggleButtonHelper
         if (obj is not ToggleButton button)
             return;
         var group = GetRadioGroup(button);
-        var topElement = button.GetTopElement();
+        var topElement = button.GetTopParent();
         _radioGroupDatas.TryAdd(topElement, new());
         var topElementData = _radioGroupDatas[topElement];
         topElementData.TryAdd(group, new());
@@ -144,7 +144,7 @@ public static class ToggleButtonHelper
             if (sender is not ToggleButton element)
                 return;
             var group = GetRadioGroup(element);
-            var topElement = element.GetTopElement();
+            var topElement = element.GetTopParent();
             var topElementData = _radioGroupDatas[topElement];
             topElementData[group].Remove(element);
         }

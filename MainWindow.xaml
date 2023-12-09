@@ -12,6 +12,7 @@
   Title="MainWindow"
   Width="800"
   Height="450"
+  d:DataContext="{d:DesignInstance Type=local:MainWindowVM}"
   x:ClassModifier="internal"
   Background="Gray"
   mc:Ignorable="d">
@@ -23,25 +24,20 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition />
-      </Grid.RowDefinitions>
-      <Button Click="Button_Click" Content="Clear" />
-      <ListBox x:Name="ListBox_Main" Grid.Row="1">
-        <ListBoxItem>
-          <CheckBox />
-        </ListBoxItem>
-      </ListBox>
-    </Grid>
-    <Button
-      Grid.Column="1"
-      HorizontalAlignment="Left"
-      VerticalAlignment="Top"
-      h:ElementHelper.IsEnabled="{Binding SelectedItem.Content.IsChecked, ElementName=ListBox_Main, Converter={StaticResource IsTrueConverter}}"
-      Content="114514"
-      IsEnabled="False" />
+    <StackPanel>
+      <CheckBox
+        h:CheckBoxHelper.CheckGroup="AAA"
+        h:CheckBoxHelper.CheckGroupLeader="AAA"
+        h:CheckBoxHelper.FailedToCheckAllCommand="{Binding FailedCheckAllCommand}"
+        Content="1" />
+      <CheckBox
+        h:CheckBoxHelper.CanCheck="False"
+        h:CheckBoxHelper.CheckGroup="AAA"
+        Content="2" />
+      <CheckBox h:CheckBoxHelper.CheckGroup="AAA" Content="3" />
+      <CheckBox h:CheckBoxHelper.CheckGroup="AAA" Content="4" />
+      <CheckBox h:CheckBoxHelper.CheckGroup="AAA" Content="5" />
+    </StackPanel>
     <!--<Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="100" />
       <ColumnDefinition />
