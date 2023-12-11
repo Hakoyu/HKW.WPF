@@ -79,13 +79,10 @@ public static class ElementHelper
             "ClearFocusOnKeyDown",
             typeof(string),
             typeof(ElementHelper),
-            new FrameworkPropertyMetadata(
-                default(string),
-                ClearFocusOnKeyDownPropertyChangedCallback
-            )
+            new FrameworkPropertyMetadata(default(string), ClearFocusOnKeyDownPropertyChanged)
         );
 
-    private static void ClearFocusOnKeyDownPropertyChangedCallback(
+    private static void ClearFocusOnKeyDownPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
@@ -93,10 +90,8 @@ public static class ElementHelper
         if (obj is not FrameworkElement element)
             return;
         var keyName = GetClearFocusOnKeyDown(element);
-        if (string.IsNullOrWhiteSpace(keyName))
-            return;
         if (Enum.TryParse<Key>(keyName, false, out _) is false)
-            throw new Exception($"Unknown key name {keyName}");
+            throw new Exception($"Unknown key {keyName}");
         element.KeyDown -= Element_KeyDown;
         element.KeyDown += Element_KeyDown;
 
@@ -104,8 +99,7 @@ public static class ElementHelper
         {
             if (sender is not FrameworkElement element)
                 return;
-            var keyName = GetClearFocusOnKeyDown(element);
-            var key = Enum.Parse<Key>(keyName);
+            var key = Enum.Parse<Key>(GetClearFocusOnKeyDown(element));
             if (e.Key == key)
             {
                 // 清除控件焦点
@@ -162,112 +156,131 @@ public static class ElementHelper
     {
         if (obj is not FrameworkElement element)
             return;
-        var elementTopElement = UniformMinWidthGroupGetTopElement(element);
-        if (elementTopElement == null)
-            return;
-        var currentTopElement = _uniformMinWidthGroups[elementTopElement];
         var groupName = GetUniformMinWidthGroup(element);
-        currentTopElement.TryAdd(groupName, new());
-        var currentGroup = currentTopElement[groupName];
-        currentGroup.Elements.Add(element);
-        element.SizeChanged += FrameworkElement_SizeChanged;
-        element.Unloaded += FrameworkElement_Unloaded;
-        if (elementTopElement is Window window)
-            window.Closed += Window_Closed;
-        else
-            elementTopElement.Unloaded += TopElement_Unloaded;
+        var topParent = element.FindTopParentOnVisualTree();
+        // 在设计器中会无法获取顶级元素, 会提示错误, 忽略即可
+        if (topParent is null)
+            return;
+        if (_uniformMinWidthGroups.TryGetValue(topParent, out var groups) is false)
+        {
+            topParent.Loaded -= TopParent_Loaded;
+            topParent.Unloaded -= TopParent_Unloaded;
 
-        static void Window_Closed(object? sender, EventArgs e)
+            topParent.Loaded += TopParent_Loaded;
+            topParent.Unloaded += TopParent_Unloaded;
+        }
+        element.Loaded -= Element_Loaded;
+        element.Unloaded -= Element_Unloaded;
+
+        element.Loaded += Element_Loaded;
+        element.Unloaded += Element_Unloaded;
+
+        #region TopParent
+        static void TopParent_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not FrameworkElement element)
+                return;
+            _uniformMinWidthGroups[element] = new();
+        }
+        static void TopParent_Unloaded(object sender, RoutedEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
             _uniformMinWidthGroups.Remove(element);
         }
+        #endregion
 
-        static void TopElement_Unloaded(object sender, RoutedEventArgs e)
+        #region Element
+        static void Element_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
-            _uniformMinWidthGroups.Remove(element);
+            var groupName = GetUniformMinWidthGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            var groups = _uniformMinWidthGroups[topParent];
+            if (groups.TryGetValue(groupName, out var group) is false)
+                group = groups[groupName] = new();
+            group.Elements.Add(element);
+            element.SizeChanged -= Element_SizeChanged;
+
+            element.SizeChanged += Element_SizeChanged;
         }
 
-        static void FrameworkElement_Unloaded(object sender, RoutedEventArgs e)
+        static void Element_Unloaded(object sender, RoutedEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
-            var currentTopElement = _uniformMinWidthGroups[
-                UniformMinWidthGroupGetTopElement(element)
-            ];
             var groupName = GetUniformMinWidthGroup(element);
-            currentTopElement[groupName].Elements.Remove(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            if (_uniformMinWidthGroups.TryGetValue(topParent, out var groups) is false)
+                return;
+            var group = groups[groupName];
+            group.Elements.Remove(element);
+            element.SizeChanged -= Element_SizeChanged;
         }
 
-        static void FrameworkElement_SizeChanged(object sender, SizeChangedEventArgs e)
+        static void Element_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
-            var domain = UniformMinWidthGroupGetTopElement(element);
-            var currentTopElement = _uniformMinWidthGroups[domain];
             var groupName = GetUniformMinWidthGroup(element);
-            var currentGroup = currentTopElement[groupName];
-            var maxWidthFE = currentTopElement[groupName].Elements.MaxBy(i => i.ActualWidth);
-            if (maxWidthFE is null)
+            var topParent = element.FindTopParentOnVisualTree();
+            var groups = _uniformMinWidthGroups[topParent];
+            var group = groups[groupName];
+            var maxWidthElement = group.Elements.MaxBy(i => i.ActualWidth);
+            if (maxWidthElement is null)
                 return;
-            if (maxWidthFE.ActualWidth == element.ActualWidth)
-                maxWidthFE = element;
-            if (maxWidthFE.ActualWidth > currentGroup.MaxWidth)
+
+            if (maxWidthElement.ActualWidth == element.ActualWidth)
+                maxWidthElement = element;
+            if (maxWidthElement.ActualWidth > group.MaxWidth)
             {
-                // 如果当前控件最大宽度的超过历史最大宽度, 表面非最大宽度列表中的控件超过了历史最大宽度
-                foreach (var item in currentGroup.Elements)
-                    item.MinWidth = maxWidthFE.ActualWidth;
+                // 如果当前控件最大宽度的超过历史最大宽度, 表明非最大宽度列表中的控件超过了历史最大宽度
+                foreach (var item in group.Elements)
+                    item.MinWidth = maxWidthElement.ActualWidth;
                 // 将当前控件最小宽度设为0
-                maxWidthFE.MinWidth = 0;
-                currentGroup.MaxWidthElements.Clear();
+                maxWidthElement.MinWidth = 0;
+                group.MaxWidthElements.Clear();
                 // 设为最大宽度的唯一控件
-                currentGroup.MaxWidthElements.Add(maxWidthFE);
-                currentGroup.MaxWidth = maxWidthFE.ActualWidth;
+                group.MaxWidthElements.Add(maxWidthElement);
+                group.MaxWidth = maxWidthElement.ActualWidth;
             }
-            else if (currentGroup.MaxWidthElements.Count == 1)
+            else if (group.MaxWidthElements.Count == 1)
             {
-                var current = currentGroup.MaxWidthElements.First();
+                maxWidthElement = group.MaxWidthElements.First();
                 // 当最大宽度控件只有一个时, 并且当前控件宽度小于历史最大宽度时, 表明需要降低全体宽度
-                if (currentGroup.MaxWidth > current.ActualWidth)
+                if (group.MaxWidth > maxWidthElement.ActualWidth)
                 {
                     // 最小宽度设为0以自适应宽度
-                    foreach (var item in currentGroup.Elements)
+                    foreach (var item in group.Elements)
                         item.MinWidth = 0;
                     // 清空最大宽度列表, 让其刷新
-                    currentGroup.MaxWidthElements.Clear();
+                    group.MaxWidthElements.Clear();
                 }
             }
             else
             {
                 // 将 MaxWidth 设置为 double.MaxValue 时, 可以让首次加载时进入此处
-                foreach (var item in currentGroup.Elements)
+                foreach (var item in group.Elements)
                 {
                     // 当控件最小宽度为0(表示其为主导宽度的控件), 并且其宽度等于最大宽度, 加入最大宽度列表
-                    if (item.MinWidth == 0 && item.ActualWidth == maxWidthFE.ActualWidth)
+                    if (item.MinWidth == 0 && item.ActualWidth == maxWidthElement.ActualWidth)
                     {
-                        currentGroup.MaxWidthElements.Add(item);
+                        group.MaxWidthElements.Add(item);
                     }
                     else
                     {
                         // 如果不是, 则从最大宽度列表删除, 并设置最小宽度为当前最大宽度
-                        currentGroup.MaxWidthElements.Remove(item);
-                        item.MinWidth = maxWidthFE.ActualWidth;
+                        group.MaxWidthElements.Remove(item);
+                        item.MinWidth = maxWidthElement.ActualWidth;
                     }
                 }
-                currentGroup.MaxWidth = maxWidthFE.ActualWidth;
+                group.MaxWidth = maxWidthElement.ActualWidth;
             }
         }
+        #endregion
     }
 
-    private static FrameworkElement UniformMinWidthGroupGetTopElement(FrameworkElement element)
-    {
-        var parent = element.GetTopParent();
-        _uniformMinWidthGroups.TryAdd(parent, new());
-        return parent;
-    }
     #endregion
 }
 

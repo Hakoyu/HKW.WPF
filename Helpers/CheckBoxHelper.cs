@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace HKW.WPF.Helpers;
 
@@ -166,7 +167,7 @@ public static class CheckBoxHelper
             "CheckGroup",
             typeof(string),
             typeof(CheckBoxHelper),
-            new FrameworkPropertyMetadata(default(string), CheckGroupPropertyChangedCallback)
+            new FrameworkPropertyMetadata(default(string), CheckGroupPropertyChanged)
         );
 
     /// <summary>
@@ -177,7 +178,7 @@ public static class CheckBoxHelper
         Dictionary<string, CheckBoxGroup>
     > _checkBoxGroups = new();
 
-    private static void CheckGroupPropertyChangedCallback(
+    private static void CheckGroupPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
@@ -185,180 +186,196 @@ public static class CheckBoxHelper
         if (obj is not CheckBox element)
             return;
         var groupName = GetCheckGroup(element);
-        var topParent = element.GetTopParent();
+        var topParent = element.FindTopParentOnVisualTree();
+        // 在设计器中会无法获取顶级元素, 会提示错误, 忽略即可
+        if (topParent is null)
+            return;
         // 获取当前页面的分组
-        if (_checkBoxGroups.TryGetValue(topParent, out var allGroup) is false)
+        if (_checkBoxGroups.ContainsKey(topParent) is false)
         {
-            _checkBoxGroups[topParent] = allGroup = new();
-            topParent.Loaded += CheckGroup_TopParent_Loaded;
-            topParent.Unloaded += CheckGroup_TopParent_Unloaded;
-        }
-        if (allGroup.TryGetValue(groupName, out var group) is false)
-            allGroup[groupName] = group = new();
-        group.SubCheckBoxes.Add(element);
-    }
+            topParent.Loaded -= TopParent_Loaded;
+            topParent.Unloaded -= TopParent_Unloaded;
 
-    #region TopParent
-    private static void CheckGroup_TopParent_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is not FrameworkElement element)
-            return;
-        if (_checkBoxGroups.TryGetValue(element, out var groups) is false)
-            return;
-        foreach (var groupInfo in groups)
+            topParent.Loaded += TopParent_Loaded;
+            topParent.Unloaded += TopParent_Unloaded;
+        }
+        element.Loaded -= Element_Loaded;
+
+        element.Loaded += Element_Loaded;
+
+        #region Element
+        static void Element_Loaded(object sender, RoutedEventArgs e)
         {
-            var group = groupInfo.Value;
+            if (sender is not CheckBox element)
+                return;
+            var groupName = GetCheckGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            var groups = _checkBoxGroups[topParent];
+            if (groups.TryGetValue(groupName, out var group) is false)
+                groups[groupName] = group = new();
+            if (GetCheckGroupLeader(element) == groupName)
+            {
+                if (group.Leader is not null)
+                    throw new Exception("CheckBox group leader already exists");
+                group.Leader = element;
+                group.LeaderLastChecked = element.IsChecked;
+
+                element.Checked -= Leader_Checked;
+                element.Unchecked -= Leader_Unchecked;
+                element.Unloaded -= Leader_Unloaded;
+
+                element.Checked += Leader_Checked;
+                element.Unchecked += Leader_Unchecked;
+                element.Unloaded += Leader_Unloaded;
+            }
+            else
+            {
+                element.Checked -= Sub_Checked;
+                element.Unchecked -= Sub_Unchecked;
+                element.Unloaded -= Sub_Unloaded;
+
+                element.Checked += Sub_Checked;
+                element.Unchecked += Sub_Unchecked;
+                element.Unloaded += Sub_Unloaded;
+
+                group.SubCheckBoxes.Add(element);
+            }
+        }
+        #endregion
+
+        #region TopParent
+        static void TopParent_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not FrameworkElement element)
+                return;
+            _checkBoxGroups[element] = new();
+        }
+
+        static void TopParent_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not FrameworkElement element)
+                return;
+            _checkBoxGroups.Remove(element);
+        }
+        #endregion
+
+        #region Leader
+
+        static void Leader_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is not CheckBox element)
+                return;
+            var groupName = GetCheckGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            var group = _checkBoxGroups[topParent][groupName];
+            if (group.Changing)
+                return;
+            group.Changing = true;
+            foreach (var item in group.SubCheckBoxes)
+                item.IsChecked = false;
+            group.Changing = false;
+        }
+
+        static void Leader_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is not CheckBox element)
+                return;
+            var groupName = GetCheckGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            var group = _checkBoxGroups[topParent][groupName];
+            if (group.Changing)
+                return;
+            group.Changing = true;
+
+            var count = 0;
             foreach (var item in group.SubCheckBoxes)
             {
-                if (GetCheckGroupLeader(item) == groupInfo.Key)
+                if (GetCanCheck(item))
                 {
-                    if (group.Leader is not null)
-                        throw new Exception("CheckBox group leader already exists");
-                    group.Leader = item;
-                    group.LeaderLastChecked = item.IsChecked;
-                    item.Checked += CheckGroup_Leader_Checked;
-                    item.Unchecked += CheckGroup_Leader_Unchecked;
-                    item.Unloaded += CheckGroup_Leader_Unloaded;
-                }
-                else
-                {
-                    item.Checked += CheckGroup_Sub_Checked;
-                    item.Unchecked += CheckGroup_Sub_Unchecked;
-                    item.Unloaded += CheckGroup_Sub_Unloaded;
+                    item.IsChecked = true;
+                    count++;
                 }
             }
-            if (group.Leader is null)
-                throw new Exception("CheckBox groupInfo leader not exists");
-            group.SubCheckBoxes.Remove(group.Leader);
-        }
-        element.Loaded -= CheckGroup_TopParent_Loaded;
-    }
-
-    private static void CheckGroup_TopParent_Unloaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is not FrameworkElement element)
-            return;
-        _checkBoxGroups.Remove(element);
-        element.Unloaded -= CheckGroup_TopParent_Unloaded;
-    }
-    #endregion
-
-    #region Leader
-
-    private static void CheckGroup_Leader_Unchecked(object sender, RoutedEventArgs e)
-    {
-        if (sender is not CheckBox element)
-            return;
-        var groupName = GetCheckGroup(element);
-        var topParent = element.GetTopParent();
-        if (_checkBoxGroups.TryGetValue(topParent, out var allGroup) is false)
-            return;
-        if (allGroup.TryGetValue(groupName, out var group) is false || group.Changing)
-            return;
-        group.Changing = true;
-        foreach (var item in group.SubCheckBoxes)
-            item.IsChecked = false;
-        group.Changing = false;
-    }
-
-    private static void CheckGroup_Leader_Checked(object sender, RoutedEventArgs e)
-    {
-        if (sender is not CheckBox element)
-            return;
-        var groupName = GetCheckGroup(element);
-        var topParent = element.GetTopParent();
-        if (_checkBoxGroups.TryGetValue(topParent, out var allGroup) is false)
-            return;
-        if (allGroup.TryGetValue(groupName, out var group) is false || group.Changing)
-            return;
-        group.Changing = true;
-
-        var count = 0;
-        foreach (var item in group.SubCheckBoxes)
-        {
-            if (GetCanCheck(item))
+            if (count != group.SubCheckBoxes.Count)
             {
-                item.IsChecked = true;
-                count++;
+                element.IsChecked = null;
+                GetAnyCanCheckFalseOnLeaderCheckedCommand(element)?.Execute(groupName);
             }
+            group.Changing = false;
         }
-        if (count != group.SubCheckBoxes.Count)
+
+        static void Leader_Unloaded(object sender, RoutedEventArgs e)
         {
-            element.IsChecked = null;
-            GetAnyCanCheckFalseOnLeaderCheckedCommand(element)?.Execute(groupName);
+            if (sender is not CheckBox element)
+                return;
+            element.Checked -= Leader_Checked;
+            element.Unchecked -= Leader_Unchecked;
+            element.Unloaded -= Leader_Unloaded;
+            var groupName = GetCheckGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            if (_checkBoxGroups.TryGetValue(topParent, out var groups) is false)
+                return;
+            var group = groups[groupName];
+            if (group.Changing)
+                return;
+            foreach (var item in group.SubCheckBoxes)
+            {
+                item.Checked -= Sub_Checked;
+                item.Unchecked -= Sub_Unchecked;
+                item.Unloaded -= Sub_Unloaded;
+            }
+            groups.Remove(groupName);
         }
-        group.Changing = false;
-    }
 
-    private static void CheckGroup_Leader_Unloaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is not CheckBox element)
-            return;
-        var groupName = GetCheckGroup(element);
-        var topParent = element.GetTopParent();
-        if (_checkBoxGroups.TryGetValue(topParent, out var allGroup) is false)
-            return;
-        if (allGroup.TryGetValue(groupName, out var group) is false)
-            return;
-        element.Checked += CheckGroup_Leader_Checked;
-        element.Unchecked += CheckGroup_Leader_Unchecked;
-        element.Unloaded -= CheckGroup_Leader_Unloaded;
-        foreach (var item in group.SubCheckBoxes)
+        #endregion
+
+        #region Sub
+        static void Sub_Unchecked(object sender, RoutedEventArgs e)
         {
-            item.Checked -= CheckGroup_Sub_Checked;
-            item.Unchecked -= CheckGroup_Sub_Unchecked;
-            item.Unloaded -= CheckGroup_Sub_Unloaded;
+            if (sender is not CheckBox element)
+                return;
+            var groupName = GetCheckGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            var group = _checkBoxGroups[topParent][groupName];
+            if (group.Changing)
+                return;
+            group.Changing = true;
+            group.Leader.IsChecked = group.SubIsAllChecked();
+            group.Changing = false;
         }
-        allGroup.Remove(groupName);
-    }
-    #endregion
 
-    #region Sub
-    private static void CheckGroup_Sub_Unchecked(object sender, RoutedEventArgs e)
-    {
-        if (sender is not CheckBox element)
-            return;
-        var groupName = GetCheckGroup(element);
-        var topParent = element.GetTopParent();
-        if (_checkBoxGroups.TryGetValue(topParent, out var allGroup) is false)
-            return;
-        if (allGroup.TryGetValue(groupName, out var group) is false || group.Changing)
-            return;
-        group.Changing = true;
-        group.Leader.IsChecked = group.SubIsAllChecked();
-        group.Changing = false;
-    }
+        static void Sub_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is not CheckBox element)
+                return;
+            var groupName = GetCheckGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            var group = _checkBoxGroups[topParent][groupName];
+            if (group.Changing)
+                return;
+            group.Changing = true;
+            element.IsChecked = GetCanCheck(element);
+            group.Leader.IsChecked = group.SubIsAllChecked();
+            group.Changing = false;
+        }
 
-    private static void CheckGroup_Sub_Checked(object sender, RoutedEventArgs e)
-    {
-        if (sender is not CheckBox element)
-            return;
-        var groupName = GetCheckGroup(element);
-        var topParent = element.GetTopParent();
-        if (_checkBoxGroups.TryGetValue(topParent, out var allGroup) is false)
-            return;
-        if (allGroup.TryGetValue(groupName, out var group) is false || group.Changing)
-            return;
-        group.Changing = true;
-        element.IsChecked = GetCanCheck(element);
-        group.Leader.IsChecked = group.SubIsAllChecked();
-        group.Changing = false;
+        static void Sub_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not CheckBox element)
+                return;
+            element.Checked -= Sub_Checked;
+            element.Unchecked -= Sub_Unchecked;
+            element.Unloaded -= Sub_Unloaded;
+            var groupName = GetCheckGroup(element);
+            var topParent = element.FindTopParentOnVisualTree();
+            if (_checkBoxGroups.TryGetValue(topParent, out var groups) is false)
+                return;
+            var group = groups[groupName];
+            group.SubCheckBoxes.Remove(element);
+        }
+        #endregion
     }
 
-    private static void CheckGroup_Sub_Unloaded(object sender, RoutedEventArgs e)
-    {
-        if (sender is not CheckBox element)
-            return;
-        var groupName = GetCheckGroup(element);
-        var topParent = element.GetTopParent();
-        if (_checkBoxGroups.TryGetValue(topParent, out var allGroup) is false)
-            return;
-        if (allGroup.TryGetValue(groupName, out var group) is false)
-            return;
-        group.SubCheckBoxes.Remove(element);
-        element.Unloaded -= CheckGroup_Sub_Unloaded;
-    }
-    #endregion
     #endregion
     #endregion
 }
@@ -386,7 +403,7 @@ public class CheckBoxGroup
     /// <summary>
     /// 复选框
     /// </summary>
-    public List<CheckBox> SubCheckBoxes { get; set; } = new();
+    public HashSet<CheckBox> SubCheckBoxes { get; set; } = new();
 
     /// <summary>
     /// 子复选框全部被选中

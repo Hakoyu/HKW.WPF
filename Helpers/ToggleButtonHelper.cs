@@ -37,13 +37,10 @@ public static class ToggleButtonHelper
             "CannotUncheckOnClick",
             typeof(bool),
             typeof(ToggleButtonHelper),
-            new FrameworkPropertyMetadata(
-                default(bool),
-                CanNotUncheckOnClickPropertyChangedCallback
-            )
+            new FrameworkPropertyMetadata(default(bool), CanNotUncheckOnClickPropertyChanged)
         );
 
-    private static void CanNotUncheckOnClickPropertyChangedCallback(
+    private static void CanNotUncheckOnClickPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
@@ -57,7 +54,8 @@ public static class ToggleButtonHelper
         {
             if (sender is not ToggleButton element)
                 return;
-            element.IsChecked = true;
+            if (element.IsChecked is not true)
+                element.IsChecked = true;
         }
     }
     #endregion
@@ -110,46 +108,40 @@ public static class ToggleButtonHelper
         if (obj is not ToggleButton button)
             return;
         var group = GetRadioGroup(button);
-        var topElement = button.GetTopParent();
-        _radioGroupDatas.TryAdd(topElement, new());
-        var topElementData = _radioGroupDatas[topElement];
-        topElementData.TryAdd(group, new());
-        var groupData = topElementData[group];
+        var topParent = button.FindTopParent();
+        _radioGroupDatas.TryAdd(topParent, new());
+        var topParentData = _radioGroupDatas[topParent];
+        topParentData.TryAdd(group, new());
+        var groupData = topParentData[group];
         groupData.Add(button);
-        button.Click += Button_Click;
-        button.Dispatcher.ShutdownStarted += Button_ShutdownStarted;
-        topElement.Dispatcher.ShutdownStarted += Domain_ShutdownStarted;
+        button.Click += RadonGroup_Button_Click;
+        button.Unloaded += RadonGroup_Button_Unloaded;
+        topParent.Unloaded += RadonGroup_TopParent_Unloaded;
 
-        static void Button_Click(object sender, RoutedEventArgs e)
+        static void RadonGroup_Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not ToggleButton element)
                 return;
             var group = GetRadioGroup(element);
-            FrameworkElement domain;
-            if (element.TryFindParent<Window>(out var window))
-                domain = window;
-            else if (element.TryFindParent<Page>(out var page))
-                domain = page;
-            else
-                throw new NotImplementedException();
-            foreach (var button in _radioGroupDatas[domain][group].Cast<ToggleButton>())
+            var topParent = element.FindTopParent();
+            foreach (var button in _radioGroupDatas[topParent][group].Cast<ToggleButton>())
             {
                 if (button != element)
                     button.IsChecked = false;
             }
         }
 
-        static void Button_ShutdownStarted(object? sender, EventArgs e)
+        static void RadonGroup_Button_Unloaded(object? sender, EventArgs e)
         {
             if (sender is not ToggleButton element)
                 return;
             var group = GetRadioGroup(element);
-            var topElement = element.GetTopParent();
-            var topElementData = _radioGroupDatas[topElement];
-            topElementData[group].Remove(element);
+            var topParent = element.FindTopParent();
+            var topParentData = _radioGroupDatas[topParent];
+            topParentData[group].Remove(element);
         }
 
-        static void Domain_ShutdownStarted(object? sender, EventArgs e)
+        static void RadonGroup_TopParent_Unloaded(object? sender, EventArgs e)
         {
             if (sender is not FrameworkElement fe)
                 return;

@@ -37,28 +37,24 @@ public static class ListBoxHelper
             "SelectedItems",
             typeof(IList),
             typeof(ListBoxHelper),
-            new FrameworkPropertyMetadata(default(IList), SelectedItemsPropertyChangedCallback)
+            new FrameworkPropertyMetadata(default(IList), SelectedItemsPropertyChanged)
         );
 
-    private static void SelectedItemsPropertyChangedCallback(
+    private static void SelectedItemsPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
     {
         if (obj is not ListBox element)
             return;
-        InitializeSelectedItems(element);
-        element.SelectionChanged += ListBox_SelectionChanged;
-
-        static void InitializeSelectedItems(ListBox element)
-        {
-            if (GetSelectedItems(element) is not IList list)
-                return;
-            list.Clear();
-            foreach (var item in element.SelectedItems)
-                list.Add(item);
-        }
-        static void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        if (GetSelectedItems(element) is not IList list)
+            return;
+        list.Clear();
+        foreach (var item in element.SelectedItems)
+            list.Add(item);
+        element.SelectionChanged += Element_SelectionChanged;
+        element.Unloaded += Element_Unloaded;
+        static void Element_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is not ListBox element)
                 return;
@@ -69,6 +65,14 @@ public static class ListBoxHelper
             foreach (var item in e.AddedItems)
                 list.Add(item);
         }
+        static void Element_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not ListBox element)
+                return;
+            element.SelectionChanged -= Element_SelectionChanged;
+            element.Unloaded -= Element_Unloaded;
+        }
     }
+
     #endregion
 }

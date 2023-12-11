@@ -11,6 +11,8 @@ internal class MainWindowVM : ObservableClass<MainWindowVM>
 {
     public ObservableCommand<string> FailedCheckAllCommand { get; } = new();
 
+    public ObservableList<string> Datas { get; set; } = new() { "2", "3", "4" };
+
     public MainWindowVM()
     {
         FailedCheckAllCommand.ExecuteCommand += FailedCheckAll_ExecuteCommand;

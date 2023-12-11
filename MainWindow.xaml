@@ -34,9 +34,27 @@
         h:CheckBoxHelper.CanCheck="False"
         h:CheckBoxHelper.CheckGroup="AAA"
         Content="2" />
-      <CheckBox h:CheckBoxHelper.CheckGroup="AAA" Content="3" />
-      <CheckBox h:CheckBoxHelper.CheckGroup="AAA" Content="4" />
-      <CheckBox h:CheckBoxHelper.CheckGroup="AAA" Content="5" />
+      <ListBox ItemsSource="{Binding Datas}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <CheckBox
+              h:CheckBoxHelper.CanCheck="{Binding CanSelect}"
+              h:CheckBoxHelper.CheckGroup="AAA"
+              Content="3" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ListBox>
+    </StackPanel>
+    <StackPanel Grid.Column="1">
+      <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
+      <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
+      <ListBox Background="Gray" ItemsSource="{Binding Datas}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ListBox>
     </StackPanel>
     <!--<Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="100" />

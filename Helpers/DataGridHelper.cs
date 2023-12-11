@@ -37,10 +37,10 @@ public static class DataGridHelper
             "SelectedItems",
             typeof(IList),
             typeof(DataGridHelper),
-            new FrameworkPropertyMetadata(default(IList), SelectedItemsPropertyChangedCallback)
+            new FrameworkPropertyMetadata(default(IList), SelectedItemsPropertyChanged)
         );
 
-    private static void SelectedItemsPropertyChangedCallback(
+    private static void SelectedItemsPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
