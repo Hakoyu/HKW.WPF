@@ -45,24 +45,21 @@ public static class DataGridHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not DataGrid element)
+        if (obj is not DataGrid dataGrid)
             return;
-        InitializeSelectedItems(element);
-        element.SelectionChanged += DataGrid_SelectionChanged;
+        if (GetSelectedItems(dataGrid) is not IList list)
+            return;
+        list.Clear();
+        foreach (var item in dataGrid.SelectedItems)
+            list.Add(item);
+        dataGrid.SelectionChanged -= DataGrid_SelectionChanged;
+        dataGrid.SelectionChanged += DataGrid_SelectionChanged;
 
-        static void InitializeSelectedItems(DataGrid element)
-        {
-            if (GetSelectedItems(element) is not IList list)
-                return;
-            list.Clear();
-            foreach (var item in element.SelectedItems)
-                list.Add(item);
-        }
         static void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is not DataGrid element)
+            if (sender is not DataGrid dataGrid)
                 return;
-            if (GetSelectedItems(element) is not IList list)
+            if (GetSelectedItems(dataGrid) is not IList list)
                 return;
             foreach (var item in e.RemovedItems)
                 list.Remove(item);

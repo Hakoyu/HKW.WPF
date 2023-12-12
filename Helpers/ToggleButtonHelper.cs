@@ -47,10 +47,10 @@ public static class ToggleButtonHelper
     {
         if (obj is not ToggleButton element)
             return;
-        if (e.NewValue is true)
-            element.Click += OnClick;
+        element.Click -= Element_Click;
+        element.Click += Element_Click;
 
-        static void OnClick(object sender, RoutedEventArgs e)
+        static void Element_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not ToggleButton element)
                 return;
@@ -105,20 +105,20 @@ public static class ToggleButtonHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not ToggleButton button)
+        if (obj is not ToggleButton element)
             return;
-        var group = GetRadioGroup(button);
-        var topParent = button.FindTopParent();
+        var group = GetRadioGroup(element);
+        var topParent = element.FindTopParent();
         _radioGroupDatas.TryAdd(topParent, new());
         var topParentData = _radioGroupDatas[topParent];
         topParentData.TryAdd(group, new());
         var groupData = topParentData[group];
-        groupData.Add(button);
-        button.Click += RadonGroup_Button_Click;
-        button.Unloaded += RadonGroup_Button_Unloaded;
-        topParent.Unloaded += RadonGroup_TopParent_Unloaded;
+        groupData.Add(element);
+        element.Click += Element_Click;
+        element.Unloaded += Element_Unloaded;
+        topParent.Unloaded += TopParent_Unloaded;
 
-        static void RadonGroup_Button_Click(object sender, RoutedEventArgs e)
+        static void Element_Click(object sender, RoutedEventArgs e)
         {
             if (sender is not ToggleButton element)
                 return;
@@ -131,7 +131,7 @@ public static class ToggleButtonHelper
             }
         }
 
-        static void RadonGroup_Button_Unloaded(object? sender, EventArgs e)
+        static void Element_Unloaded(object? sender, EventArgs e)
         {
             if (sender is not ToggleButton element)
                 return;
@@ -141,7 +141,7 @@ public static class ToggleButtonHelper
             topParentData[group].Remove(element);
         }
 
-        static void RadonGroup_TopParent_Unloaded(object? sender, EventArgs e)
+        static void TopParent_Unloaded(object? sender, EventArgs e)
         {
             if (sender is not FrameworkElement fe)
                 return;

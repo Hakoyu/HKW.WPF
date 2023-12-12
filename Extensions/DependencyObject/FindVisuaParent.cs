@@ -9,11 +9,11 @@ namespace HKW.WPF.Extensions;
 public static partial class WPFExtensions
 {
     /// <summary>
-    /// 寻找视觉父级
+    /// 寻找视觉父元素
     /// </summary>
-    /// <typeparam name="T">父级类型</typeparam>
+    /// <typeparam name="T">父元素类型</typeparam>
     /// <param name="obj">源控件</param>
-    /// <returns>指定类型的父级</returns>
+    /// <returns>父元素</returns>
     public static T FindVisuaParent<T>(this DependencyObject obj)
         where T : DependencyObject
     {
@@ -27,11 +27,11 @@ public static partial class WPFExtensions
     }
 
     /// <summary>
-    /// 尝试寻找视觉父级
+    /// 尝试寻找视觉父元素
     /// </summary>
-    /// <typeparam name="T">父级类型</typeparam>
+    /// <typeparam name="T">父元素类型</typeparam>
     /// <param name="obj">源控件</param>
-    /// <param name="outValue">找到的父级</param>
+    /// <param name="outValue">父元素</param>
     /// <returns>成功为 <see langword="true"/> 失败为 <see langword="false"/></returns>
     public static bool TryFindVisuaParent<T>(
         this DependencyObject obj,

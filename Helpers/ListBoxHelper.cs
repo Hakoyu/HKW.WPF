@@ -45,32 +45,27 @@ public static class ListBoxHelper
         DependencyPropertyChangedEventArgs e
     )
     {
-        if (obj is not ListBox element)
+        if (obj is not ListBox listBox)
             return;
-        if (GetSelectedItems(element) is not IList list)
+        if (GetSelectedItems(listBox) is not IList list)
             return;
         list.Clear();
-        foreach (var item in element.SelectedItems)
+        foreach (var item in listBox.SelectedItems)
             list.Add(item);
-        element.SelectionChanged += Element_SelectionChanged;
-        element.Unloaded += Element_Unloaded;
+
+        listBox.SelectionChanged -= Element_SelectionChanged;
+        listBox.SelectionChanged += Element_SelectionChanged;
+
         static void Element_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is not ListBox element)
+            if (sender is not ListBox listBox)
                 return;
-            if (GetSelectedItems(element) is not IList list)
+            if (GetSelectedItems(listBox) is not IList list)
                 return;
             foreach (var item in e.RemovedItems)
                 list.Remove(item);
             foreach (var item in e.AddedItems)
                 list.Add(item);
-        }
-        static void Element_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is not ListBox element)
-                return;
-            element.SelectionChanged -= Element_SelectionChanged;
-            element.Unloaded -= Element_Unloaded;
         }
     }
 

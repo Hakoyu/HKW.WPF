@@ -1,4 +1,5 @@
-﻿using System.Windows.Data;
+﻿using System.Globalization;
+using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -16,12 +17,16 @@ namespace HKW.WPF.Converters;
 /// </summary>
 public class MarginConverter : IMultiValueConverter
 {
-    public object Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        System.Globalization.CultureInfo culture
-    )
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="values"></param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.Length == 0)
         {
@@ -71,11 +76,20 @@ public class MarginConverter : IMultiValueConverter
             throw new NotImplementedException();
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="targetTypes"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
     public object[] ConvertBack(
         object value,
         Type[] targetTypes,
         object parameter,
-        System.Globalization.CultureInfo culture
+        CultureInfo culture
     )
     {
         throw new NotImplementedException();

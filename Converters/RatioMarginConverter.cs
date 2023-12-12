@@ -1,4 +1,5 @@
-﻿using System.Windows.Data;
+﻿using System.Globalization;
+using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -26,12 +27,7 @@ public class RatioMarginConverter : IMultiValueConverter
     /// <param name="culture"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public object Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        System.Globalization.CultureInfo culture
-    )
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values.Any(i => i == DependencyProperty.UnsetValue))
             return new Thickness();
@@ -101,7 +97,7 @@ public class RatioMarginConverter : IMultiValueConverter
         object value,
         Type[] targetTypes,
         object parameter,
-        System.Globalization.CultureInfo culture
+        CultureInfo culture
     )
     {
         throw new NotImplementedException();

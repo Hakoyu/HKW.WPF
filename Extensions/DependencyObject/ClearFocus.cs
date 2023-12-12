@@ -10,9 +10,9 @@ namespace HKW.WPF.Extensions;
 public static partial class WPFExtensions
 {
     /// <summary>
-    /// 清除控件焦点
+    /// 清除元素焦点
     /// </summary>
-    /// <param name="obj">控件</param>
+    /// <param name="obj">元素</param>
     public static void ClearFocus(this DependencyObject obj)
     {
         FocusManager.SetFocusedElement(FocusManager.GetFocusScope(obj), null);

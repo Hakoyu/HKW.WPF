@@ -1,4 +1,5 @@
-﻿using System.Windows.Data;
+﻿using System.Globalization;
+using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -28,12 +29,7 @@ public class StringFormatConverter : IMultiValueConverter
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
     /// <returns></returns>
-    public object Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        System.Globalization.CultureInfo culture
-    )
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         var formatStr = (string)parameter;
         if (string.IsNullOrWhiteSpace(formatStr))
@@ -60,7 +56,7 @@ public class StringFormatConverter : IMultiValueConverter
         object value,
         Type[] targetTypes,
         object parameter,
-        System.Globalization.CultureInfo culture
+        CultureInfo culture
     )
     {
         throw new NotImplementedException();

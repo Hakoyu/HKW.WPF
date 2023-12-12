@@ -23,7 +23,6 @@ public static class ElementHelper
     /// <summary>
     ///
     /// </summary>
-    /// <exception cref="Exception">禁止使用此方法</exception>
     public static void SetIsEnabled(FrameworkElement element, bool value)
     {
         element.SetValue(IsEnabledProperty, value);
@@ -142,11 +141,11 @@ public static class ElementHelper
         );
 
     /// <summary>
-    /// (TopElement ,(GroupName, UniformMinWidthGroupElementInfo))
+    /// (TopParent ,(GroupName, UniformMinWidthGroupInfo))
     /// </summary>
     private readonly static Dictionary<
         FrameworkElement,
-        Dictionary<string, UniformMinWidthGroupElementInfo>
+        Dictionary<string, UniformMinWidthGroupInfo>
     > _uniformMinWidthGroups = new();
 
     private static void UniformMinWidthGroupPropertyChanged(
@@ -285,19 +284,19 @@ public static class ElementHelper
 }
 
 /// <summary>
-/// 控件信息
+/// 统一最小宽度分组信息
 /// </summary>
-public class UniformMinWidthGroupElementInfo
+public class UniformMinWidthGroupInfo
 {
-    /// <summary>
-    /// 所有控件
-    /// </summary>
-    public HashSet<FrameworkElement> Elements { get; } = new();
-
     /// <summary>
     /// 最后一个最大宽度
     /// </summary>
     public double MaxWidth { get; set; } = double.MaxValue;
+
+    /// <summary>
+    /// 所有控件
+    /// </summary>
+    public HashSet<FrameworkElement> Elements { get; } = new();
 
     /// <summary>
     /// 最大宽度的控件

@@ -6,11 +6,11 @@ namespace HKW.WPF.Extensions;
 public static partial class WPFExtensions
 {
     /// <summary>
-    /// 寻找视觉子项
+    /// 寻找视觉子元素
     /// </summary>
-    /// <typeparam name="T">子项类型</typeparam>
+    /// <typeparam name="T">子元素类型</typeparam>
     /// <param name="obj">源控件</param>
-    /// <returns>子项</returns>
+    /// <returns>子元素</returns>
     public static T FindVisualChild<T>(this DependencyObject obj)
         where T : DependencyObject
     {
@@ -28,11 +28,11 @@ public static partial class WPFExtensions
     }
 
     /// <summary>
-    /// 寻找视觉子项
+    /// 寻找视觉子元素
     /// </summary>
-    /// <typeparam name="T">子项类型</typeparam>
+    /// <typeparam name="T">子元素类型</typeparam>
     /// <param name="obj">源控件</param>
-    /// <param name="outValue">子项</param>
+    /// <param name="outValue">子元素</param>
     /// <returns>成功为 <see langword="true"/> 失败为 <see langword="false"/></returns>
     public static bool TryFindVisualChild<T>(
         this DependencyObject obj,

@@ -22,7 +22,7 @@ public static partial class WPFExtensions
     }
 
     /// <summary>
-    /// 搜索一个元素的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
+    /// 寻找它的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
     /// </summary>
     /// <param name="element">元素</param>
     public static FrameworkElement FindTopParent(this FrameworkElement element)
@@ -40,7 +40,7 @@ public static partial class WPFExtensions
     }
 
     /// <summary>
-    /// 尝试搜索一个元素的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
+    /// 尝试寻找它的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
     /// </summary>
     /// <param name="element">元素</param>
     /// <param name="topParent">顶级元素</param>
@@ -61,9 +61,9 @@ public static partial class WPFExtensions
     }
 
     /// <summary>
-    /// 在视觉树上搜索一个元素的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
+    /// 在视觉树上寻找它的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
     /// <para>
-    /// 用于 <see cref="FindTopParent"/> 无法获取到父级的情况下使用, 此元素通常位于 <see cref="DataTemplate"/> 中
+    /// 用于 <see cref="FindTopParent"/> 无法获取到顶级元素的情况下使用, 此元素通常位于 <see cref="DataTemplate"/> 中
     /// </para>
     /// </summary>
     /// <param name="element">元素</param>
@@ -81,7 +81,7 @@ public static partial class WPFExtensions
     }
 
     /// <summary>
-    /// 尝试在视觉树上搜索一个元素的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
+    /// 尝试在视觉树上寻找它的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
     /// </summary>
     /// <param name="element">元素</param>
     /// <param name="topParent">顶级元素</param>
@@ -102,7 +102,7 @@ public static partial class WPFExtensions
     }
 
     /// <summary>
-    /// 获取一个元素的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
+    /// 寻找它的顶级元素, 它肯定是 <see cref="Window"/>, <see cref="Page"/>, <see cref="UserControl"/> 中的一个
     /// </summary>
     /// <param name="element">元素</param>
     public static TParent FindTopParent<TParent>(this FrameworkElement element)
