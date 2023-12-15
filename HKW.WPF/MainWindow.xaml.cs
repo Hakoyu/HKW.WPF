@@ -1,4 +1,6 @@
-﻿namespace HKW.WPF;
+﻿using HKW.WPF.Extensions;
+
+namespace HKW.WPF;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -16,5 +18,10 @@ internal partial class MainWindow : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         //ListBox_Main.SelectedItem = null;
+    }
+
+    private void Button_1_Click(object sender, RoutedEventArgs e)
+    {
+        return;
     }
 }

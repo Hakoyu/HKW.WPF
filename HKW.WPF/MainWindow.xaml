@@ -9,6 +9,7 @@
   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:local="clr-namespace:HKW.WPF"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:xc="clr-namespace:ValueConverters;assembly=ValueConverters"
   Title="MainWindow"
   Width="800"
   Height="450"
@@ -17,13 +18,14 @@
   Background="Gray"
   mc:Ignorable="d">
   <Window.Resources>
-    <c:IsBoolConverter x:Key="IsTrueConverter" />
+    <xc:ValueToBoolConverter x:Key="Value" />
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
+    <Button x:Name="Button_1" Click="Button_1_Click" />
     <StackPanel>
       <CheckBox
         h:CheckBoxHelper.AnyCanCheckFalseOnLeaderCheckedCommand="{Binding FailedCheckAllCommand}"
