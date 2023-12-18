@@ -22,27 +22,20 @@
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto" MinWidth="100" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <Button x:Name="Button_1" Click="Button_1_Click" />
     <StackPanel>
-      <CheckBox
-        h:CheckBoxHelper.AnyCanCheckFalseOnLeaderCheckedCommand="{Binding FailedCheckAllCommand}"
-        h:CheckBoxHelper.CheckGroup="AAA"
-        h:CheckBoxHelper.CheckGroupLeader="AAA"
-        Content="1" />
-      <CheckBox
-        h:CheckBoxHelper.CanCheck="False"
-        h:CheckBoxHelper.CheckGroup="AAA"
-        Content="2" />
-      <ListBox ItemsSource="{Binding Datas}">
+      <CheckBox Content="1" />
+      <CheckBox Content="2" />
+      <ListBox
+        Height="200"
+        ItemsSource="{Binding Datas}"
+        VirtualizingPanel.CacheLengthUnit="Page">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <CheckBox
-              h:CheckBoxHelper.CanCheck="{Binding CanSelect}"
-              h:CheckBoxHelper.CheckGroup="AAA"
-              Content="3" />
+            <CheckBox Content="{Binding Content}" IsChecked="{Binding IsChecked}" />
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ListBox>
@@ -50,7 +43,10 @@
     <StackPanel Grid.Column="1">
       <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
       <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
-      <ListBox Background="Gray" ItemsSource="{Binding Datas}">
+      <ListBox
+        Height="200"
+        Background="Gray"
+        ItemsSource="{Binding Datas}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
