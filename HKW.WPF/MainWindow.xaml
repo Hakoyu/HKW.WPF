@@ -25,33 +25,56 @@
       <ColumnDefinition Width="Auto" MinWidth="100" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <Button x:Name="Button_1" Click="Button_1_Click" />
-    <StackPanel>
-      <CheckBox Content="1" />
-      <CheckBox Content="2" />
-      <ListBox
-        Height="200"
-        ItemsSource="{Binding Datas}"
-        VirtualizingPanel.CacheLengthUnit="Page">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <CheckBox Content="{Binding Content}" IsChecked="{Binding IsChecked}" />
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ListBox>
-    </StackPanel>
+    <ScrollViewer x:Name="ScrollViewer_1" Height="100">
+      <StackPanel>
+        <Button
+          x:Name="Button_1"
+          Height="50"
+          Content="1" />
+        <Button
+          x:Name="Button_2"
+          Height="50"
+          Content="2" />
+        <Button
+          x:Name="Button_3"
+          Height="50"
+          Content="3" />
+        <Button
+          x:Name="Button_4"
+          Height="50"
+          Content="4" />
+        <Button
+          x:Name="Button_5"
+          Height="50"
+          Content="5" />
+      </StackPanel>
+    </ScrollViewer>
     <StackPanel Grid.Column="1">
-      <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
-      <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
-      <ListBox
-        Height="200"
-        Background="Gray"
-        ItemsSource="{Binding Datas}">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <TextBox HorizontalAlignment="Left" h:ElementHelper.UniformMinWidthGroup="AAA" />
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
+      <ListBox Height="200" Background="Gray">
+        <ListBoxItem
+          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_1}"
+          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
+          Content="1" >
+          <h:ListBoxItemHelper.ScrollToControl >
+            
+          </h:ListBoxItemHelper.ScrollToControl>
+        </ListBoxItem>
+        <ListBoxItem
+          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_2}"
+          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
+          Content="2" />
+        <ListBoxItem
+          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_3}"
+          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
+          Content="3" />
+        <ListBoxItem
+          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_4}"
+          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
+          Content="4" />
+        <ListBoxItem
+          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_5}"
+          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
+          Content="5" />
       </ListBox>
     </StackPanel>
     <!--<Grid.ColumnDefinitions>

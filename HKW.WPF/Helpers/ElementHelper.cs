@@ -162,62 +162,27 @@ public static class ElementHelper
             return;
         if (_uniformMinWidthGroups.TryGetValue(topParent, out var groups) is false)
         {
-            topParent.Loaded -= TopParent_Loaded;
-            topParent.Unloaded -= TopParent_Unloaded;
-
-            topParent.Loaded += TopParent_Loaded;
-            topParent.Unloaded += TopParent_Unloaded;
+            topParent.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+            groups = _uniformMinWidthGroups[element] = new();
         }
-        element.Loaded -= Element_Loaded;
-        element.Unloaded -= Element_Unloaded;
+        if (groups.TryGetValue(groupName, out var group) is false)
+            group = groups[groupName] = new();
+        group.Elements.Add(element);
 
-        element.Loaded += Element_Loaded;
-        element.Unloaded += Element_Unloaded;
+        element.SizeChanged -= Element_SizeChanged;
+        element.SizeChanged += Element_SizeChanged;
 
         #region TopParent
-        static void TopParent_Loaded(object sender, RoutedEventArgs e)
+
+        static void Dispatcher_ShutdownStarted(object? sender, EventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
             _uniformMinWidthGroups[element] = new();
         }
-        static void TopParent_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is not FrameworkElement element)
-                return;
-            _uniformMinWidthGroups.Remove(element);
-        }
         #endregion
 
         #region Element
-        static void Element_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is not FrameworkElement element)
-                return;
-            var groupName = GetUniformMinWidthGroup(element);
-            var topParent = element.FindTopParentOnVisualTree();
-            var groups = _uniformMinWidthGroups[topParent];
-            if (groups.TryGetValue(groupName, out var group) is false)
-                group = groups[groupName] = new();
-            group.Elements.Add(element);
-            element.SizeChanged -= Element_SizeChanged;
-
-            element.SizeChanged += Element_SizeChanged;
-        }
-
-        static void Element_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (sender is not FrameworkElement element)
-                return;
-            var groupName = GetUniformMinWidthGroup(element);
-            var topParent = element.FindTopParentOnVisualTree();
-            if (_uniformMinWidthGroups.TryGetValue(topParent, out var groups) is false)
-                return;
-            var group = groups[groupName];
-            group.Elements.Remove(element);
-            element.SizeChanged -= Element_SizeChanged;
-        }
-
         static void Element_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (sender is not FrameworkElement element)

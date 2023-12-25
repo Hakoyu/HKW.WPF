@@ -56,7 +56,7 @@ public class ScrollToControlAction : TriggerAction<FrameworkElement>
         // 检查指定的控件是否在指定的 ScrollViewer 中
         var result = TargetControl.FindVisuaParent<ScrollViewer>();
         if (result is null || result != ScrollViewer)
-            throw new Exception("The TargetControl is not in the target ScrollViewer");
+            throw new Exception("The target Control is not in the target ScrollViewer");
 
         // 获取要定位之前 ScrollViewer 目前的滚动位置
         var currentScrollPosition = ScrollViewer.VerticalOffset;
