@@ -54,11 +54,7 @@
         <ListBoxItem
           h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_1}"
           h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
-          Content="1" >
-          <h:ListBoxItemHelper.ScrollToControl >
-            
-          </h:ListBoxItemHelper.ScrollToControl>
-        </ListBoxItem>
+          Content="1" />
         <ListBoxItem
           h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_2}"
           h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
