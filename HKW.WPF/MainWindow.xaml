@@ -19,60 +19,36 @@
   mc:Ignorable="d">
   <Window.Resources>
     <xc:ValueToBoolConverter x:Key="Value" />
+    <c:MarginConverter x:Key="MarginConverter" HaveRatio="True" />
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="100" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <ScrollViewer x:Name="ScrollViewer_1" Height="100">
-      <StackPanel>
-        <Button
-          x:Name="Button_1"
-          Height="50"
-          Content="1" />
-        <Button
-          x:Name="Button_2"
-          Height="50"
-          Content="2" />
-        <Button
-          x:Name="Button_3"
-          Height="50"
-          Content="3" />
-        <Button
-          x:Name="Button_4"
-          Height="50"
-          Content="4" />
-        <Button
-          x:Name="Button_5"
-          Height="50"
-          Content="5" />
-      </StackPanel>
-    </ScrollViewer>
-    <StackPanel Grid.Column="1">
-      <ListBox Height="200" Background="Gray">
-        <ListBoxItem
-          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_1}"
-          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
-          Content="1" />
-        <ListBoxItem
-          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_2}"
-          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
-          Content="2" />
-        <ListBoxItem
-          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_3}"
-          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
-          Content="3" />
-        <ListBoxItem
-          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_4}"
-          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
-          Content="4" />
-        <ListBoxItem
-          h:ListBoxItemHelper.ScrollToControlTargetControl="{Binding ElementName=Button_5}"
-          h:ListBoxItemHelper.ScrollToControlTargetScrollViewer="{Binding ElementName=ScrollViewer_1}"
-          Content="5" />
-      </ListBox>
+    <StackPanel>
+      <TextBox x:Name="TextBox_1" Text="1" />
+      <TextBox x:Name="TextBox_2" Text="1" />
+      <TextBox x:Name="TextBox_3" Text="1" />
+      <TextBox x:Name="TextBox_4" Text="1" />
     </StackPanel>
+    <Grid Grid.Column="1">
+      <Grid
+        Width="100"
+        Height="100"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Background="Red">
+        <Grid.Margin>
+          <MultiBinding Converter="{StaticResource MarginConverter}">
+            <Binding ElementName="TextBox_3" Path="Text" />
+            <Binding ElementName="TextBox_1" Path="Text" />
+            <Binding ElementName="TextBox_2" Path="Text" />
+            <!--<Binding ElementName="TextBox_4" Path="Text" />-->
+          </MultiBinding>
+        </Grid.Margin>
+      </Grid>
+    </Grid>
     <!--<Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="100" />
       <ColumnDefinition />

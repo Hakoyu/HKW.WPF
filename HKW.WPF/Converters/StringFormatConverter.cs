@@ -19,7 +19,7 @@ namespace HKW.WPF.Converters;
 /// </MultiBinding>
 /// ]]></code></para>
 /// </summary>
-public class StringFormatConverter : IMultiValueConverter
+public class StringFormatConverter : MultiValueConverterBase
 {
     /// <summary>
     ///
@@ -29,7 +29,12 @@ public class StringFormatConverter : IMultiValueConverter
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
     /// <returns></returns>
-    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    public override object Convert(
+        object[] values,
+        Type targetType,
+        object parameter,
+        CultureInfo culture
+    )
     {
         var formatStr = (string)parameter;
         if (string.IsNullOrWhiteSpace(formatStr))
@@ -41,24 +46,5 @@ public class StringFormatConverter : IMultiValueConverter
         {
             return string.Format(formatStr, values);
         }
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="targetTypes"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public object[] ConvertBack(
-        object value,
-        Type[] targetTypes,
-        object parameter,
-        CultureInfo culture
-    )
-    {
-        throw new NotImplementedException();
     }
 }

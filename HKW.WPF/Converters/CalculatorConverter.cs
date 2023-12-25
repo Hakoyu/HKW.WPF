@@ -29,18 +29,15 @@ namespace HKW.WPF.Converters;
 /// ]]></code></para>
 /// </summary>
 /// <exception cref="Exception">绑定的数量不正确</exception>
-public class CalculatorConverter : IMultiValueConverter
+public class CalculatorConverter : MultiValueConverterBase
 {
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="values"></param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    /// <inheritdoc/>
+    public override object Convert(
+        object[] values,
+        Type targetType,
+        object parameter,
+        CultureInfo culture
+    )
     {
         if (values.Any(i => i == DependencyProperty.UnsetValue))
             return 0.0;
@@ -99,24 +96,5 @@ public class CalculatorConverter : IMultiValueConverter
             '%' => value1 % value2,
             _ => throw new NotImplementedException(),
         };
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="targetTypes"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public object[] ConvertBack(
-        object value,
-        Type[] targetTypes,
-        object parameter,
-        CultureInfo culture
-    )
-    {
-        throw new NotImplementedException();
     }
 }

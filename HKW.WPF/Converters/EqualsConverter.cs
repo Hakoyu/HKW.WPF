@@ -13,7 +13,7 @@ namespace HKW.WPF.Converters;
 /// </MultiBinding>
 /// ]]></code></para>
 /// </summary>
-public class EqualsConverter : IMultiValueConverter
+public class EqualsConverter : CanInverterMultiValueConverter<EqualsConverter>
 {
     /// <summary>
     ///
@@ -24,29 +24,15 @@ public class EqualsConverter : IMultiValueConverter
     /// <param name="culture"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-    {
-        if (values.Length != 2)
-            throw new NotImplementedException("Values length must be 2");
-        return values[0].Equals(values[1]);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="targetTypes"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public object[] ConvertBack(
-        object value,
-        Type[] targetTypes,
+    public override object Convert(
+        object[] values,
+        Type targetType,
         object parameter,
         CultureInfo culture
     )
     {
-        throw new NotImplementedException();
+        if (values.Length != 2)
+            throw new NotImplementedException("Values length must be 2");
+        return values[0].Equals(values[1]) ^ Inverter;
     }
 }
