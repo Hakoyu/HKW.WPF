@@ -1,1 +1,0 @@
-dotnet nuget push bin\Release\HKW.WPF.0.3.2.nupkg --api-key oy2dqw5jdg4izmygtuyahd7f4egj3jvubi6gfirwmli2ge --source https://api.nuget.org/v3/index.json
