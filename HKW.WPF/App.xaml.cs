@@ -1,4 +1,6 @@
-﻿namespace HKW.WPF;
+﻿using System.Windows;
+
+namespace HKW.WPF;
 
 /// <summary>
 /// Interaction logic for App.xaml

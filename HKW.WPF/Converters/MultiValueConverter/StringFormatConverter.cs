@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -19,7 +18,7 @@ namespace HKW.WPF.Converters;
 /// </MultiBinding>
 /// ]]></code></para>
 /// </summary>
-public class StringFormatConverter : MultiValueConverterBase
+public class StringFormatConverter : MultiValueConverterBase<StringFormatConverter>
 {
     /// <summary>
     ///
@@ -29,22 +28,21 @@ public class StringFormatConverter : MultiValueConverterBase
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
     /// <returns></returns>
-    public override object Convert(
+    public override object? Convert(
         object[] values,
         Type targetType,
         object parameter,
         CultureInfo culture
     )
     {
-        var formatStr = (string)parameter;
-        if (string.IsNullOrWhiteSpace(formatStr))
+        if (parameter is string format && string.IsNullOrWhiteSpace(format) is false)
         {
-            formatStr = (string)values[0];
-            return string.Format(formatStr, values.Skip(1).ToArray());
+            return string.Format(format, values);
         }
         else
         {
-            return string.Format(formatStr, values);
+            format = (string)values[0]!;
+            return string.Format(format, values.Skip(1).ToArray());
         }
     }
 }

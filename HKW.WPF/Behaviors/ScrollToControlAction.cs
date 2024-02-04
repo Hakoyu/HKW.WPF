@@ -1,4 +1,7 @@
 ﻿using HKW.WPF.Extensions;
+using Microsoft.Xaml.Behaviors;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace HKW.WPF.Behaviors;
 

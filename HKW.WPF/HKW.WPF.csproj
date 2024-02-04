@@ -34,12 +34,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Using Include="Microsoft.Xaml.Behaviors" />
-		<Using Include="System.Windows" />
-		<Using Include="System.Windows.Controls" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="..\README.md">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>

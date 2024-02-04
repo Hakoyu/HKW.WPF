@@ -1,4 +1,4 @@
-﻿using HKW.WPF.Extensions;
+﻿using System.Windows;
 
 namespace HKW.WPF;
 

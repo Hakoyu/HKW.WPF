@@ -19,7 +19,7 @@
   mc:Ignorable="d">
   <Window.Resources>
     <xc:ValueToBoolConverter x:Key="Value" />
-    <c:MarginConverter x:Key="MarginConverter" HaveRatio="True" />
+    <c:MarginConverter x:Key="MarginConverter" HasRatio="True" />
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>

@@ -1,5 +1,5 @@
 ﻿using HKW.WPF.Extensions;
-using System.Windows.Data;
+using System.Windows;
 using System.Windows.Input;
 
 namespace HKW.WPF.Helpers;

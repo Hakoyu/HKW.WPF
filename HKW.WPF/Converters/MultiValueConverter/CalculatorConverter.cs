@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using System.Windows.Data;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
@@ -29,22 +29,22 @@ namespace HKW.WPF.Converters;
 /// ]]></code></para>
 /// </summary>
 /// <exception cref="Exception">绑定的数量不正确</exception>
-public class CalculatorConverter : MultiValueConverterBase
+public class CalculatorConverter : MultiValueConverterBase<CalculatorConverter>
 {
     /// <inheritdoc/>
-    public override object Convert(
+    public override object? Convert(
         object[] values,
         Type targetType,
         object parameter,
         CultureInfo culture
     )
     {
-        if (values.Any(i => i == DependencyProperty.UnsetValue))
+        if (values.Any(i => i == UnsetValue))
             return 0.0;
         if (values.Length == 1)
             return values[0];
         double result = System.Convert.ToDouble(values[0]);
-        if (parameter is string operators)
+        if (parameter is string operators && string.IsNullOrWhiteSpace(operators) is false)
         {
             if (operators.Length != values.Length - 1)
                 throw new Exception("Parameter error: operator must be one more than parameter");
@@ -62,7 +62,7 @@ public class CalculatorConverter : MultiValueConverterBase
             {
                 if (isNumber is false)
                 {
-                    currentOperator = ((string)values[i])[0];
+                    currentOperator = ((string)values[i]!)[0];
                     isNumber = true;
                 }
                 else
@@ -84,7 +84,7 @@ public class CalculatorConverter : MultiValueConverterBase
     /// <param name="operatorChar">符号</param>
     /// <param name="value2">值2</param>
     /// <returns>结果</returns>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <exception cref="NotImplementedException">不支持的符号</exception>
     public static double Operation(double value1, char operatorChar, double value2)
     {
         return operatorChar switch
@@ -94,7 +94,7 @@ public class CalculatorConverter : MultiValueConverterBase
             '*' => value1 * value2,
             '/' => value1 / value2,
             '%' => value1 % value2,
-            _ => throw new NotImplementedException(),
+            _ => throw new NotImplementedException($"Unsupported operator '{operatorChar}'"),
         };
     }
 }

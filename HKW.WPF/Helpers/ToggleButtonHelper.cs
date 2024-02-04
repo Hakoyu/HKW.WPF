@@ -1,4 +1,5 @@
 ﻿using HKW.WPF.Extensions;
+using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace HKW.WPF.Helpers;
