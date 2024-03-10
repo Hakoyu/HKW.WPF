@@ -3,10 +3,10 @@
 /// <summary>
 /// 全部为真转换器
 /// </summary>
-public class AllIsTrueConverter : AllEqualsValueConverter<bool, AllIsTrueConverter>
+public class AllIsTrueMultiConverter : AllEqualsValueMultiConverter<bool, AllIsTrueMultiConverter>
 {
     /// <inheritdoc/>
-    public AllIsTrueConverter()
+    public AllIsTrueMultiConverter()
     {
         Value = true;
     }

@@ -11,7 +11,7 @@
   Height="450"
   mc:Ignorable="d">
   <Window.Resources>
-    <c:CalculatorConverter x:Key="CalculatorConverter" />
+    <c:CalculatorMultiConverter x:Key="CalculatorConverter" />
   </Window.Resources>
   <ScrollViewer>
     <StackPanel x:Name="StackPanel_ConverterTests">

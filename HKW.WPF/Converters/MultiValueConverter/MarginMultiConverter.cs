@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
 
 namespace HKW.WPF.Converters;
@@ -24,7 +23,7 @@ namespace HKW.WPF.Converters;
 /// </MultiBinding>
 /// ]]></code></para>
 /// </summary>
-public class MarginConverter : MultiValueConverterBase<MarginConverter>
+public class MarginMultiConverter : MultiValueConverterBase<MarginMultiConverter>
 {
     /// <summary>
     ///
@@ -32,7 +31,7 @@ public class MarginConverter : MultiValueConverterBase<MarginConverter>
     public static readonly DependencyProperty HasRatioProperty = DependencyProperty.Register(
         nameof(HasRatio),
         typeof(bool),
-        typeof(MarginConverter)
+        typeof(MarginMultiConverter)
     );
 
     /// <summary>
@@ -44,15 +43,7 @@ public class MarginConverter : MultiValueConverterBase<MarginConverter>
         set => SetValue(HasRatioProperty, value);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="values"></param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <inheritdoc/>
     public override object? Convert(
         object[] values,
         Type targetType,

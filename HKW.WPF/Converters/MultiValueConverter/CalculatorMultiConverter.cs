@@ -29,7 +29,7 @@ namespace HKW.WPF.Converters;
 /// ]]></code></para>
 /// </summary>
 /// <exception cref="Exception">绑定的数量不正确</exception>
-public class CalculatorConverter : MultiValueConverterBase<CalculatorConverter>
+public class CalculatorMultiConverter : MultiValueConverterBase<CalculatorMultiConverter>
 {
     /// <inheritdoc/>
     public override object? Convert(

@@ -9,7 +9,6 @@
   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:local="clr-namespace:HKW.WPF"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:xc="clr-namespace:ValueConverters;assembly=ValueConverters"
   Title="MainWindow"
   Width="800"
   Height="450"
@@ -18,8 +17,8 @@
   Background="Gray"
   mc:Ignorable="d">
   <Window.Resources>
-    <xc:ValueToBoolConverter x:Key="Value" />
-    <c:MarginConverter x:Key="MarginConverter" HasRatio="True" />
+    <c:ValueToBoolConverter x:Key="Value" />
+    <c:MarginMultiConverter x:Key="MarginConverter" HasRatio="True" />
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>

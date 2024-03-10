@@ -1,40 +1,23 @@
-﻿using System.Windows;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
 /// <summary>
 /// 全部相等于值转换器
 /// </summary>
-public class AllEqualsValueConverter<T, TConverter> : MultiValueConverterBase<TConverter>
-    where TConverter : AllEqualsValueConverter<T, TConverter>, new()
+public class AllEqualsValueMultiConverter<T, TConverter>
+    : InvertibleMultiValueConverterBase<TConverter>
+    where TConverter : AllEqualsValueMultiConverter<T, TConverter>, new()
 {
-    /// <summary>
-    ///
-    /// </summary>
-    public static readonly DependencyProperty IsInvertedProperty = DependencyProperty.Register(
-        nameof(IsInverted),
-        typeof(bool),
-        typeof(AllEqualsValueConverter<T, TConverter>)
-    );
-
-    /// <summary>
-    /// 是反转的
-    /// </summary>
-    public bool IsInverted
-    {
-        get => (bool)GetValue(IsInvertedProperty);
-        set => SetValue(IsInvertedProperty, value);
-    }
-
     /// <summary>
     ///
     /// </summary>
     public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
         nameof(Value),
         typeof(T),
-        typeof(AllEqualsValueConverter<T, TConverter>)
+        typeof(AllEqualsValueMultiConverter<T, TConverter>)
     );
 
     /// <summary>

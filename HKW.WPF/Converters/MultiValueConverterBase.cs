@@ -1,5 +1,5 @@
-﻿using System.Windows.Data;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -55,7 +55,7 @@ public abstract class MultiValueConverterBase<TConverter> : ConverterBase, IMult
         CultureInfo culture
     )
     {
-        return Convert(value, targetType, parameter, SelectCulture(() => culture));
+        return Convert(value, targetType, parameter, SelectCulture(() => culture))!;
     }
 
     object[] IMultiValueConverter.ConvertBack(

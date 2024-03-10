@@ -18,16 +18,9 @@ namespace HKW.WPF.Converters;
 /// </MultiBinding>
 /// ]]></code></para>
 /// </summary>
-public class StringFormatConverter : MultiValueConverterBase<StringFormatConverter>
+public class StringFormatMultiConverter : MultiValueConverterBase<StringFormatMultiConverter>
 {
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="values"></param>
-    /// <param name="targetType"></param>
-    /// <param name="parameter"></param>
-    /// <param name="culture"></param>
-    /// <returns></returns>
+    /// <inheritdoc/>
     public override object? Convert(
         object[] values,
         Type targetType,

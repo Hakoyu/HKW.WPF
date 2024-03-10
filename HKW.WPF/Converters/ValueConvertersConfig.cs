@@ -1,5 +1,8 @@
 ﻿namespace HKW.WPF.Converters;
 
+/// <summary>
+/// 值转换器设置
+/// </summary>
 public static class ValueConvertersConfig
 {
     /// <summary>

@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
@@ -8,7 +8,7 @@ namespace HKW.WPF.Converters;
 /// </summary>
 /// <typeparam name="T">值类型</typeparam>
 /// <typeparam name="TConverter">转换器类型</typeparam>
-public class BoolToValueConverter<T, TConverter> : ValueConverterBase<TConverter>
+public class BoolToValueConverter<T, TConverter> : InvertibleValueConverterBase<TConverter>
     where TConverter : BoolToValueConverter<T, TConverter>, new()
 {
     /// <summary>
@@ -63,24 +63,6 @@ public class BoolToValueConverter<T, TConverter> : ValueConverterBase<TConverter
     {
         get => (bool)GetValue(NullValueProperty);
         set => SetValue(NullValueProperty, value);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public static readonly DependencyProperty IsInvertedProperty = DependencyProperty.Register(
-        nameof(IsInverted),
-        typeof(bool),
-        typeof(BoolToValueConverter<T, TConverter>)
-    );
-
-    /// <summary>
-    /// 是反转的
-    /// </summary>
-    public bool IsInverted
-    {
-        get => (bool)GetValue(IsInvertedProperty);
-        set => SetValue(IsInvertedProperty, value);
     }
 
     /// <inheritdoc/>
