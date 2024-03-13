@@ -17,66 +17,15 @@
   Background="Gray"
   mc:Ignorable="d">
   <Window.Resources>
-    <c:ValueToBoolConverter x:Key="Value" />
-    <c:MarginMultiConverter x:Key="MarginConverter" HasRatio="True" />
+    <c:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" />
   </Window.Resources>
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" MinWidth="100" />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
     <StackPanel>
-      <TextBox x:Name="TextBox_1" Text="1" />
-      <TextBox x:Name="TextBox_2" Text="1" />
-      <TextBox x:Name="TextBox_3" Text="1" />
-      <TextBox x:Name="TextBox_4" Text="1" />
+      <CheckBox x:Name="CheckBox1" />
+      <Label
+        Background="Red"
+        Content="OK"
+        Visibility="{Binding IsChecked, ElementName=CheckBox1, Converter={StaticResource FalseToCollapsedConverter}}" />
     </StackPanel>
-    <Grid Grid.Column="1">
-      <Grid
-        Width="100"
-        Height="100"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        Background="Red">
-        <Grid.Margin>
-          <MultiBinding Converter="{StaticResource MarginConverter}">
-            <Binding ElementName="TextBox_3" Path="Text" />
-            <Binding ElementName="TextBox_1" Path="Text" />
-            <Binding ElementName="TextBox_2" Path="Text" />
-            <!--<Binding ElementName="TextBox_4" Path="Text" />-->
-          </MultiBinding>
-        </Grid.Margin>
-      </Grid>
-    </Grid>
-    <!--<Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" MinWidth="100" />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    <StackPanel>
-      <Button Content="1">
-        <i:Interaction.Triggers>
-          <i:EventTrigger EventName="Click">
-            <b:ScrollToControlAction ScrollViewer="{Binding ElementName=ScrollViewer}" TargetControl="{Binding ElementName=Button_4}" />
-          </i:EventTrigger>
-        </i:Interaction.Triggers>
-      </Button>
-    </StackPanel>
-    <ScrollViewer
-      x:Name="ScrollViewer"
-      Grid.Column="1"
-      VerticalScrollBarVisibility="Auto">
-      <StackPanel>
-
-        <Button
-          x:Name="Button_4"
-          Height="100"
-          Content="444" />
-        <Button
-          x:Name="Button_5"
-          Height="100"
-          Content="555" />
-      </StackPanel>
-    </ScrollViewer>-->
-
   </Grid>
 </Window>

@@ -73,7 +73,7 @@ public class BoolToValueConverter<T, TConverter> : InvertibleValueConverterBase<
         CultureInfo culture
     )
     {
-        return ConverterUtils.GetBool(value, NullValue) ^ IsInverted ? FalseValue : TrueValue;
+        return ConverterUtils.GetBool(value, NullValue) ^ IsInverted ? TrueValue : FalseValue;
     }
 
     /// <inheritdoc/>
