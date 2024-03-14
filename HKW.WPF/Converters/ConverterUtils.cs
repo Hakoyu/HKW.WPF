@@ -2,7 +2,7 @@
 
 internal static class ConverterUtils
 {
-    public static bool GetBool(object value, bool nullValue = false)
+    public static bool GetBool(object? value, bool nullValue = false)
     {
         if (value is null || value == ConverterBase.UnsetValue)
             return nullValue;

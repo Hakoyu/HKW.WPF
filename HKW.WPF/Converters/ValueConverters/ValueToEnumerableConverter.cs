@@ -10,10 +10,10 @@ public class ValueToEnumerableConverter : ValueConverterBase<ValueToEnumerableCo
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (value is not null)

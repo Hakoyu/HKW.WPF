@@ -45,10 +45,10 @@ public class MarginMultiConverter : MultiValueConverterBase<MarginMultiConverter
 
     /// <inheritdoc/>
     public override object? Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] values,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (values.Any(i => i == UnsetValue))

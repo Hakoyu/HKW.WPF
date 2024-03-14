@@ -15,10 +15,10 @@ public class StringToDecimalConverter : ValueConverterBase<StringToDecimalConver
 
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (value is decimal dec)
@@ -38,10 +38,10 @@ public class StringToDecimalConverter : ValueConverterBase<StringToDecimalConver
 
     /// <inheritdoc/>
     public override object? ConvertBack(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         return Convert(value, targetType, parameter, culture);

@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
@@ -60,10 +60,10 @@ public class MinMaxValueToBoolConverter : ValueConverterBase<MinMaxValueToBoolCo
 #pragma warning disable CA2208 // 正确实例化参数异常
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (value is not IComparable comparable)

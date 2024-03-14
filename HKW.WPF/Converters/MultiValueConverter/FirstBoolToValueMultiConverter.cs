@@ -20,10 +20,10 @@ public class FirstBoolToValueMultiConverter
     /// <inheritdoc/>
     /// <exception cref="NotImplementedException">参数数量必须为2或3</exception>
     public override object? Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] values,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (values.Length != 2 && values.Length != 3)

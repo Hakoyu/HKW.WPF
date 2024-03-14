@@ -32,10 +32,10 @@ public class AnyEqualsValueMultiConverter<T, TConverter>
 
     /// <inheritdoc/>
     public override object? Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] values,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (IsInverted)

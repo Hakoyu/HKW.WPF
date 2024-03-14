@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
@@ -37,10 +37,10 @@ public abstract class ValueToBoolConverterBase<T, TConverter> : ValueConverterBa
 
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         var trueValue = TrueValue;

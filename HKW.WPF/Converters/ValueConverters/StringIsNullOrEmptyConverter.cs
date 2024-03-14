@@ -12,10 +12,10 @@ public class StringIsNullOrEmptyConverter
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         return string.IsNullOrEmpty(value as string) ^ IsInverted;

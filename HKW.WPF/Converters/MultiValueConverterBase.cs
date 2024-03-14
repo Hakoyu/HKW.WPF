@@ -31,18 +31,18 @@ public abstract class MultiValueConverterBase<TConverter> : ConverterBase, IMult
 
     /// <inheritdoc/>
     public abstract object? Convert(
-        object[] value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     );
 
     /// <inheritdoc/>
     public virtual object[] ConvertBack(
-        object value,
-        Type[] targetTypes,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type?[] targetTypes,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         throw new NotImplementedException();

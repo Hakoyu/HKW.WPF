@@ -69,10 +69,10 @@ public class AllBoolToValueMultiConverter<T, TConverter>
 
     /// <inheritdoc/>
     public override object? Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] values,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         var nullValue = NullValue;

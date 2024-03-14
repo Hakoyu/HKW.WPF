@@ -33,10 +33,10 @@ public class CalculatorMultiConverter : MultiValueConverterBase<CalculatorMultiC
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] values,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (values.Any(i => i == UnsetValue))

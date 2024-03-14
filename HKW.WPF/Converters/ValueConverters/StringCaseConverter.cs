@@ -20,10 +20,10 @@ public class StringCaseConverter : ValueConverterBase<StringCaseConverter>
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (value is string stringValue)

@@ -22,10 +22,10 @@ public class StringFormatMultiConverter : MultiValueConverterBase<StringFormatMu
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] values,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (parameter is string format && string.IsNullOrWhiteSpace(format) is false)

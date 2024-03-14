@@ -10,10 +10,10 @@ public class EnumToBoolConverter : ValueConverterBase<EnumToBoolConverter>
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (value is null)
@@ -32,15 +32,16 @@ public class EnumToBoolConverter : ValueConverterBase<EnumToBoolConverter>
 
     /// <inheritdoc/>
     public override object? ConvertBack(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
+        if (targetType is null)
+            return null;
         if (parameter is string parameterString)
             return Enum.Parse(targetType, parameterString);
-
         return null;
     }
 }

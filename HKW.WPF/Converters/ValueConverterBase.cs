@@ -1,5 +1,5 @@
-﻿using System.Windows.Data;
-using System.Globalization;
+﻿using System.Globalization;
+using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -31,18 +31,18 @@ public abstract class ValueConverterBase<TConverter> : ConverterBase, IValueConv
 
     /// <inheritdoc/>
     public abstract object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     );
 
     /// <inheritdoc/>
     public virtual object? ConvertBack(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         throw new NotSupportedException(

@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
@@ -35,10 +35,10 @@ public abstract class ReversibleValueToBoolConverterBase<T, TConverter>
 
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (!BaseOnFalseValue)
@@ -52,10 +52,10 @@ public abstract class ReversibleValueToBoolConverterBase<T, TConverter>
 
     /// <inheritdoc/>
     public override object? ConvertBack(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         return Equals(value) ^ IsInverted ? TrueValue : FalseValue;

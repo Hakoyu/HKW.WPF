@@ -1,6 +1,6 @@
-﻿using System.Windows;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
@@ -62,10 +62,10 @@ public class TimeSpanToStringConverter : ValueConverterBase<TimeSpanToStringConv
 
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (value is TimeSpan timeSpan)
@@ -83,10 +83,10 @@ public class TimeSpanToStringConverter : ValueConverterBase<TimeSpanToStringConv
 
     /// <inheritdoc/>
     public override object? ConvertBack(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (value != null)

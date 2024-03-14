@@ -11,10 +11,10 @@ public class StringIsNullOrWhiteSpaceConverter
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         return string.IsNullOrWhiteSpace(value as string) ^ IsInverted;

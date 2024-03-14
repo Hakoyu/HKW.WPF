@@ -16,10 +16,10 @@ public class GetDictionaryValueMulitiConverter
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object[] value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (parameter is null)

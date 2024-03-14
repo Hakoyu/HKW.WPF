@@ -1,8 +1,8 @@
-﻿using System.Windows.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -21,10 +21,10 @@ public class ValueConverterGroup : ValueConverterBase<ValueConverterGroup>
 
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (Converters is not IEnumerable<IValueConverter> converters)
@@ -38,10 +38,10 @@ public class ValueConverterGroup : ValueConverterBase<ValueConverterGroup>
 
     /// <inheritdoc/>
     public override object? ConvertBack(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (Converters is not IEnumerable<IValueConverter> converters)

@@ -18,10 +18,10 @@ public class EqualsMultiConverter : InvertibleMultiValueConverterBase<EqualsMult
     /// <inheritdoc/>
     /// <exception cref="NotImplementedException">参数必须为2</exception>
     public override object? Convert(
-        object[] values,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object?[] values,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         if (values.Length != 2)

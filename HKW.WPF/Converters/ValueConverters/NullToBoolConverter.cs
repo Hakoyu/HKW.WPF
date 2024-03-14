@@ -12,10 +12,10 @@ public class NullToBoolConverter : InvertibleValueConverterBase<NullToBoolConver
 {
     /// <inheritdoc/>
     public override object? Convert(
-        object value,
-        Type targetType,
-        object parameter,
-        CultureInfo culture
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
     )
     {
         return value == null ^ IsInverted;
