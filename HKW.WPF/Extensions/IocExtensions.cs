@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using HKW.HKWUtils.Observable;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HKW.WPF.Extensions;
 
@@ -25,7 +26,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TWindow : Window, new()
-        where TWindowVM : ObservableObject, new()
+        where TWindowVM : ObservableObjectX, new()
     {
         services.AddTransient<TWindowVM>();
         services.AddTransient<TWindow>(sp =>
@@ -54,7 +55,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TWindow : Window
-        where TWindowVM : ObservableObject
+        where TWindowVM : ObservableObjectX
     {
         services.AddTransient<TWindowVM>(sp => windowVM(sp));
         services.AddTransient<TWindow>(sp =>
@@ -81,7 +82,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TPage : Page, new()
-        where TPageVM : ObservableObject, new()
+        where TPageVM : ObservableObjectX, new()
     {
         services.AddTransient<TPageVM>();
         services.AddTransient<TPage>(sp =>
@@ -110,7 +111,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TPage : Page
-        where TPageVM : ObservableObject
+        where TPageVM : ObservableObjectX
     {
         services.AddTransient<TPageVM>(sp => pageVM(sp));
         services.AddTransient<TPage>(sp =>
@@ -137,7 +138,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TUserControl : UserControl, new()
-        where TUserControlVM : ObservableObject, new()
+        where TUserControlVM : ObservableObjectX, new()
     {
         services.AddTransient<TUserControlVM>();
         services.AddTransient<TUserControl>(sp =>
@@ -166,7 +167,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TUserControl : UserControl
-        where TUserControlVM : ObservableObject
+        where TUserControlVM : ObservableObjectX
     {
         services.AddTransient<TUserControlVM>(sp => ucVM(sp));
         services.AddTransient<TUserControl>(sp =>

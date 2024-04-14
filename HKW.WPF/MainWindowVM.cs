@@ -2,7 +2,7 @@
 
 namespace HKW.WPF;
 
-internal class MainWindowVM : ObservableObjectX<MainWindowVM>
+internal class MainWindowVM : ObservableObjectX
 {
     public MainWindowVM() { }
 }
