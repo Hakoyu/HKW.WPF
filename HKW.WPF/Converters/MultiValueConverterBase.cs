@@ -10,11 +10,13 @@ namespace HKW.WPF.Converters;
 public abstract class MultiValueConverterBase<TConverter> : ConverterBase, IMultiValueConverter
     where TConverter : MultiValueConverterBase<TConverter>, new()
 {
+    private static readonly Lazy<TConverter> InstanceConstructor =
+        new(() => new(), LazyThreadSafetyMode.PublicationOnly);
+
     /// <summary>
     /// 单例
     /// </summary>
-    public static TConverter Instance { get; } =
-        new Lazy<TConverter>(() => new TConverter(), LazyThreadSafetyMode.PublicationOnly).Value;
+    public static TConverter Instance => InstanceConstructor.Value;
 
 #if DEBUG
     /// <inheritdoc/>

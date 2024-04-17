@@ -24,8 +24,15 @@
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
 
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<Reference Include="HKW.Utils">
+			<HintPath>..\..\HKW.Utils\HKW.Utils\bin\Debug\net8.0\HKW.Utils.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<PackageReference Include="HKW.Utils" Version="1.2.21" />
+	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="HKW.Utils" Version="1.2.14" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
 	</ItemGroup>

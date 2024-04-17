@@ -8,8 +8,8 @@ namespace HKW.WPF.Converters;
 /// 全部为布尔值到值转换器
 /// </summary>
 public class AllBoolToValueMultiConverter<T, TConverter>
-    : InvertibleMultiValueConverterBase<AllBoolToValueMultiConverter<T, TConverter>>
-    where TConverter : AllBoolToValueMultiConverter<T, TConverter>
+    : InvertibleMultiValueConverterBase<TConverter>
+    where TConverter : AllBoolToValueMultiConverter<T, TConverter>, new()
 {
     /// <summary>
     ///
