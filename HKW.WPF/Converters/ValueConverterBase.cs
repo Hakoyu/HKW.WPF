@@ -59,7 +59,7 @@ public abstract class ValueConverterBase<TConverter> : ConverterBase, IValueConv
         CultureInfo culture
     )
     {
-        return Convert(value, targetType, parameter, SelectCulture(() => culture))?.ToString();
+        return Convert(value, targetType, parameter, SelectCulture(() => culture));
     }
 
     object? IValueConverter.ConvertBack(

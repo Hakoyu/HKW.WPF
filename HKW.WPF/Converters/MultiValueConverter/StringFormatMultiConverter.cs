@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Windows;
 
 namespace HKW.WPF.Converters;
 
@@ -20,6 +21,25 @@ namespace HKW.WPF.Converters;
 /// </summary>
 public class StringFormatMultiConverter : MultiValueConverterBase<StringFormatMultiConverter>
 {
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly DependencyProperty HiddenUnsetAndNullProperty =
+        DependencyProperty.Register(
+            nameof(HiddenUnsetAndNull),
+            typeof(bool),
+            typeof(StringFormatMultiConverter)
+        );
+
+    /// <summary>
+    /// 是反转的
+    /// </summary>
+    public bool HiddenUnsetAndNull
+    {
+        get => (bool)GetValue(HiddenUnsetAndNullProperty);
+        set => SetValue(HiddenUnsetAndNullProperty, value);
+    }
+
     /// <inheritdoc/>
     public override object? Convert(
         object?[] values,
@@ -30,12 +50,25 @@ public class StringFormatMultiConverter : MultiValueConverterBase<StringFormatMu
     {
         if (parameter is string format && string.IsNullOrWhiteSpace(format) is false)
         {
-            return string.Format(format, values);
+            if (HiddenUnsetAndNull)
+                return string.Format(
+                    format,
+                    values.Select(v => v is null || v == UnsetValue ? string.Empty : v).ToArray()
+                );
+            else
+                return string.Format(format, values);
         }
         else
         {
             format = (string)values[0]!;
-            return string.Format(format, values.Skip(1).ToArray());
+            var temp = values.Skip(1);
+            if (HiddenUnsetAndNull)
+                return string.Format(
+                    format,
+                    temp.Select(v => v is null || v == UnsetValue ? string.Empty : v).ToArray()
+                );
+            else
+                return string.Format(format, temp.ToArray());
         }
     }
 }

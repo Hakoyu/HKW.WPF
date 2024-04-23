@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Data;
-using System;
+﻿using System;
 using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
 
 namespace HKW.WPF.Converters;
 
@@ -11,7 +11,7 @@ namespace HKW.WPF.Converters;
 public abstract class ConverterBase : DependencyObject
 {
     /// <summary>
-    /// 未设置值
+    /// 默认未设置值
     /// </summary>
     public static object UnsetValue { get; } = DependencyProperty.UnsetValue;
 

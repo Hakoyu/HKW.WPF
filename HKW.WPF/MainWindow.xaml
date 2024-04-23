@@ -17,15 +17,21 @@
   Background="Gray"
   mc:Ignorable="d">
   <Window.Resources>
-    <c:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" />
+    <!--<c:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" UnsetValue="{x:Null}" />-->
+    <c:StringFormatMultiConverter x:Key="StringFormatMultiConverter" HiddenUnsetAndNull="True" />
   </Window.Resources>
   <Grid>
     <StackPanel>
-      <CheckBox x:Name="CheckBox1" />
-      <Label
-        Background="Red"
-        Content="OK"
-        Visibility="{Binding IsChecked, ElementName=CheckBox1, Converter={StaticResource FalseToCollapsedConverter}}" />
+      <TextBox x:Name="TextBox1" />
+      <TextBox x:Name="TextBox2" />
+      <Label Height="100">
+        <Label.Content>
+          <MultiBinding Converter="{StaticResource StringFormatMultiConverter}" ConverterParameter="'{0} ({1})'">
+            <Binding ElementName="TextBox1" Path="Text" />
+            <Binding ElementName="TextBox2" Path="Text1" />
+          </MultiBinding>
+        </Label.Content>
+      </Label>
     </StackPanel>
   </Grid>
 </Window>
