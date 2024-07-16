@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HKW.WPF", "HKW.WPF\HKW.WPF.csproj", "{58375C04-6C3C-4C64-8378-3AA94BDA21C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HKW.WPF.Tests", "HKW.WPF.Tests\HKW.WPF.Tests.csproj", "{14A8C17F-CF07-4F44-8F6B-3FADEA11A4DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HKW.WPF.Tests", "HKW.WPF.Tests\HKW.WPF.Tests.csproj", "{14A8C17F-CF07-4F44-8F6B-3FADEA11A4DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,19 +19,22 @@
   <Window.Resources>
     <!--<c:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" UnsetValue="{x:Null}" />-->
     <c:StringFormatMultiConverter x:Key="StringFormatMultiConverter" HiddenUnsetAndNull="True" />
+    <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoName" EnumInfoTarget="Name" />
+    <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoShortName" EnumInfoTarget="ShortName" />
+    <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoDescription" EnumInfoTarget="Description" />
   </Window.Resources>
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
     <StackPanel>
-      <TextBox x:Name="TextBox1" />
-      <TextBox x:Name="TextBox2" />
-      <Label Height="100">
-        <Label.Content>
-          <MultiBinding Converter="{StaticResource StringFormatMultiConverter}" ConverterParameter="'{0} ({1})'">
-            <Binding ElementName="TextBox1" Path="Text" />
-            <Binding ElementName="TextBox2" Path="Text1" />
-          </MultiBinding>
-        </Label.Content>
-      </Label>
+      <TextBox Text="{Binding Enum, Converter={StaticResource EnumToEnumInfoName}}" />
+      <TextBox Text="{Binding Enum, Converter={StaticResource EnumToEnumInfoShortName}}" />
+      <TextBox Text="{Binding Enum, Converter={StaticResource EnumToEnumInfoDescription}}" />
+    </StackPanel>
+    <StackPanel Grid.Column="1">
+      <Button Command="{Binding NextCommand}" Content="Next" />
     </StackPanel>
   </Grid>
 </Window>

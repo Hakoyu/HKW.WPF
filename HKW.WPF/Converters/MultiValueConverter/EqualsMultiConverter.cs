@@ -7,7 +7,7 @@ namespace HKW.WPF.Converters;
 /// 相等转换器
 /// <para>示例:
 /// <code><![CDATA[
-/// <MultiBinding Converter="{StaticResource RatioMarginConverter}">
+/// <MultiBinding Converter="{StaticResource EqualsMultiConverter}">
 ///   <Binding Path="Value1" />
 ///   <Binding Path="Value2" />
 /// </MultiBinding>

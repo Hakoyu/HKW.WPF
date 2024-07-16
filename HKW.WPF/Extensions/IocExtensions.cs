@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using HKW.HKWReactiveUI;
 using HKW.HKWUtils.Observable;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,7 +27,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TWindow : Window, new()
-        where TWindowVM : ObservableObjectX, new()
+        where TWindowVM : ReactiveObjectX, new()
     {
         services.AddTransient<TWindowVM>();
         services.AddTransient<TWindow>(sp =>
@@ -55,7 +56,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TWindow : Window
-        where TWindowVM : ObservableObjectX
+        where TWindowVM : ReactiveObjectX
     {
         services.AddTransient<TWindowVM>(sp => windowVM(sp));
         services.AddTransient<TWindow>(sp =>
@@ -82,7 +83,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TPage : Page, new()
-        where TPageVM : ObservableObjectX, new()
+        where TPageVM : ReactiveObjectX, new()
     {
         services.AddTransient<TPageVM>();
         services.AddTransient<TPage>(sp =>
@@ -111,7 +112,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TPage : Page
-        where TPageVM : ObservableObjectX
+        where TPageVM : ReactiveObjectX
     {
         services.AddTransient<TPageVM>(sp => pageVM(sp));
         services.AddTransient<TPage>(sp =>
@@ -138,7 +139,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TUserControl : UserControl, new()
-        where TUserControlVM : ObservableObjectX, new()
+        where TUserControlVM : ReactiveObjectX, new()
     {
         services.AddTransient<TUserControlVM>();
         services.AddTransient<TUserControl>(sp =>
@@ -167,7 +168,7 @@ public static class IocExtensions
         bool setDataContext = true
     )
         where TUserControl : UserControl
-        where TUserControlVM : ObservableObjectX
+        where TUserControlVM : ReactiveObjectX
     {
         services.AddTransient<TUserControlVM>(sp => ucVM(sp));
         services.AddTransient<TUserControl>(sp =>
