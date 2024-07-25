@@ -35,6 +35,8 @@
     </StackPanel>
     <StackPanel Grid.Column="1">
       <Button Command="{Binding NextCommand}" Content="Next" />
+      <Button Click="Button_Click" Content="Show" />
+      <Button Click="Button_1_Click" Content="Close" />
     </StackPanel>
   </Grid>
 </Window>

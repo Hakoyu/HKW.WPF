@@ -8,6 +8,7 @@ using HKW.HKWUtils;
 using HKW.HKWUtils.Collections;
 using HKW.HKWUtils.Extensions;
 using HKW.HKWUtils.Observable;
+using HKW.WPF.Converters;
 using ReactiveUI;
 
 namespace HKW.WPF;
@@ -25,8 +26,11 @@ internal partial class MainWindowVM : ReactiveObjectX
 
     public MainWindowVM()
     {
+        //var c = new CalculatorConverter();
+        //var r = c.Convert(1, typeof(int), "+2", null);
+
         EnumInfo<TestEnum>.Initialize();
-        _enums.MoveNext();
+        //_enums.MoveNext();
     }
 
     [ReactiveCommand]

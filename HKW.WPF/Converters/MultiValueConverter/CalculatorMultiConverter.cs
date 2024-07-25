@@ -7,7 +7,7 @@ namespace HKW.WPF.Converters;
 /// 计算器转换器
 /// <para>示例:
 /// <code><![CDATA[
-/// <MultiBinding Converter="{StaticResource CalculatorConverter}">
+/// <MultiBinding Converter="{StaticResource CalculatorMultiConverter}">
 ///   <Binding Path="Num1" />
 ///   <Binding Source="+" />
 ///   <Binding Path="Num2" />
@@ -19,7 +19,7 @@ namespace HKW.WPF.Converters;
 ///   <Binding Path="Num5" />
 /// </MultiBinding>
 /// //
-/// <MultiBinding Converter="{StaticResource CalculatorConverter}" ConverterParameter="+-*/">
+/// <MultiBinding Converter="{StaticResource CalculatorMultiConverter}" ConverterParameter="+-*/">
 ///   <Binding Path="Num1" />
 ///   <Binding Path="Num2" />
 ///   <Binding Path="Num3" />
