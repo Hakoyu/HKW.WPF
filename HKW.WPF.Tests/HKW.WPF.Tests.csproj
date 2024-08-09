@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Converters\" />
 		<Folder Include="Helpers\" />
 		<Folder Include="Behaviors\" />
 		<Folder Include="Extensions\" />

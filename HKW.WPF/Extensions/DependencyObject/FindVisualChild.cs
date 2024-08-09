@@ -16,16 +16,23 @@ public static partial class WPFExtensions
         where T : DependencyObject
     {
         ArgumentNullException.ThrowIfNull(obj, nameof(obj));
-        var count = VisualTreeHelper.GetChildrenCount(obj);
-        for (int i = 0; i < count; i++)
+        return FindVisualChild(obj);
+
+        static T FindVisualChild(DependencyObject obj)
         {
-            var child = VisualTreeHelper.GetChild(obj, i);
-            if (child is T t)
-                return t;
-            if (FindVisualChild<T>(child) is T childItem)
-                return childItem;
+            var count = VisualTreeHelper.GetChildrenCount(obj);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(obj, i);
+                if (child is null)
+                    continue;
+                if (child is T t)
+                    return t;
+                if (FindVisualChild(child) is T childItem)
+                    return childItem;
+            }
+            return null!;
         }
-        return null!;
     }
 
     /// <summary>
@@ -41,6 +48,8 @@ public static partial class WPFExtensions
     )
         where T : DependencyObject
     {
+        ArgumentNullException.ThrowIfNull(obj, nameof(obj));
+
         var result = obj.FindVisualChild<T>();
         if (result is not null)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 using HKW.HKWUtils.Extensions;
+using HKW.HKWUtils.Utils;
 
 namespace HKW.WPF.Converters;
 
@@ -8,30 +9,48 @@ namespace HKW.WPF.Converters;
 /// 计算器转换器
 /// <para>示例:
 /// <code><![CDATA[
-/// <Binding Number,Converter="{StaticResource CalculatorConverter}" ConverterParameter="+8"/>
+/// <Binding Number,Converter="{StaticResource CalculatorConverter}",ConverterParameter="8"/>
 /// return: Number + 8
 /// ]]></code></para>
 /// </summary>
-/// <exception cref="Exception">绑定的数量不正确</exception>
 public class CalculatorConverter : ValueConverterBase<CalculatorConverter>
 {
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty SeparatorProperty = DependencyProperty.Register(
-        nameof(Separator),
-        typeof(char),
+    public static readonly DependencyProperty NumberTypeProperty = DependencyProperty.Register(
+        nameof(NumberType),
+        typeof(NumberType),
         typeof(CalculatorConverter),
-        new(',')
+        new(NumberType.Double)
     );
 
     /// <summary>
-    /// 分割符
+    /// 数值类型
     /// </summary>
-    public char Separator
+    public NumberType NumberType
     {
-        get => (char)GetValue(SeparatorProperty);
-        set => SetValue(SeparatorProperty, value);
+        get => (NumberType)GetValue(NumberTypeProperty);
+        set => SetValue(NumberTypeProperty, value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly DependencyProperty OperatorTypeProperty = DependencyProperty.Register(
+        nameof(OperatorType),
+        typeof(ArithmeticOperatorType),
+        typeof(CalculatorConverter),
+        new(ArithmeticOperatorType.Addition)
+    );
+
+    /// <summary>
+    /// 运算符类型
+    /// </summary>
+    public ArithmeticOperatorType OperatorType
+    {
+        get => (ArithmeticOperatorType)GetValue(OperatorTypeProperty);
+        set => SetValue(OperatorTypeProperty, value);
     }
 
     /// <inheritdoc/>
@@ -42,43 +61,21 @@ public class CalculatorConverter : ValueConverterBase<CalculatorConverter>
         CultureInfo? culture
     )
     {
-        if (value == UnsetValue)
-            return 0.0;
-        var result = System.Convert.ToDouble(value);
-        if (parameter is string data && string.IsNullOrWhiteSpace(data) is false)
-        {
-            var split = data.AsSpan().Split(Separator);
-            split.MoveNext();
-            var currentOperator = split.Current[0];
-            split.MoveNext();
-            result = Operation(
-                result,
-                currentOperator,
-                System.Convert.ToDouble(split.Current.ToString())
-            );
-            return result;
-        }
-        return result;
+        if (value == UnsetValue || parameter == UnsetValue)
+            return 0;
+        return NumberUtils.Arithmetic(value, parameter, NumberType, OperatorType);
     }
 
-    /// <summary>
-    /// 计算
-    /// </summary>
-    /// <param name="value1">值1</param>
-    /// <param name="operatorChar">符号</param>
-    /// <param name="value2">值2</param>
-    /// <returns>结果</returns>
-    /// <exception cref="NotImplementedException">不支持的符号</exception>
-    public static double Operation(double value1, char operatorChar, double value2)
+    /// <inheritdoc/>
+    public override object? ConvertBack(
+        object? value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
+    )
     {
-        return operatorChar switch
-        {
-            '+' => value1 + value2,
-            '-' => value1 - value2,
-            '*' => value1 * value2,
-            '/' => value1 / value2,
-            '%' => value1 % value2,
-            _ => throw new NotImplementedException($"Unsupported operator '{operatorChar}'"),
-        };
+        if (value == UnsetValue || parameter == UnsetValue)
+            return 0;
+        return NumberUtils.Arithmetic(value, parameter, NumberType, OperatorType);
     }
 }

@@ -1,0 +1,73 @@
+﻿<pu:WindowX
+  x:Class="HKW.WPF.MVVMDialogs.TextInputWindowX"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:HKW.WPF.MVVMDialogs"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:pu="https://opensource.panuon.com/wpf-ui"
+  Title="{Binding Title}"
+  Width="400"
+  Height="200"
+  d:DataContext="{d:DesignInstance Type=local:TextInputVM}"
+  pu:WindowXCaption.Buttons="Close"
+  ResizeMode="NoResize"
+  WindowStartupLocation="CenterScreen"
+  mc:Ignorable="d">
+  <Grid x:Name="Grid_Main">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <TextBox
+      x:Name="TextBox_Text"
+      Height="30"
+      Margin="10"
+      HorizontalContentAlignment="Left"
+      VerticalContentAlignment="Center"
+      pu:TextBoxHelper.Watermark="{Binding Watermark}"
+      Focusable="True"
+      FontSize="12"
+      HorizontalScrollBarVisibility="Hidden"
+      Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}"
+      TextWrapping="NoWrap"
+      VerticalScrollBarVisibility="Disabled" />
+    <Grid
+      x:Name="Grid_Button"
+      Grid.Row="1"
+      Margin="0,0,0,10">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Button
+        x:Name="Button_Yes"
+        Width="100"
+        Height="30"
+        Click="Button_Yes_Click"
+        Content="Yes" />
+      <Button
+        x:Name="Button_Cancel"
+        Grid.Column="1"
+        Width="100"
+        Height="30"
+        Click="Button_Cancel_Click"
+        Content="Cancel" />
+      <Button
+        x:Name="Button_No"
+        Grid.Column="1"
+        Width="100"
+        Height="30"
+        Click="Button_No_Click"
+        Content="No" />
+      <Button
+        x:Name="Button_Ok"
+        Grid.Column="1"
+        Width="100"
+        Height="30"
+        Click="Button_Ok_Click"
+        Content="OK" />
+    </Grid>
+  </Grid>
+</pu:WindowX>

@@ -3,18 +3,24 @@ using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using DynamicData.Binding;
+using HanumanInstitute.MvvmDialogs;
 using HKW.HKWReactiveUI;
 using HKW.HKWUtils;
 using HKW.HKWUtils.Collections;
 using HKW.HKWUtils.Extensions;
 using HKW.HKWUtils.Observable;
 using HKW.WPF.Converters;
+using HKW.WPF.MVVMDialogs;
 using ReactiveUI;
+using Splat;
 
 namespace HKW.WPF;
 
 internal partial class MainWindowVM : ReactiveObjectX
 {
+    private static readonly IDialogService _dialogService =
+        Locator.Current.GetService<IDialogService>()!;
+
     [ReactiveProperty]
     public string Title { get; set; } = string.Empty;
 
@@ -23,6 +29,9 @@ internal partial class MainWindowVM : ReactiveObjectX
 
     private readonly CyclicList<TestEnum> _enums =
         new(EnumInfo<TestEnum>.Values) { AutoReset = true };
+
+    [ReactiveProperty]
+    public double Number { get; set; }
 
     public MainWindowVM()
     {
@@ -33,11 +42,53 @@ internal partial class MainWindowVM : ReactiveObjectX
         //_enums.MoveNext();
     }
 
+    private int _count = 0;
+
     [ReactiveCommand]
     private void Next()
     {
-        Enum = _enums.Current;
-        _enums.MoveNext();
+        if (_count == 0)
+            _dialogService.ShowTextInputDialog(
+                this,
+                new()
+                {
+                    Button = HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.Ok,
+                    MultiLineMode = true
+                }
+            );
+        else if (_count == 1)
+            _dialogService.ShowTextInputDialog(
+                this,
+                new()
+                {
+                    Button = HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.YesNo
+                }
+            );
+        else if (_count == 2)
+            _dialogService.ShowTextInputDialog(
+                this,
+                new()
+                {
+                    Button = HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.OkCancel
+                }
+            );
+        else if (_count == 3)
+            _dialogService.ShowTextInputDialog(
+                this,
+                new()
+                {
+                    Button = HanumanInstitute
+                        .MvvmDialogs
+                        .FrameworkDialogs
+                        .MessageBoxButton
+                        .YesNoCancel
+                }
+            );
+        else
+            _count = -1;
+        _count++;
+        //Enum = _enums.Current;
+        //_enums.MoveNext();
     }
 }
 

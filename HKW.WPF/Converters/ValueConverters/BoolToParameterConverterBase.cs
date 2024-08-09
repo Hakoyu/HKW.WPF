@@ -14,7 +14,7 @@ public abstract class BoolToParameterConverterBase<TConverter> : ValueConverterB
     public static readonly DependencyProperty SeparatorProperty = DependencyProperty.Register(
         nameof(Separator),
         typeof(char),
-        typeof(CalculatorConverter),
+        typeof(TConverter),
         new(',')
     );
 

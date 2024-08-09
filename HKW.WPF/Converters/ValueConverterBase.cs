@@ -48,7 +48,7 @@ public abstract class ValueConverterBase<TConverter> : ConverterBase, IValueConv
     )
     {
         throw new NotSupportedException(
-            $"Converter '{GetType().Name}' does not support backward conversion."
+            $"Converter '{GetType().FullName}' does not support backward conversion."
         );
     }
 

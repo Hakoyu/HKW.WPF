@@ -1,18 +1,18 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using HanumanInstitute.MvvmDialogs;
 using HKW.HKWReactiveUI;
 using HKW.HKWUtils.Observable;
 
-namespace HKW.WPF.Windows;
+namespace HKW.WPF.MVVMDialogs;
 
 /// <summary>
 /// 文本输入框视图模型
 /// </summary>
-public class TextInputWindowVM : DialogWindowVM
+public partial class TextInputVM : DialogWindowVM
 {
     /// <inheritdoc/>
-    public TextInputWindowVM(Window window)
-        : base(window) { }
+    public TextInputVM() { }
 
     /// <summary>
     /// 文本
@@ -25,6 +25,12 @@ public class TextInputWindowVM : DialogWindowVM
     /// </summary>
     [ReactiveProperty]
     public string Watermark { get; set; } = string.Empty;
+
+    /// <summary>
+    /// 多行模式, 文本框可换行
+    /// </summary>
+    [ReactiveProperty]
+    public bool MultiLineMode { get; set; }
 
     #region Command
 

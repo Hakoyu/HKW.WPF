@@ -5,6 +5,7 @@
   xmlns:b="clr-namespace:HKW.WPF.Behaviors"
   xmlns:c="clr-namespace:HKW.WPF.Converters"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:e="clr-namespace:HKW.WPF.TypeExtension"
   xmlns:h="clr-namespace:HKW.WPF.Helpers"
   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:local="clr-namespace:HKW.WPF"
@@ -21,7 +22,7 @@
     <c:StringFormatMultiConverter x:Key="StringFormatMultiConverter" HiddenUnsetAndNull="True" />
     <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoName" EnumInfoTarget="Name" />
     <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoShortName" EnumInfoTarget="ShortName" />
-    <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoDescription" EnumInfoTarget="Description" />
+    <c:CalculatorConverter x:Key="AdditionConverter" NumberType="Double" />
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -29,9 +30,8 @@
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <StackPanel>
-      <TextBox Text="{Binding Enum, Converter={StaticResource EnumToEnumInfoName}}" />
-      <TextBox Text="{Binding Enum, Converter={StaticResource EnumToEnumInfoShortName}}" />
-      <TextBox Text="{Binding Enum, Converter={StaticResource EnumToEnumInfoDescription}}" />
+      <TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
+      <TextBlock Text="{Binding Number, Converter={StaticResource AdditionConverter}, ConverterParameter={e:Double 0.1}}" />
     </StackPanel>
     <StackPanel Grid.Column="1">
       <Button Command="{Binding NextCommand}" Content="Next" />

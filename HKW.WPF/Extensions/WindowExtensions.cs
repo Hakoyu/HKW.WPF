@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using HKW.WPF.MVVMDialogs;
 
 namespace HKW.WPF.Extensions;
 
@@ -92,7 +93,27 @@ public static partial class WPFExtensions
     {
         window.Owner = owner;
         window.WindowStartupLocation = windowStartupLocation;
-        return window.ShowDialog();
+        var result = window.ShowDialog();
+        // 判断是否为单例对话框, 并收集结果
+        if(window is IInstanceDialog dialog)
+            result = dialog.InstanceDialogResult;
+        return result;
+    }
+
+    /// <summary>
+    /// 显示或者聚焦
+    /// </summary>
+    /// <param name="window">窗口</param>
+    /// <param name="windowStartupLocation">窗口显示位置</param>
+    public static void ShowOrActivate(
+        this Window window,
+        WindowStartupLocation windowStartupLocation = WindowStartupLocation.CenterOwner
+    )
+    {
+        window.WindowStartupLocation = windowStartupLocation;
+        if (window.IsVisible is false)
+            window.Show();
+        window.Activate();
     }
 
     /// <summary>
@@ -126,8 +147,8 @@ public static partial class WPFExtensions
     {
         if (window.IsLoaded is false)
             return;
-        var w = SystemParameters.PrimaryScreenWidth;
-        var h = SystemParameters.PrimaryScreenHeight;
+        var w = SystemParameters.WorkArea.Width;
+        var h = SystemParameters.WorkArea.Height;
         if (owner is null)
         {
             window.Left = Math.Clamp((w - window.Width) / 2, 0, w - window.Width);
@@ -140,65 +161,6 @@ public static partial class WPFExtensions
             window.Left = Math.Clamp(l - window.Width / 2, 0, w - window.Width);
             window.Top = Math.Clamp(t - window.Height / 2, 0, h - window.Height);
         }
-    }
-    #endregion
-
-    #region MaskClose
-    private static readonly HashSet<Window> _maskClosedWindow = [];
-
-    /// <summary>
-    /// 屏蔽关闭事件
-    /// </summary>
-    /// <param name="window">窗口</param>
-    /// <param name="owner">所有者 (当所有者关闭时, 此窗口同时关闭)</param>
-    public static TWindow MaskClose<TWindow>(this TWindow window, Window? owner = null)
-        where TWindow : Window
-    {
-        window.Closing -= Window_MaskClose_Closing;
-        window.Closed -= Window_MaskClose_Closed;
-
-        window.Closing += Window_MaskClose_Closing;
-        window.Closed += Window_MaskClose_Closed;
-
-        _maskClosedWindow.Add(window);
-        if (owner is not null)
-        {
-            owner.Closed += (s, e) =>
-            {
-                window.CloseX();
-            };
-        }
-        return window;
-    }
-
-    private static void Window_MaskClose_Closed(object? sender, EventArgs e)
-    {
-        if (sender is not Window window)
-            return;
-        _maskClosedWindow.Remove(window);
-    }
-
-    private static void Window_MaskClose_Closing(object? sender, CancelEventArgs e)
-    {
-        if (sender is not Window window)
-            return;
-        if (_maskClosedWindow.Contains(window))
-        {
-            e.Cancel = true;
-            window.Visibility = Visibility.Hidden;
-        }
-    }
-
-    /// <summary>
-    /// 强制关闭
-    /// </summary>
-    /// <param name="window"></param>
-    public static void CloseX(this Window window)
-    {
-        _maskClosedWindow.Remove(window);
-        window.Closing -= Window_MaskClose_Closing;
-        window.Closed -= Window_MaskClose_Closed;
-        window.Close();
     }
     #endregion
 }

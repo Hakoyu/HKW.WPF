@@ -27,8 +27,9 @@ internal partial class MainWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        window.SetLocationToCenter(this);
-        window.ShowOrActivate(this);
+        MessageBox.Show("Hello, World!", "", MessageBoxButton.YesNo);
+        //window.SetLocationToCenter(this);
+        //window.ShowOrActivate(this);
     }
 
     private void Button_1_Click(object sender, RoutedEventArgs e)

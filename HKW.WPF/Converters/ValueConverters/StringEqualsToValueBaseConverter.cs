@@ -8,9 +8,9 @@ namespace HKW.WPF.Converters;
 /// </summary>
 /// <typeparam name="T">值类型</typeparam>
 /// <typeparam name="TConverter">转换器类型</typeparam>
-public class EqualsStringToValueBaseConverter<T, TConverter>
+public class StringEqualsToValueBaseConverter<T, TConverter>
     : InvertibleValueConverterBase<TConverter>
-    where TConverter : EqualsStringToValueBaseConverter<T, TConverter>, new()
+    where TConverter : StringEqualsToValueBaseConverter<T, TConverter>, new()
 {
     /// <summary>
     ///
@@ -18,7 +18,7 @@ public class EqualsStringToValueBaseConverter<T, TConverter>
     public static readonly DependencyProperty TrueValueProperty = DependencyProperty.Register(
         nameof(TrueValue),
         typeof(T),
-        typeof(EqualsStringToValueBaseConverter<T, TConverter>)
+        typeof(StringEqualsToValueBaseConverter<T, TConverter>)
     );
 
     /// <summary>
@@ -36,7 +36,7 @@ public class EqualsStringToValueBaseConverter<T, TConverter>
     public static readonly DependencyProperty FalseValueProperty = DependencyProperty.Register(
         nameof(FalseValue),
         typeof(T),
-        typeof(EqualsStringToValueBaseConverter<T, TConverter>)
+        typeof(StringEqualsToValueBaseConverter<T, TConverter>)
     );
 
     /// <summary>

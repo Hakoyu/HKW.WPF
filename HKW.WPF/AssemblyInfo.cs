@@ -14,4 +14,5 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Converters")]
 [assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Behaviors")]
 [assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Helpers")]
-[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.Windows")]
+[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.MVVMDialogs")]
+[assembly: XmlnsDefinition("https://hkw.com/wpf", "HKW.WPF.TypeExtension")]

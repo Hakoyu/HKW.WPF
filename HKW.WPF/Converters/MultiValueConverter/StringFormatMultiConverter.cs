@@ -4,7 +4,7 @@ using System.Windows;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// 字符串格式化器
+/// 字符串格式化转换器
 /// <para>示例:
 /// <code><![CDATA[
 /// <MultiBinding Converter="{StaticResource MarginConverter}">
@@ -32,7 +32,7 @@ public class StringFormatMultiConverter : MultiValueConverterBase<StringFormatMu
         );
 
     /// <summary>
-    /// 是反转的
+    /// 隐藏未设置和空占位符
     /// </summary>
     public bool HiddenUnsetAndNull
     {
