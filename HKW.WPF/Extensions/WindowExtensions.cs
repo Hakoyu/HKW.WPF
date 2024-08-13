@@ -95,7 +95,7 @@ public static partial class WPFExtensions
         window.WindowStartupLocation = windowStartupLocation;
         var result = window.ShowDialog();
         // 判断是否为单例对话框, 并收集结果
-        if(window is IInstanceDialog dialog)
+        if (window is IInstanceDialog dialog)
             result = dialog.InstanceDialogResult;
         return result;
     }
