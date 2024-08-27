@@ -1,42 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace HKW.WPF.Utils;
+namespace HKW.WPF;
 
 /// <summary>
 /// 图片工具
 /// </summary>
 public static class HKWImageUtils
 {
+    ///// <summary>
+    ///// 载入位图
+    ///// </summary>
+    ///// <param name="file">文件</param>
+    ///// <returns>位图</returns>
+    //public static Bitmap LoadBitmap(string file)
+    //{
+    //    if (string.IsNullOrWhiteSpace(file) || File.Exists(file) is false)
+    //        return null!;
+    //    return new(file);
+    //}
+
     /// <summary>
-    /// 创建图片
+    /// 载入图片
     /// </summary>
-    /// <param name="imagePath">图片路径</param>
-    /// <param name="beginInitAction">初始化行动</param>
+    /// <param name="file">文件</param>
+    /// <param name="endInit">结束初始化</param>
     /// <returns>图片</returns>
-    public static BitmapImage LoadImage(
-        string? imagePath,
-        Action<BitmapImage>? beginInitAction = null
-    )
+    public static BitmapImage LoadImage(string? file, bool endInit = true)
     {
-        if (string.IsNullOrWhiteSpace(imagePath) || File.Exists(imagePath) is false)
+        if (string.IsNullOrWhiteSpace(file) || File.Exists(file) is false)
             return null!;
         BitmapImage image = new();
         image.BeginInit();
         try
         {
+            image.CacheOption = BitmapCacheOption.OnLoad;
             image.StreamSource = new FileStream(
-                imagePath,
+                file,
                 FileMode.Open,
                 FileAccess.Read,
                 FileShare.ReadWrite
             );
-            beginInitAction?.Invoke(image);
         }
         catch
         {
@@ -45,26 +55,29 @@ public static class HKWImageUtils
         }
         finally
         {
-            image.EndInit();
-            image.Freeze();
+            if (endInit)
+            {
+                image.EndInit();
+                image.Freeze();
+            }
         }
         return image;
     }
 
     /// <summary>
-    /// 创建图片
+    /// 载入图片
     /// </summary>
     /// <param name="stream">流</param>
-    /// <param name="beginInitAction">初始化行动</param>
+    /// <param name="endInit">结束初始化</param>
     /// <returns>图片</returns>
-    public static BitmapImage LoadImage(Stream stream, Action<BitmapImage>? beginInitAction = null)
+    public static BitmapImage LoadImage(Stream stream, bool endInit = true)
     {
         BitmapImage image = new();
         image.BeginInit();
         try
         {
+            image.CacheOption = BitmapCacheOption.OnLoad;
             image.StreamSource = stream;
-            beginInitAction?.Invoke(image);
         }
         catch
         {
@@ -73,8 +86,11 @@ public static class HKWImageUtils
         }
         finally
         {
-            image.EndInit();
-            image.Freeze();
+            if (endInit)
+            {
+                image.EndInit();
+                image.Freeze();
+            }
         }
         return image;
     }
@@ -82,20 +98,18 @@ public static class HKWImageUtils
     /// <summary>
     /// 载入图片至内存流
     /// </summary>
-    /// <param name="imagePath">图片路径</param>
-    /// <param name="beginInitAction">初始化行动</param>
+    /// <param name="file">文件</param>
+    /// <param name="endInit">结束初始化</param>
     /// <returns>图片</returns>
-    public static BitmapImage LoadImageToMemory(
-        string imagePath,
-        Action<BitmapImage>? beginInitAction = null
-    )
+    public static BitmapImage LoadImageToMemory(string file, bool endInit = true)
     {
         BitmapImage image = new();
         image.BeginInit();
         try
         {
+            image.CacheOption = BitmapCacheOption.OnLoad;
             using var fs = new FileStream(
-                imagePath,
+                file,
                 FileMode.Open,
                 FileAccess.Read,
                 FileShare.ReadWrite
@@ -103,7 +117,6 @@ public static class HKWImageUtils
             var bytes = new byte[fs.Length];
             fs.Read(bytes);
             image.StreamSource = new MemoryStream(bytes);
-            beginInitAction?.Invoke(image);
         }
         catch
         {
@@ -112,8 +125,11 @@ public static class HKWImageUtils
         }
         finally
         {
-            image.EndInit();
-            image.Freeze();
+            if (endInit)
+            {
+                image.EndInit();
+                image.Freeze();
+            }
         }
         return image;
     }

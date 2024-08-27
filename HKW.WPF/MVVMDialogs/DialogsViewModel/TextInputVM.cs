@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using HanumanInstitute.MvvmDialogs;
 using HKW.HKWReactiveUI;
-using HKW.HKWUtils.Observable;
+using HKW.HKWUtils.Extensions;
 
 namespace HKW.WPF.MVVMDialogs;
 

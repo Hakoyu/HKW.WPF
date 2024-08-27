@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 
 namespace HKW.WPF.MVVMDialogs;
 
-
 /// <summary>
 /// 对话框管理器
 /// </summary>
@@ -35,13 +34,16 @@ public class DialogManagerX : DialogManager
     public override IView? FindViewByViewModel(INotifyPropertyChanged viewModel)
     {
         var view = ViewLocator.Locate(viewModel);
-        // 如果不是页面, 则搜索窗口
-        if (view.ViewType.InheritedFrom<Page>() is false)
-            return Windows.FirstOrDefault(x => viewModel == x.DataContext).AsWrapper();
 
         // 如果是页面, 则搜索子元素
-        return Windows
-            .FirstOrDefault(x => x.FindVisualChild<Page>()?.DataContext == viewModel)
-            .AsWrapper();
+        if (view.ViewType.InheritedFrom<Page>())
+        {
+            return Windows
+                .FirstOrDefault(x => x.FindVisualChild<Page>()?.DataContext == viewModel)
+                .AsWrapper();
+        }
+
+        // 如果不是页面, 则搜索窗口
+        return Windows.FirstOrDefault(x => viewModel == x.DataContext).AsWrapper();
     }
 }

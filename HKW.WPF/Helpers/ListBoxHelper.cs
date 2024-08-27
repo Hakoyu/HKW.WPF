@@ -13,21 +13,20 @@ public static class ListBoxHelper
     /// <summary>
     ///
     /// </summary>
-    /// <param name="element"></param>
+    /// <param name="control"></param>
     /// <returns></returns>
-    public static IList GetSelectedItems(ListBox element)
+    public static IList GetSelectedItems(ListBox control)
     {
-        return (IList)element.GetValue(SelectedItemsProperty);
+        return (IList)control.GetValue(SelectedItemsProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
-    /// <exception cref="Exception">禁止使用此方法</exception>
-    public static void SetSelectedItems(ListBox element, IList value)
+    public static void SetSelectedItems(ListBox control, IList value)
     {
         throw new Exception(
-            "This property is read-only. To bind to it you must use 'Mode=OneWayToSource'."
+            "This property is read-only. To bind to it you must use 'Mode=OneWay'."
         );
     }
 

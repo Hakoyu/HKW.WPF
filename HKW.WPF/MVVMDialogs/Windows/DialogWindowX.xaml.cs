@@ -14,30 +14,48 @@ using System.Windows.Shapes;
 using HKW.WPF.MVVMDialogs;
 using Panuon.WPF.UI;
 
-namespace HKW.WPF.MVVMDialogs;
+namespace HKW.WPF.MVVMDialogs.Windows;
 
 /// <summary>
-/// TextInputWindow.xaml 的交互逻辑
+/// DialogWindow.xaml 的交互逻辑
 /// </summary>
-public partial class TextInputWindowX : WindowX
+public partial class DialogWindowX : WindowX
 {
     /// <summary>
     /// 视图模型
     /// </summary>
-    public TextInputVM ViewModel => (TextInputVM)DataContext;
+    public DialogWindowVM ViewModel => (DialogWindowVM)DataContext;
 
     /// <inheritdoc/>
-    public TextInputWindowX()
+    public DialogWindowX()
     {
         InitializeComponent();
-        DataContextChanged += TextInputWindow_DataContextChanged;
+        DataContextChanged += DialogWindow_DataContextChanged;
+        // Frame.Content是异步设置的,需要使用Navigated事件来获取设置完成的值
+        Frame_Main.Navigated += Frame_Main_Navigated;
     }
 
-    private void TextInputWindow_DataContextChanged(
+    private void Frame_Main_Navigated(
+        object sender,
+        System.Windows.Navigation.NavigationEventArgs e
+    )
+    {
+        if (Frame_Main.Content is Page page)
+            page.DataContext = ViewModel;
+    }
+
+    private void DialogWindow_DataContextChanged(
         object sender,
         DependencyPropertyChangedEventArgs e
     )
     {
+        if (DataContext is null)
+            return;
+
+        ResizeMode = ViewModel.ResizeMode.ToWPFResizeMode();
+        WindowXCaption.SetButtons(this, ViewModel.CaptionButtons.ToPUICaptionButtons());
+
+        // 设置按钮
         if (ViewModel.Button is HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.Ok)
         {
             Button_Yes.Visibility = Visibility.Collapsed;
@@ -73,14 +91,24 @@ public partial class TextInputWindowX : WindowX
             Button_Cancel.SetValue(Grid.ColumnProperty, 2);
         }
 
-        if (ViewModel.MultiLineMode)
+        // 设置默认按钮
+        if (ViewModel.DefeatButton is DefeatMessageBoxButton.OkOrYes)
         {
-            TextBox_Text.Height = double.NaN;
-            TextBox_Text.TextWrapping = TextWrapping.Wrap;
-            TextBox_Text.VerticalContentAlignment = VerticalAlignment.Top;
-            TextBox_Text.HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled;
-            TextBox_Text.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            TextBox_Text.AcceptsReturn = true;
+            if (
+                ViewModel.Button
+                is HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.Ok
+            )
+                Button_Ok.Focus();
+            else
+                Button_Yes.Focus();
+        }
+        else if (ViewModel.DefeatButton is DefeatMessageBoxButton.Cancel)
+        {
+            Button_Cancel.Focus();
+        }
+        else if (ViewModel.DefeatButton is DefeatMessageBoxButton.No)
+        {
+            Button_No.Focus();
         }
     }
 

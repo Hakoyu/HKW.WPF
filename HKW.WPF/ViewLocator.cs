@@ -17,6 +17,6 @@ internal class ViewLocator : StrongViewLocatorX
     public ViewLocator()
     {
         Register<MainWindowVM, MainWindow>();
-        this.RegisterTextInputDialog();
+        this.RegisterAllDialogX();
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using HKW.HKWUtils.Extensions;
-using HKW.WPF.Utils;
+using HKW.WPF;
 
 namespace HKW.WPF.Extensions;
 
@@ -23,6 +23,12 @@ public static partial class WPFExtensions
     public static void CloseStream(this BitmapImage image)
     {
         image.StreamSource?.Close();
+    }
+
+    /// <inheritdoc cref="Bitmap.SetResolution(float, float)"/>
+    public static void SetResolution(this Bitmap bitmap, float dpi)
+    {
+        bitmap.SetResolution(dpi, dpi);
     }
 
     /// <summary>

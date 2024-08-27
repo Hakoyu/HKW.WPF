@@ -28,6 +28,7 @@ public class StringCaseConverter : ValueConverterBase<StringCaseConverter>
     {
         if (value is string stringValue)
         {
+            culture ??= CultureInfo.CurrentCulture;
             return parameter?.ToString() switch
             {
                 // 大写

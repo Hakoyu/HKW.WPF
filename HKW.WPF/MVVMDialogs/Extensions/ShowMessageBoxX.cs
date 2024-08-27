@@ -40,7 +40,7 @@ public static partial class HKWMVVMDialogExtensions
     {
         var owner = dialogService.DialogManager.FindViewByViewModel(ownerViewModel)!;
         return MessageBoxX
-            .Show((Window)owner.RefObj, text, title, button.ToFrameworkButton(), icon.ToPUIIcon())
+            .Show((Window)owner.RefObj, text, title, button.ToWPFButton(), icon.ToPUIIcon())
             .ToResult(defaultResult);
     }
 
@@ -67,7 +67,7 @@ public static partial class HKWMVVMDialogExtensions
     )
     {
         return MessageBoxX
-            .Show(text, title, button.ToFrameworkButton(), icon.ToPUIIcon())
+            .Show(text, title, button.ToWPFButton(), icon.ToPUIIcon())
             .ToResult(defaultResult);
     }
 #pragma warning restore IDE0060 // 删除未使用的参数

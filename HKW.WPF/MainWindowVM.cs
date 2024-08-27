@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using DynamicData.Binding;
 using HanumanInstitute.MvvmDialogs;
 using HKW.HKWReactiveUI;
@@ -24,9 +25,6 @@ internal partial class MainWindowVM : ReactiveObjectX
     [ReactiveProperty]
     public string Title { get; set; } = string.Empty;
 
-    [ReactiveProperty]
-    public TestEnum Enum { get; set; }
-
     private readonly CyclicList<TestEnum> _enums =
         new(EnumInfo<TestEnum>.Values) { AutoReset = true };
 
@@ -37,7 +35,6 @@ internal partial class MainWindowVM : ReactiveObjectX
     {
         //var c = new CalculatorConverter();
         //var r = c.Convert(1, typeof(int), "+2", null);
-
         EnumInfo<TestEnum>.Initialize();
         //_enums.MoveNext();
     }
@@ -47,46 +44,7 @@ internal partial class MainWindowVM : ReactiveObjectX
     [ReactiveCommand]
     private void Next()
     {
-        if (_count == 0)
-            _dialogService.ShowTextInputDialog(
-                this,
-                new()
-                {
-                    Button = HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.Ok,
-                    MultiLineMode = true
-                }
-            );
-        else if (_count == 1)
-            _dialogService.ShowTextInputDialog(
-                this,
-                new()
-                {
-                    Button = HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.YesNo
-                }
-            );
-        else if (_count == 2)
-            _dialogService.ShowTextInputDialog(
-                this,
-                new()
-                {
-                    Button = HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.OkCancel
-                }
-            );
-        else if (_count == 3)
-            _dialogService.ShowTextInputDialog(
-                this,
-                new()
-                {
-                    Button = HanumanInstitute
-                        .MvvmDialogs
-                        .FrameworkDialogs
-                        .MessageBoxButton
-                        .YesNoCancel
-                }
-            );
-        else
-            _count = -1;
-        _count++;
+        var vm = _dialogService.ShowItemSelectionDialog(this, new(_enums, new List<TestEnum>()));
         //Enum = _enums.Current;
         //_enums.MoveNext();
     }

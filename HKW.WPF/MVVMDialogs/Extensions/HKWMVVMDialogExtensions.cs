@@ -62,7 +62,7 @@ public static partial class HKWMVVMDialogExtensions
     /// </summary>
     /// <param name="button">MVVM窗口按钮</param>
     /// <returns>WPF按钮</returns>
-    public static MessageBoxButton ToFrameworkButton(
+    public static MessageBoxButton ToWPFButton(
         this HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton button
     )
     {
@@ -77,6 +77,43 @@ public static partial class HKWMVVMDialogExtensions
             HanumanInstitute.MvvmDialogs.FrameworkDialogs.MessageBoxButton.YesNoCancel
                 => MessageBoxButton.YesNoCancel,
             _ => MessageBoxButton.OK
+        };
+    }
+
+    /// <summary>
+    /// 转换为WPF调整模式
+    /// </summary>
+    /// <param name="resizeMode">调整模式</param>
+    /// <returns>WPF调整模式</returns>
+    public static System.Windows.ResizeMode ToWPFResizeMode(this ResizeMode resizeMode)
+    {
+        return resizeMode switch
+        {
+            ResizeMode.NoResize => System.Windows.ResizeMode.NoResize,
+            ResizeMode.CanMinimize => System.Windows.ResizeMode.CanMinimize,
+            ResizeMode.CanResize => System.Windows.ResizeMode.CanResize,
+            ResizeMode.CanResizeWithGrip => System.Windows.ResizeMode.CanResizeWithGrip,
+            _ => System.Windows.ResizeMode.NoResize,
+        };
+    }
+
+    /// <summary>
+    /// 转换为PUI标题按钮
+    /// </summary>
+    /// <param name="captionButtons">标题按钮</param>
+    /// <returns>PUI标题按钮</returns>
+    public static Panuon.WPF.UI.CaptionButtons ToPUICaptionButtons(
+        this CaptionButtons captionButtons
+    )
+    {
+        return captionButtons switch
+        {
+            CaptionButtons.All => Panuon.WPF.UI.CaptionButtons.All,
+            CaptionButtons.Close => Panuon.WPF.UI.CaptionButtons.Close,
+            CaptionButtons.MinimizeClose => Panuon.WPF.UI.CaptionButtons.MinimizeClose,
+            CaptionButtons.MaximizeClose => Panuon.WPF.UI.CaptionButtons.MaximizeClose,
+            CaptionButtons.None => Panuon.WPF.UI.CaptionButtons.None,
+            _ => Panuon.WPF.UI.CaptionButtons.All
         };
     }
 }

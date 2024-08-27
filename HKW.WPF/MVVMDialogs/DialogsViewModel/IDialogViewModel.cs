@@ -19,6 +19,11 @@ public interface IDialogViewModel
     public string Title { get; set; }
 
     /// <summary>
+    /// 提示
+    /// </summary>
+    public string? ToolTip { get; set; }
+
+    /// <summary>
     /// 对话框结果
     /// </summary>
     public bool? DialogResult { get; }
@@ -27,4 +32,19 @@ public interface IDialogViewModel
     /// 按钮
     /// </summary>
     public MessageBoxButton Button { get; set; }
+
+    /// <summary>
+    /// 默认按钮
+    /// </summary>
+    public DefeatMessageBoxButton DefeatButton { get; set; }
+
+    /// <summary>
+    /// 标题栏按钮
+    /// </summary>
+    public CaptionButtons CaptionButtons { get; set; }
+
+    /// <summary>
+    /// 调整大小模式
+    /// </summary>
+    public ResizeMode ResizeMode { get; set; }
 }
