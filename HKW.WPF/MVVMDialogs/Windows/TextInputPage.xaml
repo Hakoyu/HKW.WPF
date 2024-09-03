@@ -8,6 +8,7 @@
   xmlns:pu="https://opensource.panuon.com/wpf-ui"
   xmlns:vm="clr-namespace:HKW.WPF.MVVMDialogs"
   Title="TextInputPage"
+  Margin="10"
   d:DataContext="{d:DesignInstance Type=vm:TextInputVM}"
   d:DesignHeight="300"
   d:DesignWidth="500"

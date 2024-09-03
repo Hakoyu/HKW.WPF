@@ -43,6 +43,8 @@ public class StrongViewLocatorX : StrongViewLocator
                 {
                     var window = new TWindow();
                     var page = new TPage();
+                    if (page is IDialogPage dialogPage)
+                        dialogPage.DialogWindow = window;
                     window.Frame_Main.Content = page;
                     return window;
                 }

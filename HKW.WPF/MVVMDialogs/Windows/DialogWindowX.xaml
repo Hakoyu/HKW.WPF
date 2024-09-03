@@ -16,6 +16,7 @@
   d:DataContext="{d:DesignInstance Type=local:DialogWindowVM}"
   pu:WindowXCaption.Background="{x:Static wpf:SystemParametersX.SystemAccentBrush}"
   pu:WindowXCaption.Buttons="Close"
+  pu:WindowXCaption.Foreground="{x:Static wpf:SystemParametersX.SystemAccentForegroundBrush}"
   ResizeMode="NoResize"
   ToolTip="{Binding ToolTip}"
   WindowStartupLocation="CenterScreen"
@@ -25,14 +26,12 @@
       <RowDefinition />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <Frame
-      x:Name="Frame_Main"
-      Margin="10"
-      NavigationUIVisibility="Hidden" />
+    <Frame x:Name="Frame_Main" NavigationUIVisibility="Hidden" />
     <Grid
       x:Name="Grid_Button"
       Grid.Row="1"
-      Margin="0,0,0,10">
+      MaxWidth="600"
+      Margin="10">
       <Grid.ColumnDefinitions>
         <ColumnDefinition />
         <ColumnDefinition />

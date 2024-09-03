@@ -105,16 +105,17 @@ public static partial class WPFExtensions
     /// 转化为位图图像
     /// </summary>
     /// <param name="bitmap">位图</param>
-    /// <param name="imageFormat">图片格式</param>
+    /// <param name="imageFormat">图片格式 (为空则使用PNG)</param>
     /// <param name="disposeBitmap">处理位图</param>
     /// <returns>位图图像</returns>
     public static BitmapImage ToBitmapImage(
         this Bitmap bitmap,
-        ImageFormat imageFormat,
+        ImageFormat? imageFormat = null,
         bool disposeBitmap = true
     )
     {
         var ms = new MemoryStream();
+        imageFormat ??= ImageFormat.Png;
         bitmap.Save(ms, imageFormat);
         if (disposeBitmap)
             bitmap.Dispose();

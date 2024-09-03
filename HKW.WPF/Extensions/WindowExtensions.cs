@@ -139,7 +139,8 @@ public static partial class WPFExtensions
 
     #region SetLocation
     /// <summary>
-    /// 设置位置到中央 (<see langword="Window.IsLoaded"/> 为 <see langword="false"/> 时无效)
+    /// 设置位置到中央
+    /// <para>(<see langword="Window.IsLoaded"/> 为 <see langword="false"/> 时无效)</para>
     /// </summary>
     /// <param name="window">窗口</param>
     /// <param name="owner">所有者 (如果添加所有这,则会将窗口位置设置到所有者的中心)</param>

@@ -17,9 +17,6 @@ public partial class DialogWindowVM : ReactiveObjectX, IDialogViewModel, IModalD
     /// <inheritdoc/>
     public DialogWindowVM() { }
 
-    internal static Brush AccentColor { get; set; } =
-        System.Windows.SystemParameters.WindowGlassBrush;
-
     /// <inheritdoc/>
     [ReactiveProperty]
     public string Title { get; set; } = string.Empty;

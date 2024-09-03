@@ -18,12 +18,15 @@ namespace HKW.WPF.MVVMDialogs.Windows;
 /// <summary>
 /// TextInputPage.xaml 的交互逻辑
 /// </summary>
-public partial class TextInputPage : Page
+public partial class TextInputPage : Page, IDialogPage
 {
     /// <summary>
     /// 视图模型
     /// </summary>
     public TextInputVM ViewModel => (TextInputVM)DataContext;
+
+    /// <inheritdoc/>
+    public Window DialogWindow { get; set; } = null!;
 
     /// <inheritdoc/>
     public TextInputPage()

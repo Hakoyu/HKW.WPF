@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using HKW.WPF.Extensions;
 using HKW.WPF.Native;
 
 namespace HKW.WPF;
@@ -30,6 +31,10 @@ public class SystemParametersX
             SystemAccentColor = color;
             SystemAccentBrush = new SolidColorBrush(color);
         }
+        SystemAccentForegroundColor = SystemAccentColor.IsLightColor()
+            ? Colors.Black
+            : Colors.White;
+        SystemAccentForegroundBrush = new SolidColorBrush(SystemAccentForegroundColor);
     }
 
     /// <summary>
@@ -41,6 +46,16 @@ public class SystemParametersX
     /// 系统主题色笔刷
     /// </summary>
     public static Brush SystemAccentBrush { get; }
+
+    /// <summary>
+    /// 系统主题前景色
+    /// </summary>
+    public static Color SystemAccentForegroundColor { get; }
+
+    /// <summary>
+    /// 系统主题前景色
+    /// </summary>
+    public static Brush SystemAccentForegroundBrush { get; }
 
     private static Color AdjustBrightness(Color color, double factor)
     {

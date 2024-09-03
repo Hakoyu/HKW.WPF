@@ -29,6 +29,12 @@ public partial class ItemSelectionVM : DialogWindowVM
         SelectedItems = seletedItems;
     }
 
+    ///// <summary>
+    ///// 文本
+    ///// </summary>
+    //[ReactiveProperty]
+    //public string? Text { get; set; } = null;
+
     /// <summary>
     /// 集合
     /// </summary>

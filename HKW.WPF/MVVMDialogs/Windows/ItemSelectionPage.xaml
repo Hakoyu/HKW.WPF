@@ -10,6 +10,7 @@
   xmlns:sp="clr-namespace:HKW.WPF"
   xmlns:vm="clr-namespace:HKW.WPF.MVVMDialogs"
   Title="ItemSelectionPage"
+  Margin="10"
   d:DataContext="{d:DesignInstance Type=vm:ItemSelectionVM}"
   d:DesignHeight="300"
   d:DesignWidth="500"

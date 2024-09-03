@@ -39,7 +39,12 @@ public class DialogManagerX : DialogManager
         if (view.ViewType.InheritedFrom<Page>())
         {
             return Windows
-                .FirstOrDefault(x => x.FindVisualChild<Page>()?.DataContext == viewModel)
+                .FirstOrDefault(x =>
+                {
+                    if (x is IPageView pageView && pageView.CurrentPage is Page page)
+                        return page.DataContext == viewModel;
+                    return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                })
                 .AsWrapper();
         }
 

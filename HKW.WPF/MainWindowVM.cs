@@ -44,7 +44,10 @@ internal partial class MainWindowVM : ReactiveObjectX
     [ReactiveCommand]
     private void Next()
     {
-        var vm = _dialogService.ShowItemSelectionDialog(this, new(_enums, new List<TestEnum>()));
+        var vm = _dialogService.ShowItemSelectionDialog(
+            this,
+            new(_enums, new List<TestEnum>()) { Title = "114514" }
+        );
         //Enum = _enums.Current;
         //_enums.MoveNext();
     }
