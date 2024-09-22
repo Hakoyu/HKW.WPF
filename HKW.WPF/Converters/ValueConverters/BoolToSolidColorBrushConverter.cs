@@ -5,8 +5,7 @@ namespace HKW.WPF.Converters;
 /// <summary>
 /// 布尔到纯色笔刷转换器
 /// </summary>
-public class BoolToSolidColorBrushConverter
-    : BoolToValueConverter<SolidColorBrush, BoolToSolidColorBrushConverter>
+public class BoolToSolidColorBrushConverter : BoolToValueConverter<SolidColorBrush>
 {
     /// <summary>
     ///

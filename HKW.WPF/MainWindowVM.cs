@@ -10,6 +10,7 @@ using HKW.HKWUtils;
 using HKW.HKWUtils.Collections;
 using HKW.HKWUtils.Extensions;
 using HKW.HKWUtils.Observable;
+using HKW.MVVMDialogs;
 using HKW.WPF.Converters;
 using HKW.WPF.MVVMDialogs;
 using ReactiveUI;

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using HKW.MVVMDialogs;
 using HKW.WPF.MVVMDialogs;
 
 namespace HKW.WPF.Extensions;

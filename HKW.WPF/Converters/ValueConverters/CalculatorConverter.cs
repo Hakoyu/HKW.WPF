@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
+using System.Numerics;
 using System.Windows;
+using HKW.CommonValueConverters;
+using HKW.HKWUtils;
 using HKW.HKWUtils.Extensions;
-using HKW.HKWUtils.Utils;
 
 namespace HKW.WPF.Converters;
 
@@ -13,69 +15,53 @@ namespace HKW.WPF.Converters;
 /// return: Number + 8
 /// ]]></code></para>
 /// </summary>
-public class CalculatorConverter : ValueConverterBase<CalculatorConverter>
+public class CalculatorConverter : ValueConverterBase
 {
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty NumberTypeProperty = DependencyProperty.Register(
-        nameof(NumberType),
-        typeof(NumberType),
-        typeof(CalculatorConverter),
-        new(NumberType.Double)
-    );
+    public static readonly CommonDependencyProperty<NumberType> NumberTypeProperty =
+        CommonDependencyProperty.Register<CalculatorConverter, NumberType>(
+            nameof(NumberType),
+            NumberType.Double
+        );
 
     /// <summary>
     /// 数值类型
     /// </summary>
     public NumberType NumberType
     {
-        get => (NumberType)GetValue(NumberTypeProperty);
+        get => GetValue(NumberTypeProperty);
         set => SetValue(NumberTypeProperty, value);
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty OperatorTypeProperty = DependencyProperty.Register(
-        nameof(OperatorType),
-        typeof(ArithmeticOperatorType),
-        typeof(CalculatorConverter),
-        new(ArithmeticOperatorType.Addition)
-    );
+    public static readonly CommonDependencyProperty<ArithmeticOperatorType> OperatorTypeProperty =
+        CommonDependencyProperty.Register<CalculatorConverter, ArithmeticOperatorType>(
+            nameof(OperatorType),
+            ArithmeticOperatorType.Addition
+        );
 
     /// <summary>
     /// 运算符类型
     /// </summary>
     public ArithmeticOperatorType OperatorType
     {
-        get => (ArithmeticOperatorType)GetValue(OperatorTypeProperty);
+        get => GetValue(OperatorTypeProperty);
         set => SetValue(OperatorTypeProperty, value);
     }
 
     /// <inheritdoc/>
-    public override object? Convert(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
+    public override void CommonValueConverterInitialize(
+        CommonValueConverters.ValueConverterBase commonValueConverter
     )
     {
-        if (value == UnsetValue || parameter == UnsetValue)
-            return 0;
-        return NumberUtils.Arithmetic(value, parameter, NumberType, OperatorType);
-    }
-
-    /// <inheritdoc/>
-    public override object? ConvertBack(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
-    )
-    {
-        if (value == UnsetValue || parameter == UnsetValue)
-            return 0;
-        return NumberUtils.Arithmetic(value, parameter, NumberType, OperatorType);
+        base.CommonValueConverterInitialize(commonValueConverter);
+        if (commonValueConverter is not CommonValueConverters.CalculatorConverter converter)
+            return;
+        converter.GetNumberType = () => NumberType;
+        converter.GetOperatorType = () => OperatorType;
     }
 }

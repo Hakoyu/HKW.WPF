@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using HanumanInstitute.MvvmDialogs.Wpf;
+using HKW.MVVMDialogs;
 using HKW.WPF.MVVMDialogs.Windows;
 
 namespace HKW.WPF.MVVMDialogs;
 
-public static partial class HKWMVVMDialogExtensions
+public static partial class MVVMDialogExtensions
 {
     /// <summary>
     /// 以默认形式注册全部对话框

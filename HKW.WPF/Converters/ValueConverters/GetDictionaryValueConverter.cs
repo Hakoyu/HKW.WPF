@@ -11,22 +11,11 @@ namespace HKW.WPF.Converters.ValueConverters;
 /// <summary>
 /// 获取字典值
 /// </summary>
-public class GetDictionaryValueConverter : ValueConverterBase<GetDictionaryValueConverter>
+public class GetDictionaryValueConverter : ValueConverterBase
 {
     /// <inheritdoc/>
-    public override object? Convert(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
-    )
+    public GetDictionaryValueConverter()
     {
-        if (value is not IDictionary dictionary)
-            return null;
-        if (parameter is null)
-            return null;
-        if (dictionary.Contains(parameter) is false)
-            return null;
-        return dictionary[parameter];
+        CommonValueConverter = new CommonValueConverters.GetDictionaryValueConverter();
     }
 }

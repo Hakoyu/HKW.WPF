@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
+using HKW.CommonValueConverters;
 
 namespace HKW.WPF.Converters;
 
 /// <summary>
 /// 时间范围到字符串转换器
 /// </summary>
-public class TimeSpanToStringConverter : ValueConverterBase<TimeSpanToStringConverter>
+public class TimeSpanToStringConverter : ValueConverterBase
 {
     /// <summary>
     /// 默认格式化
@@ -19,15 +20,24 @@ public class TimeSpanToStringConverter : ValueConverterBase<TimeSpanToStringConv
     /// </summary>
     protected const string DefaultMinValueString = "";
 
+    /// <inheritdoc/>
+    public TimeSpanToStringConverter()
+    {
+        CommonValueConverter = new CommonValueConverters.TimeSpanToStringConverter()
+        {
+            GetMinValueString = () => MinValueString,
+            GetFormat = () => Format,
+        };
+    }
+
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty FormatProperty = DependencyProperty.Register(
-        nameof(Format),
-        typeof(string),
-        typeof(TimeSpanToStringConverter),
-        new(DefaultFormat)
-    );
+    public static readonly CommonDependencyProperty<string> FormatProperty =
+        CommonDependencyProperty.Register<TimeSpanToStringConverter, string>(
+            nameof(Format),
+            DefaultFormat
+        );
 
     /// <summary>
     /// 时间格式化
@@ -37,70 +47,25 @@ public class TimeSpanToStringConverter : ValueConverterBase<TimeSpanToStringConv
     /// </summary>
     public string Format
     {
-        get => (string)GetValue(FormatProperty);
+        get => GetValue(FormatProperty);
         set => SetValue(FormatProperty, value);
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty MinValueStringProperty = DependencyProperty.Register(
-        nameof(MinValueString),
-        typeof(string),
-        typeof(TimeSpanToStringConverter),
-        new(DefaultMinValueString)
-    );
+    public static readonly CommonDependencyProperty<string> MinValueStringProperty =
+        CommonDependencyProperty.Register<TimeSpanToStringConverter, string>(
+            nameof(MinValueString),
+            DefaultMinValueString
+        );
 
     /// <summary>
     /// 最小值
     /// </summary>
     public string MinValueString
     {
-        get => (string)GetValue(MinValueStringProperty);
+        get => GetValue(MinValueStringProperty);
         set => SetValue(MinValueStringProperty, value);
-    }
-
-    /// <inheritdoc/>
-    public override object? Convert(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
-    )
-    {
-        if (value is TimeSpan timeSpan)
-        {
-            if (timeSpan == TimeSpan.MinValue)
-            {
-                return MinValueString;
-            }
-
-            return timeSpan.ToString(Format, culture);
-        }
-
-        return null;
-    }
-
-    /// <inheritdoc/>
-    public override object? ConvertBack(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
-    )
-    {
-        if (value != null)
-        {
-            if (value is TimeSpan timeSpan)
-            {
-                return timeSpan;
-            }
-
-            if (value is string str && TimeSpan.TryParse(str, out var resultTimeSpan))
-            {
-                return resultTimeSpan;
-            }
-        }
-        return null;
     }
 }

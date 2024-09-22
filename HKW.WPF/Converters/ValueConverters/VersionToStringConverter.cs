@@ -12,22 +12,11 @@ namespace HKW.WPF.Converters;
 /// [4] Revision
 /// </example>
 /// </summary>
-public class VersionToStringConverter : ValueConverterBase<VersionToStringConverter>
+public class VersionToStringConverter : ValueConverterBase
 {
     /// <inheritdoc/>
-    public override object? Convert(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
-    )
+    public VersionToStringConverter()
     {
-        if (value is not Version version)
-            return null;
-        if (int.TryParse(parameter as string, out int fieldCount))
-        {
-            return version.ToString(fieldCount);
-        }
-        return version.ToString();
+        CommonValueConverter = new CommonValueConverters.VersionToStringConverter();
     }
 }

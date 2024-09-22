@@ -1,0 +1,74 @@
+﻿using System.Globalization;
+using System.Windows.Data;
+
+namespace HKW.WPF.Converters;
+
+/// <summary>
+/// 多个值转换器
+/// </summary>
+public abstract class MultiValueConverterBase : ConverterBase, IMultiValueConverter
+{
+    private CommonValueConverters.MultiValueConverterBase? _commonValueConverter;
+
+    /// <summary>
+    /// 通用值转换器
+    /// </summary>
+    public CommonValueConverters.MultiValueConverterBase? CommonValueConverter
+    {
+        get => _commonValueConverter;
+        set => CommonValueConverterInitialize(_commonValueConverter = value!);
+    }
+
+    /// <summary>
+    /// 通用值转换器初始化
+    /// </summary>
+    /// <param name="commonValueConverter">通用值转换器</param>
+    public virtual void CommonValueConverterInitialize(
+        CommonValueConverters.MultiValueConverterBase commonValueConverter
+    )
+    {
+        commonValueConverter.GetDefaultResult = () => DefaultResult;
+    }
+
+    /// <inheritdoc/>
+    public virtual object? Convert(
+        object?[] value,
+        Type? targetType,
+        object? parameter,
+        CultureInfo? culture
+    )
+    {
+        return CommonValueConverter?.Convert(value, targetType, parameter, culture);
+    }
+
+    /// <inheritdoc/>
+    public virtual object[] ConvertBack(
+        object? value,
+        Type?[] targetTypes,
+        object? parameter,
+        CultureInfo? culture
+    )
+    {
+        throw new NotImplementedException();
+    }
+
+    object IMultiValueConverter.Convert(
+        object[] value,
+        Type targetType,
+        object parameter,
+        CultureInfo culture
+    )
+    {
+        return Convert(value, targetType, parameter, SelectCulture(() => culture))!;
+    }
+
+    object[] IMultiValueConverter.ConvertBack(
+        object value,
+        Type[] targetTypes,
+        object parameter,
+        CultureInfo culture
+    )
+    {
+        throw new NotImplementedException();
+    }
+}

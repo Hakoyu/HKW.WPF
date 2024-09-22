@@ -9,8 +9,7 @@ namespace HKW.WPF.Converters;
 /// IsChecked={Binding Value, Converter={StaticResource EqualsToVisibilityConverter}, ConverterParameter={x:Null}}
 /// ]]></code></para>
 /// </summary>
-public class EqualsToVisibilityConverter
-    : EqualsToValueBaseConverter<Visibility, EqualsToVisibilityConverter>
+public class EqualsToVisibilityConverter : EqualsToValueConverter<Visibility>
 {
     /// <inheritdoc/>
     public EqualsToVisibilityConverter()

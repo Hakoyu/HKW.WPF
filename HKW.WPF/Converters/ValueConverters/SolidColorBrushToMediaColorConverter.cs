@@ -11,8 +11,7 @@ namespace HKW.WPF.Converters;
 /// <summary>
 /// 笔刷到媒体颜色转换器
 /// </summary>
-public class SolidColorBrushToMediaColorConverter
-    : ValueConverterBase<SolidColorBrushToMediaColorConverter>
+public class SolidColorBrushToMediaColorConverter : ValueConverterBase
 {
     /// <inheritdoc/>
     public override object? Convert(

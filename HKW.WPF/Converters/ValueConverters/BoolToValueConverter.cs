@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows;
+using HKW.CommonValueConverters;
 
 namespace HKW.WPF.Converters;
 
@@ -7,86 +8,63 @@ namespace HKW.WPF.Converters;
 /// 布尔到值转换器
 /// </summary>
 /// <typeparam name="T">值类型</typeparam>
-/// <typeparam name="TConverter">转换器类型</typeparam>
-public class BoolToValueConverter<T, TConverter> : InvertibleValueConverterBase<TConverter>
-    where TConverter : BoolToValueConverter<T, TConverter>, new()
+public class BoolToValueConverter<T> : InvertibleValueConverterBase
 {
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty TrueValueProperty = DependencyProperty.Register(
-        nameof(TrueValue),
-        typeof(T),
-        typeof(BoolToValueConverter<T, TConverter>)
-    );
+    public static readonly CommonDependencyProperty<T> TrueValueProperty =
+        CommonDependencyProperty.Register<BoolToValueConverter<T>, T>(nameof(TrueValue));
 
     /// <summary>
     /// 为真时的值
     /// </summary>
     public T TrueValue
     {
-        get => (T)GetValue(TrueValueProperty);
+        get => GetValue(TrueValueProperty);
         set => SetValue(TrueValueProperty, value);
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty FalseValueProperty = DependencyProperty.Register(
-        nameof(FalseValue),
-        typeof(T),
-        typeof(BoolToValueConverter<T, TConverter>)
-    );
+    public static readonly CommonDependencyProperty<T> FalseValueProperty =
+        CommonDependencyProperty.Register<BoolToValueConverter<T>, T>(nameof(FalseValue));
 
     /// <summary>
     /// 为假时的值
     /// </summary>
     public T FalseValue
     {
-        get => (T)GetValue(FalseValueProperty);
+        get => GetValue(FalseValueProperty);
         set => SetValue(FalseValueProperty, value);
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static readonly DependencyProperty NullValueProperty = DependencyProperty.Register(
-        nameof(NullValue),
-        typeof(bool),
-        typeof(BoolToValueConverter<T, TConverter>)
-    );
+    public static readonly CommonDependencyProperty<T> NullValueProperty =
+        CommonDependencyProperty.Register<BoolToValueConverter<T>, T>(nameof(NullValue));
 
     /// <summary>
     /// 为空时的布尔值
     /// </summary>
-    public bool NullValue
+    public T NullValue
     {
-        get => (bool)GetValue(NullValueProperty);
+        get => GetValue(NullValueProperty);
         set => SetValue(NullValueProperty, value);
     }
 
     /// <inheritdoc/>
-    public override object? Convert(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
+    public override void CommonValueConverterInitialize(
+        CommonValueConverters.ValueConverterBase commonValueConverter
     )
     {
-        return ConverterUtils.GetBool(value, NullValue) ^ IsInverted ? TrueValue : FalseValue;
-    }
-
-    /// <inheritdoc/>
-    public override object? ConvertBack(
-        object? value,
-        Type? targetType,
-        object? parameter,
-        CultureInfo? culture
-    )
-    {
-        if (value != null)
-            return IsInverted ? value.Equals(FalseValue) : value.Equals(TrueValue);
-        else
-            return false;
+        base.CommonValueConverterInitialize(commonValueConverter);
+        if (commonValueConverter is not CommonValueConverters.BoolToValueConverter<T> converter)
+            return;
+        converter.GetTrueValue = () => TrueValue;
+        converter.GetFalseValue = () => FalseValue;
+        converter.GetNullValue = () => NullValue;
     }
 }

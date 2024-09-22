@@ -16,7 +16,6 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PathMap>$(SolutionDir)=$(MSBuildProjectName.Replace(" ", "_"))/</PathMap>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(Configuration)'=='Debug'">
@@ -28,10 +27,16 @@
 		</Reference>
 		<Analyzer Include="..\..\HKW.ReactiveUI\HKW.ReactiveUI\bin\Debug\netstandard2.0\HKW.ReactiveUI.dll" />
 		<WeaverFiles Include="..\..\HKW.ReactiveUI\HKW.ReactiveUI.Fody\bin\Debug\netstandard2.0\HKW.ReactiveUI.Fody.dll" />
-	</ItemGroup>
+    <Reference Include="HKW.MVVMDialogs">
+      <HintPath>..\..\HKW.MVVMDialogs\HKW.MVVMDialogs\bin\Debug\net8.0\HKW.MVVMDialogs.dll</HintPath>
+    </Reference>
+    <Reference Include="HKW.CommonValueConverters">
+      <HintPath>..\..\HKW.CommonValueConverters\HKW.CommonValueConverters\bin\Debug\net8.0\HKW.CommonValueConverters.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
 		<PackageReference Include="HKW.Utils" Version="1.2.21" />
-		<PackageReference Include="HKW.ReactiveUI" Version="0.1.2" />
+		<PackageReference Include="HKW.ReactiveUI" Version="0.1.8" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="HanumanInstitute.MvvmDialogs" Version="2.1.0" />
@@ -56,9 +61,4 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Update="MVVMDialogs\Windows\ItemSelectionPage.xaml.cs">
-	    <SubType>Code</SubType>
-	  </Compile>
-	</ItemGroup>
 </Project>

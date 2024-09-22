@@ -13,7 +13,7 @@ namespace HKW.WPF.MVVMDialogs;
 /// <summary>
 /// MVVM对话框扩展
 /// </summary>
-public static partial class HKWMVVMDialogExtensions
+public static partial class MVVMDialogExtensions
 {
     /// <summary>
     /// 显示消息框

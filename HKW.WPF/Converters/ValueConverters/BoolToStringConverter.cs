@@ -3,4 +3,4 @@
 /// <summary>
 /// 布尔到字符串转换器
 /// </summary>
-public class BoolToStringConverter : BoolToValueConverter<string, BoolToStringConverter> { }
+public class BoolToStringConverter : BoolToValueConverter<string> { }

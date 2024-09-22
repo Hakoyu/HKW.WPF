@@ -8,7 +8,7 @@ namespace HKW.WPF.Converters;
 /// <summary>
 /// 布尔到可见度转换器
 /// </summary>
-public class BoolToVisibilityConverter : BoolToValueConverter<Visibility, BoolToVisibilityConverter>
+public class BoolToVisibilityConverter : BoolToValueConverter<Visibility>
 {
     /// <inheritdoc/>
     public BoolToVisibilityConverter()
