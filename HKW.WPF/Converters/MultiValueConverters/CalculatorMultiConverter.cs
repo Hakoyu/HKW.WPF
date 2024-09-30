@@ -14,3 +14,8 @@ public class CalculatorMultiConverter<T> : MultiValueConverterBase
         CommonValueConverter = new CommonValueConverters.CalculatorMultiConverter<T>();
     }
 }
+
+/// <summary>
+/// Double计算转换器
+/// </summary>
+public class DoubleCalculatorMultiConverter : CalculatorMultiConverter<double> { }

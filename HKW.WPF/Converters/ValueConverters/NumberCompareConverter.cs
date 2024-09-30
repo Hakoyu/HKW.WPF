@@ -5,7 +5,7 @@ using System.Numerics;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// 相等字符串转换器
+/// 数字比较转换器
 /// <para>示例:
 /// <code><![CDATA[
 /// IsEnabled={Binding Numer, Converter={StaticResource NumberCompareConverter}, ConverterParameter=">0"}
@@ -21,3 +21,8 @@ public class NumberCompareConverter<T> : InvertibleValueConverterBase
         CommonValueConverter = new CommonValueConverters.NumberCompareConverter<T>();
     }
 }
+
+/// <summary>
+/// double比较转换器
+/// </summary>
+public class DoubleCompareConverter : NumberCompareConverter<double> { }

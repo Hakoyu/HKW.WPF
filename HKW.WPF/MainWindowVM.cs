@@ -47,7 +47,12 @@ internal partial class MainWindowVM : ReactiveObjectX
     {
         var vm = _dialogService.ShowItemSelectionDialog(
             this,
-            new(_enums, new List<TestEnum>()) { Title = "114514" }
+            new(_enums, new List<TestEnum>())
+            {
+                Title = "114514",
+                CaptionButtons = CaptionButtons.All,
+                ResizeMode = ResizeMode.CanResizeWithGrip
+            }
         );
         //Enum = _enums.Current;
         //_enums.MoveNext();

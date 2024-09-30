@@ -19,7 +19,7 @@ namespace HKW.WPF.MVVMDialogs.Windows;
 /// <summary>
 /// ItemSelectionPage.xaml 的交互逻辑
 /// </summary>
-public partial class ItemSelectionPage : Page, IDialogPage
+public partial class ItemSelectionPage : Page, IDialogPage<Window>
 {
     /// <summary>
     /// 视图模型

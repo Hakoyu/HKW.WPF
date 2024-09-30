@@ -17,7 +17,7 @@ public class EqualsToValueConverter<T> : InvertibleValueConverterBase
         {
             GetTrueValue = () => TrueValue,
             GetFalseValue = () => FalseValue,
-            GetNullable = () => Nullable,
+            GetIsNullable = () => IsNullable,
             GetNullValue = () => NullValue,
             GetIsStringEquals = () => IsStringEquals,
         };
@@ -56,16 +56,16 @@ public class EqualsToValueConverter<T> : InvertibleValueConverterBase
     /// <summary>
     ///
     /// </summary>
-    public static readonly CommonDependencyProperty<bool> NullableProperty =
-        CommonDependencyProperty.Register<EqualsToValueConverter<T>, bool>(nameof(Nullable));
+    public static readonly CommonDependencyProperty<bool> IsNullableProperty =
+        CommonDependencyProperty.Register<EqualsToValueConverter<T>, bool>(nameof(IsNullable));
 
     /// <summary>
-    /// 可为空
+    /// 是可为空的
     /// </summary>
-    public bool Nullable
+    public bool IsNullable
     {
-        get => GetValue(NullableProperty);
-        set => SetValue(NullableProperty, value);
+        get => GetValue(IsNullableProperty);
+        set => SetValue(IsNullableProperty, value);
     }
 
     /// <summary>

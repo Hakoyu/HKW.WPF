@@ -1,24 +1,24 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using HKW.MVVMDialogs;
 
 namespace HKW.WPF.MVVMDialogs;
 
-/// <summary>
-/// 对话框页面
-/// </summary>
-public class DialogPage : Page, IDialogPage
-{
-    /// <inheritdoc/>
-    public Window DialogWindow { get; set; } = null!;
-}
 
-/// <summary>
-/// 对话框页面接口
-/// </summary>
-public interface IDialogPage
-{
-    /// <summary>
-    /// 对话框窗口
-    /// </summary>
-    public Window DialogWindow { get; set; }
-}
+///// <summary>
+///// 对话框页面
+///// </summary>
+//public class DialogPage : Page, IDialogPage
+//{
+//    /// <inheritdoc/>
+//    public object DialogWindow { get; set; } = null!;
+
+//    /// <inheritdoc/>
+//    public void SetDialogWindowSize(double width, double height)
+//    {
+//        if (DialogWindow is not Window window)
+//            return;
+//        window.Width = width;
+//        window.Height = height;
+//    }
+//}

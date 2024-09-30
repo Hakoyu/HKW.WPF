@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using HanumanInstitute.MvvmDialogs;
 using HanumanInstitute.MvvmDialogs.Wpf;
+using HKW.MVVMDialogs;
 using HKW.WPF.MVVMDialogs.Windows;
 using Panuon.WPF.UI;
 
@@ -43,7 +44,7 @@ public class StrongViewLocatorX : StrongViewLocator
                 {
                     var window = new TWindow();
                     var page = new TPage();
-                    if (page is IDialogPage dialogPage)
+                    if (page is IDialogPage<Window> dialogPage)
                         dialogPage.DialogWindow = window;
                     window.Frame_Main.Content = page;
                     return window;

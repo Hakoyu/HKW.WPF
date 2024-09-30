@@ -11,9 +11,7 @@ namespace HKW.WPF.Native;
 internal partial class PInvoke
 {
     [LibraryImport("uxtheme.dll", EntryPoint = "#94")]
-    [UnmanagedCallConv(
-        CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvStdcall) }
-    )]
+    [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvStdcall)])]
     public static partial uint GetImmersiveColorSetCount();
 
     [LibraryImport("uxtheme.dll", EntryPoint = "#95")]
@@ -34,9 +32,7 @@ internal partial class PInvoke
     );
 
     [LibraryImport("uxtheme.dll", EntryPoint = "#100")]
-    [UnmanagedCallConv(
-        CallConvs = new Type[] { typeof(System.Runtime.CompilerServices.CallConvStdcall) }
-    )]
+    [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvStdcall)])]
     public static partial IntPtr GetImmersiveColorNamedTypeByIndex(uint index);
 
     private static List<string> GetAllColorNames()

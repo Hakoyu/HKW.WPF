@@ -44,16 +44,6 @@ public partial class DialogWindowX : WindowX
         if (Frame_Main.Content is not Page page)
             return;
         page.DataContext = ViewModel;
-        page.SizeChanged -= Page_SizeChanged;
-        page.SizeChanged += Page_SizeChanged;
-    }
-
-    private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (e.WidthChanged)
-            Width = e.NewSize.Width;
-        if (e.HeightChanged)
-            Height = e.NewSize.Height;
     }
 
     private void DialogWindow_DataContextChanged(

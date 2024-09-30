@@ -6,7 +6,7 @@ using HKW.CommonValueConverters;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// 字符串是null或者空转换器
+/// 字符串是null或空或空白转换器
 /// </summary>
 public class StringIsNullOrEmptyOrWhiteSpaceConverter : InvertibleValueConverterBase
 {
@@ -22,7 +22,7 @@ public class StringIsNullOrEmptyOrWhiteSpaceConverter : InvertibleValueConverter
     /// <summary>
     ///
     /// </summary>
-    public static readonly CommonDependencyProperty<StringCheckType> TrueValueProperty =
+    public static readonly CommonDependencyProperty<StringCheckType> StringCheckTypeProperty =
         CommonDependencyProperty.Register<
             StringIsNullOrEmptyOrWhiteSpaceConverter,
             StringCheckType
@@ -33,7 +33,7 @@ public class StringIsNullOrEmptyOrWhiteSpaceConverter : InvertibleValueConverter
     /// </summary>
     public StringCheckType StringCheckType
     {
-        get => GetValue(TrueValueProperty);
-        set => SetValue(TrueValueProperty, value);
+        get => GetValue(StringCheckTypeProperty);
+        set => SetValue(StringCheckTypeProperty, value);
     }
 }
