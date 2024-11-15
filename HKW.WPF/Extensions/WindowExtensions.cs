@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using HKW.MVVMDialogs;
 using HKW.WPF.MVVMDialogs;
+using Splat;
 
 namespace HKW.WPF.Extensions;
 
@@ -21,16 +22,21 @@ public static partial class WPFExtensions
     {
         if (window.DataContext is null)
         {
-            window.DataContext = new T();
+            var viewModel = new T();
+            window.DataContext = viewModel;
+            window.Closed += closedEvent;
             window.Closed += (s, e) =>
             {
                 try
                 {
                     window.DataContext = null;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    if (viewModel is IEnableLogger logger)
+                        logger.Log().Warn(ex);
+                }
             };
-            window.Closed += closedEvent;
         }
         return (T)window.DataContext;
     }
@@ -53,15 +59,19 @@ public static partial class WPFExtensions
         if (window.DataContext is null)
         {
             window.DataContext = viewModel;
+            window.Closed += closedEvent;
             window.Closed += (s, e) =>
             {
                 try
                 {
                     window.DataContext = null;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    if (viewModel is IEnableLogger logger)
+                        logger.Log().Warn(ex);
+                }
             };
-            window.Closed += closedEvent;
         }
         return viewModel;
     }
@@ -71,7 +81,7 @@ public static partial class WPFExtensions
     /// </summary>
     /// <typeparam name="T">视图模型类型</typeparam>
     /// <param name="page">页面</param>
-    public static T SetViewModel<T>(this Page page)
+    public static T SetViewModel<T>(this UserControl page)
         where T : INotifyPropertyChanged, new()
     {
         return (T)(page.DataContext ??= new T());
@@ -108,7 +118,7 @@ public static partial class WPFExtensions
     /// <param name="windowStartupLocation">窗口显示位置</param>
     public static void ShowOrActivate(
         this Window window,
-        WindowStartupLocation windowStartupLocation = WindowStartupLocation.CenterOwner
+        WindowStartupLocation windowStartupLocation = WindowStartupLocation.CenterScreen
     )
     {
         window.WindowStartupLocation = windowStartupLocation;

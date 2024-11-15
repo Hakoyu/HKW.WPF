@@ -13,27 +13,6 @@ public class EnumToEnumInfoConverter : ValueConverterBase
     /// <inheritdoc/>
     public EnumToEnumInfoConverter()
     {
-        CommonValueConverter = new CommonValueConverters.EnumToEnumInfoConverter()
-        {
-            GetEnumInfoTarget = () => EnumInfoTarget,
-        };
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public static readonly CommonDependencyProperty<EnumInfoTarget> TrueValueProperty =
-        CommonDependencyProperty.Register<EnumToEnumInfoConverter, EnumInfoTarget>(
-            nameof(EnumInfoTarget),
-            EnumInfoTarget.Name
-        );
-
-    /// <summary>
-    /// 枚举信息目标
-    /// </summary>
-    public EnumInfoTarget EnumInfoTarget
-    {
-        get => GetValue(TrueValueProperty);
-        set => SetValue(TrueValueProperty, value);
+        CommonValueConverter = new CommonValueConverters.EnumToEnumInfoConverter();
     }
 }

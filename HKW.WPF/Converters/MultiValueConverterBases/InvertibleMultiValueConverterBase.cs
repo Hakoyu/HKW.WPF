@@ -26,11 +26,11 @@ public abstract class InvertibleMultiValueConverterBase : MultiValueConverterBas
     }
 
     /// <inheritdoc/>
-    public override void CommonValueConverterInitialize(
+    public override void InitializeValueConverter(
         CommonValueConverters.MultiValueConverterBase commonValueConverter
     )
     {
-        base.CommonValueConverterInitialize(commonValueConverter);
+        base.InitializeValueConverter(commonValueConverter);
         if (
             commonValueConverter
             is not CommonValueConverters.InvertibleMultiValueConverterBase converterBase

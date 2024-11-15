@@ -13,6 +13,14 @@ public class CalculatorMultiConverter<T> : MultiValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.CalculatorMultiConverter<T>();
     }
+
+    /// <inheritdoc/>
+    public override void InitializeValueConverter(
+        CommonValueConverters.MultiValueConverterBase commonValueConverter
+    )
+    {
+        commonValueConverter.GetDefaultResult = () => T.Zero;
+    }
 }
 
 /// <summary>

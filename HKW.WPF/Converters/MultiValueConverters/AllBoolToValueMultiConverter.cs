@@ -17,8 +17,16 @@ public class AllBoolToValueMultiConverter<T> : InvertibleMultiValueConverterBase
         {
             GetTrueValue = () => TrueValue,
             GetFalseValue = () => FalseValue,
-            GetNullValue = () => NullValue,
+            GetNullValue = () => NullValue
         };
+    }
+
+    /// <inheritdoc/>
+    public override void InitializeValueConverter(
+        CommonValueConverters.MultiValueConverterBase commonValueConverter
+    )
+    {
+        commonValueConverter.GetDefaultResult = () => DefaultResult;
     }
 
     /// <summary>
@@ -64,5 +72,22 @@ public class AllBoolToValueMultiConverter<T> : InvertibleMultiValueConverterBase
     {
         get => GetValue(NullValueProperty);
         set => SetValue(NullValueProperty, value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public new static readonly CommonDependencyProperty<T> DefaultResultProperty =
+        CommonDependencyProperty.Register<AllBoolToValueMultiConverter<T>, T>(
+            nameof(DefaultResult)
+        );
+
+    /// <summary>
+    /// 为真时的值
+    /// </summary>
+    public new T DefaultResult
+    {
+        get => GetValue(DefaultResultProperty);
+        set => SetValue(DefaultResultProperty, value);
     }
 }

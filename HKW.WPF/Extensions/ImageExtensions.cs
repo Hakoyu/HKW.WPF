@@ -22,6 +22,8 @@ public static partial class WPFExtensions
     /// <param name="image">图像资源</param>
     public static void CloseStream(this BitmapImage image)
     {
+        HKWImageUtils.ImageByPath.Remove(image);
+        HKWImageUtils.Images.Remove(image);
         image.StreamSource?.Close();
     }
 
@@ -115,11 +117,10 @@ public static partial class WPFExtensions
     )
     {
         var ms = new MemoryStream();
-        imageFormat ??= ImageFormat.Png;
-        bitmap.Save(ms, imageFormat);
+        bitmap.Save(ms, imageFormat ?? ImageFormat.Png);
         if (disposeBitmap)
             bitmap.Dispose();
-        return HKWImageUtils.LoadImage(ms);
+        return HKWImageUtils.LoadImage(ms)!;
     }
 
     /// <summary>

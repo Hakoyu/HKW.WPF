@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -22,6 +23,11 @@ public class CommonDependencyProperty
         string propertyName
     )
     {
+#if DEBUG
+        var method = new StackTrace(1).GetFrame(0)?.GetMethod();
+        if (method?.DeclaringType?.Name != typeof(TOwner).Name)
+            throw new NotImplementedException();
+#endif
         var dependencyProperty = DependencyProperty.Register(
             propertyName,
             typeof(TProperty),
@@ -43,6 +49,11 @@ public class CommonDependencyProperty
         TProperty defaultValue
     )
     {
+#if DEBUG
+        var method = new StackTrace(1).GetFrame(0)?.GetMethod();
+        if (method?.DeclaringType?.Name != typeof(TOwner).Name)
+            throw new NotImplementedException();
+#endif
         var dependencyProperty = DependencyProperty.Register(
             propertyName,
             typeof(TProperty),
@@ -111,7 +122,7 @@ public abstract class ConverterBase : DependencyObject, ICommonValueConverter
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<object> DefaultResultProperty =
-        CommonDependencyProperty.Register<GuidToStringConverter, object>(nameof(DefaultResult));
+        CommonDependencyProperty.Register<ConverterBase, object>(nameof(DefaultResult));
 
     /// <summary>
     /// 默认结果

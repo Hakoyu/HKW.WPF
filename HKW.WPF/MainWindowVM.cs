@@ -30,7 +30,7 @@ internal partial class MainWindowVM : ReactiveObjectX
         new(EnumInfo<TestEnum>.Values) { AutoReset = true };
 
     [ReactiveProperty]
-    public double Number { get; set; }
+    public double Number { get; set; } = 1.1;
 
     public MainWindowVM()
     {
@@ -43,9 +43,9 @@ internal partial class MainWindowVM : ReactiveObjectX
     private int _count = 0;
 
     [ReactiveCommand]
-    private void Next()
+    private async void Next()
     {
-        var vm = _dialogService.ShowItemSelectionDialog(
+        var vm = await _dialogService.ShowDialogAsyncX<ItemSelectionVM>(
             this,
             new(_enums, new List<TestEnum>())
             {
@@ -54,6 +54,7 @@ internal partial class MainWindowVM : ReactiveObjectX
                 ResizeMode = ResizeMode.CanResizeWithGrip
             }
         );
+        return;
         //Enum = _enums.Current;
         //_enums.MoveNext();
     }

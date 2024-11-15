@@ -29,7 +29,7 @@ public static partial class MVVMDialogExtensions
     /// <param name="strongViewLocator">强视图定位器</param>
     public static void RegisterItemSelectionDialog(this StrongViewLocatorX strongViewLocator)
     {
-        strongViewLocator.RegisterDialogX<ItemSelectionVM, DialogWindowX, ItemSelectionPage>();
+        strongViewLocator.RegisterDialogX<ItemSelectionVM, ItemSelectionPage, DialogWindowX>();
     }
 
     /// <summary>
@@ -45,9 +45,9 @@ public static partial class MVVMDialogExtensions
         Action<ItemSelectionPage>? pageAction
     )
     {
-        strongViewLocator.RegisterDialogX<ItemSelectionVM, DialogWindowX, ItemSelectionPage>(
-            windowAction,
-            pageAction
+        strongViewLocator.RegisterDialogX<ItemSelectionVM, ItemSelectionPage, DialogWindowX>(
+            pageAction,
+            windowAction
         );
     }
 
@@ -72,7 +72,7 @@ public static partial class MVVMDialogExtensions
     /// <param name="strongViewLocator">强视图定位器</param>
     public static void RegisterTextInputDialog(this StrongViewLocatorX strongViewLocator)
     {
-        strongViewLocator.RegisterDialogX<TextInputVM, DialogWindowX, TextInputPage>();
+        strongViewLocator.RegisterDialogX<TextInputVM, TextInputPage, DialogWindowX>();
     }
 
     /// <summary>
@@ -88,9 +88,9 @@ public static partial class MVVMDialogExtensions
         Action<TextInputPage>? pageAction
     )
     {
-        strongViewLocator.RegisterDialogX<TextInputVM, DialogWindowX, TextInputPage>(
-            windowAction,
-            pageAction
+        strongViewLocator.RegisterDialogX<TextInputVM, TextInputPage, DialogWindowX>(
+            pageAction,
+            windowAction
         );
     }
 

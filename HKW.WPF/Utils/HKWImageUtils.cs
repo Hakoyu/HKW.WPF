@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using HKW.HKWUtils.Collections;
+using Splat;
 
 namespace HKW.WPF;
 
@@ -14,6 +16,16 @@ namespace HKW.WPF;
 /// </summary>
 public static class HKWImageUtils
 {
+    /// <summary>
+    /// 所有外部图像
+    /// </summary>
+    public static BidirectionalDictionary<string, BitmapImage> ImageByPath { get; } = new([], []);
+
+    /// <summary>
+    /// 所有图像
+    /// </summary>
+    public static HashSet<BitmapImage> Images { get; } = [];
+
     ///// <summary>
     ///// 载入位图
     ///// </summary>
@@ -30,13 +42,20 @@ public static class HKWImageUtils
     /// 载入图片
     /// </summary>
     /// <param name="file">文件</param>
+    /// <param name="logger">日志记录器</param>
     /// <param name="endInit">结束初始化</param>
     /// <returns>图片</returns>
-    public static BitmapImage LoadImage(string? file, bool endInit = true)
+    public static BitmapImage? LoadImage(
+        string? file,
+        IEnableLogger? logger = null,
+        bool endInit = true
+    )
     {
-        if (string.IsNullOrWhiteSpace(file) || File.Exists(file) is false)
-            return null!;
-        BitmapImage image = new();
+        if (File.Exists(file) is false)
+            return null;
+        if (ImageByPath.TryGetValue(file, out var oldImage))
+            return oldImage;
+        var image = new BitmapImage();
         image.BeginInit();
         try
         {
@@ -48,18 +67,27 @@ public static class HKWImageUtils
                 FileShare.ReadWrite
             );
         }
-        catch
+        catch (Exception ex)
         {
+            logger?.Log().Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
+            image.EndInit();
+            image.Freeze();
+            image = null;
         }
         finally
         {
             if (endInit)
             {
-                image.EndInit();
-                image.Freeze();
+                image?.EndInit();
+                image?.Freeze();
             }
+        }
+        if (image is not null)
+        {
+            ImageByPath.Add(file, image);
+            Images.Remove(image);
         }
         return image;
     }
@@ -68,29 +96,43 @@ public static class HKWImageUtils
     /// 载入图片
     /// </summary>
     /// <param name="stream">流</param>
+    /// <param name="logger">日志记录器</param>
     /// <param name="endInit">结束初始化</param>
     /// <returns>图片</returns>
-    public static BitmapImage LoadImage(Stream stream, bool endInit = true)
+    public static BitmapImage? LoadImage(
+        Stream stream,
+        IEnableLogger? logger = null,
+        bool endInit = true
+    )
     {
-        BitmapImage image = new();
+        ArgumentNullException.ThrowIfNull(stream, nameof(stream));
+        var image = new BitmapImage();
         image.BeginInit();
         try
         {
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.StreamSource = stream;
         }
-        catch
+        catch (Exception ex)
         {
+            logger?.Log().Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
+            image.EndInit();
+            image.Freeze();
+            image = null;
         }
         finally
         {
             if (endInit)
             {
-                image.EndInit();
-                image.Freeze();
+                image?.EndInit();
+                image?.Freeze();
             }
+        }
+        if (image is not null)
+        {
+            Images.Remove(image);
         }
         return image;
     }
@@ -99,11 +141,20 @@ public static class HKWImageUtils
     /// 载入图片至内存流
     /// </summary>
     /// <param name="file">文件</param>
+    /// <param name="logger">日志记录器</param>
     /// <param name="endInit">结束初始化</param>
     /// <returns>图片</returns>
-    public static BitmapImage LoadImageToMemory(string file, bool endInit = true)
+    public static BitmapImage? LoadImageToMemory(
+        string file,
+        IEnableLogger? logger = null,
+        bool endInit = true
+    )
     {
-        BitmapImage image = new();
+        if (File.Exists(file) is false)
+            return null;
+        if (ImageByPath.TryGetValue(file, out var oldImage))
+            return oldImage;
+        var image = new BitmapImage();
         image.BeginInit();
         try
         {
@@ -118,18 +169,27 @@ public static class HKWImageUtils
             fs.Read(bytes);
             image.StreamSource = new MemoryStream(bytes);
         }
-        catch
+        catch (Exception ex)
         {
+            logger?.Log().Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
+            image.EndInit();
+            image.Freeze();
+            image = null;
         }
         finally
         {
             if (endInit)
             {
-                image.EndInit();
-                image.Freeze();
+                image?.EndInit();
+                image?.Freeze();
             }
+        }
+        if (image is not null)
+        {
+            ImageByPath.Add(file, image);
+            Images.Add(image);
         }
         return image;
     }

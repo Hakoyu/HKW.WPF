@@ -16,14 +16,14 @@ public abstract class MultiValueConverterBase : ConverterBase, IMultiValueConver
     public CommonValueConverters.MultiValueConverterBase? CommonValueConverter
     {
         get => _commonValueConverter;
-        set => CommonValueConverterInitialize(_commonValueConverter = value!);
+        set => InitializeValueConverter(_commonValueConverter = value!);
     }
 
     /// <summary>
     /// 通用值转换器初始化
     /// </summary>
     /// <param name="commonValueConverter">通用值转换器</param>
-    public virtual void CommonValueConverterInitialize(
+    public virtual void InitializeValueConverter(
         CommonValueConverters.MultiValueConverterBase commonValueConverter
     )
     {

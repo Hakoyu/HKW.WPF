@@ -10,6 +10,7 @@
   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:local="clr-namespace:HKW.WPF"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:pu="https://opensource.panuon.com/wpf-ui"
   Title="MainWindow"
   Width="800"
   Height="450"
@@ -19,9 +20,12 @@
   mc:Ignorable="d">
   <Window.Resources>
     <!--<c:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" UnsetValue="{x:Null}" />-->
-    <c:StringFormatMultiConverter x:Key="StringFormatMultiConverter" HiddenUnsetAndNull="True" />
-    <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoName" EnumInfoTarget="Name" />
-    <c:EnumToEnumInfoConverter x:Key="EnumToEnumInfoShortName" EnumInfoTarget="ShortName" />
+    <c:StringFormatMultiConverter
+      x:Key="StringFormatMultiConverter"
+      DefaultResult="null"
+      ReplaceUnsetValue="True" />
+    <c:EnumToEnumInfoTargetConverter x:Key="EnumToEnumInfoName" />
+    <c:EnumToEnumInfoTargetConverter x:Key="EnumToEnumInfoShortName" />
     <c:CalculatorConverter x:Key="AdditionConverter" NumberType="Double" />
   </Window.Resources>
   <Grid>
@@ -31,7 +35,8 @@
     </Grid.ColumnDefinitions>
     <StackPanel>
       <TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
-      <TextBlock Text="{Binding Number, Converter={StaticResource AdditionConverter}, ConverterParameter={e:Double 0.1}}" />
+      <pu:NumberInput Value="{Binding Number}" />
+      <!--<TextBlock Text="{Binding Number, Converter={StaticResource AdditionConverter}, ConverterParameter={e:Double 0.1}}" />-->
     </StackPanel>
     <StackPanel Grid.Column="1">
       <Button Command="{Binding NextCommand}" Content="Next" />

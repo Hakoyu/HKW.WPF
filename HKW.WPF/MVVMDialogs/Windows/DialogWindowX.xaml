@@ -7,13 +7,14 @@
   xmlns:local="clr-namespace:HKW.WPF.MVVMDialogs"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:pu="https://opensource.panuon.com/wpf-ui"
+  xmlns:vm="clr-namespace:HKW.MVVMDialogs;assembly=HKW.MVVMDialogs"
   xmlns:wpf="clr-namespace:HKW.WPF"
   Title="{Binding Title}"
   Width="400"
   Height="200"
   MinWidth="400"
   MinHeight="200"
-  d:DataContext="{d:DesignInstance Type=local:DialogWindowVM}"
+  d:DataContext="{d:DesignInstance Type=vm:DialogViewModel}"
   pu:WindowXCaption.Background="{x:Static wpf:SystemParametersX.SystemAccentBrush}"
   pu:WindowXCaption.Buttons="Close"
   pu:WindowXCaption.Foreground="{x:Static wpf:SystemParametersX.SystemAccentForegroundBrush}"
@@ -26,7 +27,7 @@
       <RowDefinition />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <Frame x:Name="Frame_Main" NavigationUIVisibility="Hidden" />
+    <ContentControl x:Name="ContentControl_Page" />
     <Grid
       x:Name="Grid_Button"
       Grid.Row="1"

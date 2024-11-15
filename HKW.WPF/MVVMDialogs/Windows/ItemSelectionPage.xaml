@@ -1,4 +1,4 @@
-﻿<Page
+﻿<UserControl
   x:Class="HKW.WPF.MVVMDialogs.Windows.ItemSelectionPage"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,8 +8,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:pu="https://opensource.panuon.com/wpf-ui"
   xmlns:sp="clr-namespace:HKW.WPF"
-  xmlns:vm="clr-namespace:HKW.WPF.MVVMDialogs"
-  Title="ItemSelectionPage"
+  xmlns:vm="clr-namespace:HKW.MVVMDialogs;assembly=HKW.MVVMDialogs"
   Margin="10"
   d:DataContext="{d:DesignInstance Type=vm:ItemSelectionVM}"
   d:DesignHeight="300"
@@ -42,4 +41,4 @@
       </DataTemplate>
     </ListBox.ItemTemplate>
   </ListBox>
-</Page>
+</UserControl>

@@ -11,7 +11,15 @@ namespace HKW.WPF.Extensions;
 public static partial class WPFExtensions
 {
     #region MaskClose
-    private static readonly HashSet<Window> _maskClosedWindow = [];
+    /// <summary>
+    /// 屏蔽关闭事件的窗口
+    /// </summary>
+    private static readonly HashSet<Window> _maskClosedWindows = [];
+
+    /// <summary>
+    /// 效果下一次关闭事件的窗口
+    /// </summary>
+    private static readonly HashSet<Window> _skipNextWindows = [];
 
     /// <summary>
     /// 是屏蔽关闭事件
@@ -20,7 +28,7 @@ public static partial class WPFExtensions
     /// <returns>是为 <see langword="true"/> 不是为 <see langword="false"/></returns>
     public static bool IsMaskClose(this Window window)
     {
-        return _maskClosedWindow.Contains(window);
+        return _maskClosedWindows.Contains(window);
     }
 
     /// <summary>
@@ -37,7 +45,7 @@ public static partial class WPFExtensions
         window.Closing += Window_MaskClose_Closing;
         window.Closed += Window_MaskClose_Closed;
 
-        _maskClosedWindow.Add(window);
+        _maskClosedWindows.Add(window);
         if (owner is not null)
         {
             owner.Closed += (s, e) =>
@@ -52,16 +60,21 @@ public static partial class WPFExtensions
     {
         if (sender is not Window window)
             return;
-        _maskClosedWindow.Remove(window);
+        _maskClosedWindows.Remove(window);
     }
 
     private static void Window_MaskClose_Closing(object? sender, CancelEventArgs e)
     {
         if (sender is not Window window)
             return;
-        if (_maskClosedWindow.Contains(window))
+        if (_maskClosedWindows.Contains(window))
         {
             e.Cancel = true;
+            if (_skipNextWindows.Contains(window))
+            {
+                _skipNextWindows.Remove(window);
+                return;
+            }
             //window.Visibility = Visibility.Collapsed;
             window.Hide();
         }
@@ -70,13 +83,22 @@ public static partial class WPFExtensions
     /// <summary>
     /// 强制关闭
     /// </summary>
-    /// <param name="window"></param>
+    /// <param name="window">窗口</param>
     public static void CloseX(this Window window)
     {
-        _maskClosedWindow.Remove(window);
+        _maskClosedWindows.Remove(window);
         window.Closing -= Window_MaskClose_Closing;
         window.Closed -= Window_MaskClose_Closed;
         window.Close();
+    }
+
+    /// <summary>
+    /// 跳过下一次关闭
+    /// </summary>
+    /// <param name="window">窗口</param>
+    public static void SkipNextClose(this Window window)
+    {
+        _skipNextWindows.Add(window);
     }
     #endregion
 }

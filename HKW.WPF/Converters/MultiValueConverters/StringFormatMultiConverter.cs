@@ -25,23 +25,26 @@ public class StringFormatMultiConverter : MultiValueConverterBase
     /// <inheritdoc/>
     public StringFormatMultiConverter()
     {
-        CommonValueConverter = new CommonValueConverters.StringFormatMultiConverter();
+        CommonValueConverter = new CommonValueConverters.StringFormatMultiConverter()
+        {
+            GetReplaceUnsetValue = () => ReplaceUnsetValue
+        };
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static readonly CommonDependencyProperty<bool> HiddenUnsetAndNullProperty =
-        CommonDependencyProperty.Register<StringFormatMultiConverter, bool>(
-            nameof(HiddenUnsetAndNull)
+    public static readonly CommonDependencyProperty<string> ReplaceUnsetValueProperty =
+        CommonDependencyProperty.Register<StringFormatMultiConverter, string>(
+            nameof(ReplaceUnsetValue)
         );
 
     /// <summary>
     /// 隐藏未设置和空占位符
     /// </summary>
-    public bool HiddenUnsetAndNull
+    public string ReplaceUnsetValue
     {
-        get => GetValue(HiddenUnsetAndNullProperty);
-        set => SetValue(HiddenUnsetAndNullProperty, value);
+        get => GetValue(ReplaceUnsetValueProperty);
+        set => SetValue(ReplaceUnsetValueProperty, value);
     }
 }

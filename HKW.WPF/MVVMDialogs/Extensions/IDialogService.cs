@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using HanumanInstitute.MvvmDialogs;
+using HKW.MVVMDialogs;
 using Panuon.WPF.UI;
 
 namespace HKW.WPF.MVVMDialogs;
@@ -15,6 +16,43 @@ namespace HKW.WPF.MVVMDialogs;
 /// </summary>
 public static partial class MVVMDialogExtensions
 {
+    /// <summary>
+    /// 异步显示对话框
+    /// </summary>
+    /// <typeparam name="TViewModel">对话框视图模型类型</typeparam>
+    /// <param name="dialogService">对话框服务</param>
+    /// <param name="ownerViewModel">所有者视图模型</param>
+    /// <returns>对话框视图模型任务</returns>
+    public static TViewModel ShowDialogX<TViewModel>(
+        this IDialogService dialogService,
+        INotifyPropertyChanged ownerViewModel
+    )
+        where TViewModel : DialogViewModel, new()
+    {
+        var vm = new TViewModel();
+        dialogService.ShowDialog(ownerViewModel, vm);
+        return vm;
+    }
+
+    /// <summary>
+    /// 异步显示对话框
+    /// </summary>
+    /// <typeparam name="TViewModel">对话框视图模型类型</typeparam>
+    /// <param name="dialogService">对话框服务</param>
+    /// <param name="ownerViewModel">所有者视图模型</param>
+    /// <param name="viewModel">对话框视图模型</param>
+    /// <returns>对话框视图模型任务</returns>
+    public static TViewModel ShowDialogX<TViewModel>(
+        this IDialogService dialogService,
+        INotifyPropertyChanged ownerViewModel,
+        TViewModel viewModel
+    )
+        where TViewModel : DialogViewModel
+    {
+        dialogService.ShowDialog(ownerViewModel, viewModel);
+        return viewModel;
+    }
+
     /// <summary>
     /// 显示消息框
     /// </summary>

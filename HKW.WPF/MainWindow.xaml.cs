@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using HKW.WPF.Converters;
 using HKW.WPF.Extensions;
 
 namespace HKW.WPF;
@@ -22,6 +23,7 @@ internal partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = new MainWindowVM();
+
         window.MaskClose(this);
     }
 

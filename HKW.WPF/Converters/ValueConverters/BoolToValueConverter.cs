@@ -181,7 +181,7 @@ public class BoolToValueConverter<T> : InvertibleValueConverterBase
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<bool> IsNullableProperty =
-        CommonDependencyProperty.Register<EqualsToValueConverter<T>, bool>(nameof(IsNullable));
+        CommonDependencyProperty.Register<BoolToValueConverter<T>, bool>(nameof(IsNullable));
 
     /// <summary>
     /// 是可为空的

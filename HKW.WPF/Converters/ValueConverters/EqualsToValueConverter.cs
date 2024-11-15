@@ -5,6 +5,24 @@ using HKW.CommonValueConverters;
 namespace HKW.WPF.Converters;
 
 /// <summary>
+/// 相等字符串转换器
+/// <para>示例:
+/// <code><![CDATA[
+/// {Binding Value, Converter={StaticResource EqualsToVisibilityConverter}, ConverterParameter={x:Null}}
+/// result: Value.Equals(ConverterParameter) ? TrueValue : FalseValue
+/// ]]></code></para>
+/// </summary>
+public class EqualsToVisibilityConverter : EqualsToValueConverter<Visibility>
+{
+    /// <inheritdoc/>
+    public EqualsToVisibilityConverter()
+    {
+        TrueValue = Visibility.Visible;
+        FalseValue = Visibility.Collapsed;
+    }
+}
+
+/// <summary>
 /// 相等到值转换器
 /// </summary>
 /// <typeparam name="T">值类型</typeparam>
@@ -87,9 +105,7 @@ public class EqualsToValueConverter<T> : InvertibleValueConverterBase
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<bool> IsStringEqualsProperty =
-        CommonDependencyProperty.Register<FirstEqualsSecondMultiConverter, bool>(
-            nameof(IsStringEquals)
-        );
+        CommonDependencyProperty.Register<EqualsToValueConverter<T>, bool>(nameof(IsStringEquals));
 
     /// <summary>
     /// 是字符串比较

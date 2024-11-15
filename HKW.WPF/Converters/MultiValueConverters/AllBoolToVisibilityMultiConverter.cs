@@ -12,5 +12,7 @@ public class AllBoolToVisibilityMultiConverter : AllBoolToValueMultiConverter<Vi
     {
         TrueValue = Visibility.Visible;
         FalseValue = Visibility.Collapsed;
+        NullValue = Visibility.Collapsed;
+        DefaultResult = Visibility.Collapsed;
     }
 }

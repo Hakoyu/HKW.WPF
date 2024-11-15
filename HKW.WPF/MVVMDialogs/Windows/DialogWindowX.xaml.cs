@@ -25,25 +25,13 @@ public partial class DialogWindowX : WindowX
     /// <summary>
     /// 视图模型
     /// </summary>
-    public DialogWindowVM ViewModel => (DialogWindowVM)DataContext;
+    public DialogViewModel ViewModel => (DialogViewModel)DataContext;
 
     /// <inheritdoc/>
     public DialogWindowX()
     {
         InitializeComponent();
         DataContextChanged += DialogWindow_DataContextChanged;
-        // Frame.Content是异步设置的,需要使用Navigated事件来获取设置完成的值
-        Frame_Main.Navigated += Frame_Main_Navigated;
-    }
-
-    private void Frame_Main_Navigated(
-        object sender,
-        System.Windows.Navigation.NavigationEventArgs e
-    )
-    {
-        if (Frame_Main.Content is not Page page)
-            return;
-        page.DataContext = ViewModel;
     }
 
     private void DialogWindow_DataContextChanged(
