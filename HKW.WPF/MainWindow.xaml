@@ -19,6 +19,7 @@
   Background="Gray"
   mc:Ignorable="d">
   <Window.Resources>
+    <c:SolidColorBrushToMediaColorConverter x:Key="SolidColorBrushToMediaColorConverter" />
     <!--<c:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" UnsetValue="{x:Null}" />-->
     <c:StringFormatMultiConverter
       x:Key="StringFormatMultiConverter"
@@ -37,6 +38,10 @@
       <TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
       <pu:NumberInput Value="{Binding Number}" />
       <!--<TextBlock Text="{Binding Number, Converter={StaticResource AdditionConverter}, ConverterParameter={e:Double 0.1}}" />-->
+      <pu:ColorPicker
+        x:Name="ColorPicker_1"
+        Grid.Column="1"
+        ColorChannels="RGB" />
     </StackPanel>
     <StackPanel Grid.Column="1">
       <Button Command="{Binding NextCommand}" Content="Next" />

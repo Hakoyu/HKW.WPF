@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Version>1.0.7</Version>
-		<OutputType>WinExe</OutputType>
+		<Version>1.1.0</Version>
+    <Authors>HKW</Authors>
+    <Company>HKW</Company>
+    <PackageDescription>A dedicated WPF library providing Collections, TypeExtension, MVVMDialogs, and other features.</PackageDescription>
+    <PackageTags>MVVM;WPF;Converter;Dialog;Extennsion</PackageTags>
+    <OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<UseWPF>true</UseWPF>
@@ -10,8 +14,6 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<IncludeSymbols>False</IncludeSymbols>
-		<Authors>HKW</Authors>
-		<Company>HKW</Company>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PathMap>$(SolutionDir)=$(MSBuildProjectName.Replace(" ", "_"))/</PathMap>
@@ -35,23 +37,25 @@
     </Reference>
   </ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="HKW.Utils" Version="1.2.21" />
-		<PackageReference Include="HKW.ReactiveUI" Version="0.1.8" />
+		<PackageReference Include="HKW.Utils" Version="1.3.1" />
+		<PackageReference Include="HKW.ReactiveUI" Version="0.3.2" />
+    <PackageReference Include="HKW.CommonValueConverters" Version="0.1.0" />
+    <PackageReference Include="HKW.MVVMDialogs" Version="0.1.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="HanumanInstitute.MvvmDialogs" Version="2.1.0" />
 		<PackageReference Include="HanumanInstitute.MvvmDialogs.Wpf" Version="2.1.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
-		<PackageReference Include="Panuon.WPF.UI" Version="1.2.4.7" />
+		<PackageReference Include="Panuon.WPF.UI" Version="1.2.4.8" />
 		<PackageReference Include="ReactiveUI" Version="20.1.63" />
 		<PackageReference Include="ReactiveUI.WPF" Version="20.1.63" />
-		<PackageReference Include="Fody" Version="6.8.2" PrivateAssets="all" />
-		<PackageReference Include="System.Drawing.Common" Version="8.0.10" />
+		<PackageReference Include="Fody" Version="6.9.1" PrivateAssets="all" />
+		<PackageReference Include="System.Drawing.Common" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -17,14 +18,108 @@ namespace HKW.WPF.Extensions;
 public static partial class WPFExtensions
 {
     /// <summary>
+    /// 添加引用计数
+    /// </summary>
+    /// <param name="image">图像</param>
+    public static BitmapImage AddReferenceCount(this BitmapImage image)
+    {
+        if (HKWImageUtils.TryGetInfo(image, out var info) is false)
+            throw new ArgumentException("Not have image", nameof(image));
+        info.ReferenceCount++;
+        if (HKWImageUtils.LogStackFrame)
+        {
+            HKWImageUtils.Logger?.Debug(
+                "Image file {file}\nAdd reference count in\n{$StackFrame}\nReferenceCount: {ReferenceCount}",
+                info.Path,
+                new StackFrame(1, true),
+                info.ReferenceCount
+            );
+        }
+        else
+        {
+            HKWImageUtils.Logger?.Debug(
+                "Image file {file}\nAdd ReferenceCount : {ReferenceCount}",
+                info.Path,
+                info.ReferenceCount
+            );
+        }
+        return image;
+    }
+
+    /// <summary>
+    /// 当没有引用时关闭流,否则仅减少引用次数
+    /// </summary>
+    /// <param name="image">图像资源</param>
+    /// <param name="flush">清除缓存</param>
+    public static void CloseStreamWhenNoReference(this BitmapImage image, bool flush = false)
+    {
+        if (image.StreamSource is null)
+            return;
+        if (HKWImageUtils.TryGetInfo(image, out var info) is false)
+            throw new ArgumentException("Not have image", nameof(image));
+        info.ReferenceCount--;
+        if (HKWImageUtils.LogStackFrame)
+        {
+            HKWImageUtils.Logger?.Debug(
+                "Image file {file}\nIs close when no reference in\n{$StackFrame}\nReferenceCount: {ReferenceCount}",
+                info.Path,
+                new StackFrame(1, true),
+                info.ReferenceCount
+            );
+        }
+        else
+        {
+            HKWImageUtils.Logger?.Debug(
+                "Image file {file}\nIs close when no reference, ReferenceCount : {ReferenceCount}",
+                info.Path,
+                info.ReferenceCount
+            );
+        }
+
+        if (info.ReferenceCount <= 0)
+        {
+            image.StreamSource.Close();
+            if (flush)
+                image.StreamSource.Flush();
+            HKWImageUtils.ImageByPath.Remove(image);
+            HKWImageUtils.InfoByPath.Remove(info.Path);
+        }
+    }
+
+    /// <summary>
     /// 关闭流
     /// </summary>
     /// <param name="image">图像资源</param>
-    public static void CloseStream(this BitmapImage image)
+    /// <param name="flush">清除缓存</param>
+    public static void CloseStream(this BitmapImage image, bool flush = false)
     {
-        HKWImageUtils.ImageByPath.Remove(image);
-        HKWImageUtils.Images.Remove(image);
-        image.StreamSource?.Close();
+        if (image.StreamSource is null)
+            return;
+        image.StreamSource.Close();
+        if (flush)
+            image.StreamSource.Flush();
+        if (HKWImageUtils.TryGetInfo(image, out var info))
+        {
+            HKWImageUtils.ImageByPath.Remove(image);
+            HKWImageUtils.InfoByPath.Remove(info.Path);
+            if (HKWImageUtils.LogStackFrame)
+            {
+                HKWImageUtils.Logger?.Debug(
+                    "Image file {file}\nIs close in\n{$StackFrame}",
+                    info.Path,
+                    info.ReferenceCount,
+                    new StackFrame(1, true)
+                );
+            }
+            else
+            {
+                HKWImageUtils.Logger?.Debug(
+                    "Image file {file}\nIs close",
+                    info.Path,
+                    info.ReferenceCount
+                );
+            }
+        }
     }
 
     /// <inheritdoc cref="Bitmap.SetResolution(float, float)"/>

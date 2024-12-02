@@ -44,7 +44,7 @@ public class StrongViewLocatorX : StrongViewLocator
         where TViewModel : INotifyPropertyChanged
         where TPage : UserControl, new()
     {
-        Register<TViewModel>(new(typeof(TPage), () => new TPage()));
+        RegistrationsX.Add(typeof(TViewModel), (new(typeof(TPage), () => new TPage()), null!));
     }
 
     /// <summary>

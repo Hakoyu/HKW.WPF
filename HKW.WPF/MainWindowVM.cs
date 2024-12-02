@@ -32,11 +32,19 @@ internal partial class MainWindowVM : ReactiveObjectX
     [ReactiveProperty]
     public double Number { get; set; } = 1.1;
 
+    [ReactiveProperty]
+    public SolidColorBrush Brush { get; set; } = Brushes.White;
+
+    partial void OnBrushChanged(SolidColorBrush oldValue, SolidColorBrush newValue)
+    {
+        return;
+    }
+
     public MainWindowVM()
     {
         //var c = new CalculatorConverter();
         //var r = c.Convert(1, typeof(int), "+2", null);
-        EnumInfo<TestEnum>.Initialize();
+        //EnumInfo<TestEnum>.Initialize();
         //_enums.MoveNext();
     }
 

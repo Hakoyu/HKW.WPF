@@ -80,13 +80,6 @@ public abstract class ConverterBase : DependencyObject, ICommonValueConverter
     /// </summary>
     public static readonly object UnsetValue = DependencyProperty.UnsetValue;
 
-    /// <summary>
-    /// Allows to override the default culture used in <seealso cref="IValueConverter"/> for the current converter.
-    /// The default override behavior can be configured in <seealso cref="ValueConvertersConfig.DefaultPreferredCulture"/>.
-    /// </summary>
-    public PreferredCulture PreferredCulture { get; set; } =
-        ValueConvertersConfig.DefaultPreferredCulture;
-
     /// <inheritdoc/>
     public T GetValue<T>(CommonDependencyProperty<T> commonDependencyProperty)
     {
@@ -103,21 +96,7 @@ public abstract class ConverterBase : DependencyObject, ICommonValueConverter
         SetValue(dependency, value);
     }
 
-    /// <summary>
-    /// 选择文化
-    /// </summary>
-    /// <param name="converterCulture"></param>
-    /// <returns></returns>
-    public CultureInfo SelectCulture(Func<CultureInfo> converterCulture)
-    {
-        return PreferredCulture switch
-        {
-            PreferredCulture.CurrentCulture => CultureInfo.CurrentCulture,
-            PreferredCulture.CurrentUICulture => CultureInfo.CurrentUICulture,
-            _ => converterCulture(),
-        };
-    }
-
+    #region DefaultResult
     /// <summary>
     ///
     /// </summary>
@@ -132,4 +111,24 @@ public abstract class ConverterBase : DependencyObject, ICommonValueConverter
         get => GetValue(DefaultResultProperty);
         set => SetValue(DefaultResultProperty, value);
     }
+    #endregion
+
+    #region PreferredCulture
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly CommonDependencyProperty<PreferredCulture> PreferredCultureProperty =
+        CommonDependencyProperty.Register<ConverterBase, PreferredCulture>(
+            nameof(PreferredCulture)
+        );
+
+    /// <summary>
+    /// 默认结果
+    /// </summary>
+    public PreferredCulture PreferredCulture
+    {
+        get => GetValue(PreferredCultureProperty);
+        set => SetValue(PreferredCultureProperty, value);
+    }
+    #endregion
 }
