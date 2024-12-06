@@ -113,6 +113,23 @@ public abstract class ConverterBase : DependencyObject, ICommonValueConverter
     }
     #endregion
 
+    #region ResultToString
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly CommonDependencyProperty<bool> ResultToStringProperty =
+        CommonDependencyProperty.Register<ConverterBase, bool>(nameof(ResultToString));
+
+    /// <summary>
+    /// 结果转换为字符串
+    /// </summary>
+    public bool ResultToString
+    {
+        get => GetValue(ResultToStringProperty);
+        set => SetValue(ResultToStringProperty, value);
+    }
+    #endregion
+
     #region PreferredCulture
     /// <summary>
     ///

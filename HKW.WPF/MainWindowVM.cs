@@ -53,16 +53,16 @@ internal partial class MainWindowVM : ReactiveObjectX
     [ReactiveCommand]
     private async void Next()
     {
-        var vm = await _dialogService.ShowDialogAsyncX<ItemSelectionVM>(
-            this,
-            new(_enums, new List<TestEnum>())
-            {
-                Title = "114514",
-                CaptionButtons = CaptionButtons.All,
-                ResizeMode = ResizeMode.CanResizeWithGrip
-            }
-        );
-        return;
+        //var vm = await _dialogService.ShowDialogAsyncX<ItemSelectionVM>(
+        //    this,
+        //    new(_enums, new List<TestEnum>())
+        //    {
+        //        Title = "114514",
+        //        CaptionButtons = CaptionButtons.All,
+        //        ResizeMode = ResizeMode.CanResizeWithGrip
+        //    }
+        //);
+        //return;
         //Enum = _enums.Current;
         //_enums.MoveNext();
     }

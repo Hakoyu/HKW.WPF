@@ -15,17 +15,17 @@ internal partial class MainWindow : Window, IViewFor<MainWindowVM>
     {
         InitializeComponent();
         DataContext = new MainWindowVM();
-        this.WhenActivated(d =>
-        {
-            this.Bind(
-                    ViewModel,
-                    x => x.Brush,
-                    x => x.ColorPicker_1.SelectedColor,
-                    vm => vm?.Color,
-                    v => new(v!.Value)
-                )
-                .DisposeWith(d);
-        });
+        //this.WhenActivated(d =>
+        //{
+        //    this.Bind(
+        //            ViewModel,
+        //            x => x.Brush,
+        //            x => x.ColorPicker_1.SelectedColor,
+        //            vm => vm?.Color,
+        //            v => new(v!.Value)
+        //        )
+        //        .DisposeWith(d);
+        //});
         //window.MaskClose(this);
     }
 

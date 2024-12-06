@@ -47,6 +47,12 @@
       <Button Command="{Binding NextCommand}" Content="Next" />
       <Button Click="Button_Click" Content="Show" />
       <Button Click="Button_1_Click" Content="Close" />
+      <ListBox x:Name="ListBox" SelectedIndex="{Binding Number}">
+        <ListBoxItem Content="1" />
+        <ListBoxItem Content="2" />
+        <ListBoxItem Content="3" />
+      </ListBox>
+      <TextBlock Text="{Binding SelectedItem, ElementName=ListBox}" />
     </StackPanel>
   </Grid>
 </Window>

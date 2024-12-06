@@ -39,7 +39,10 @@ public abstract class ValueConverterBase : ConverterBase, IValueConverter
         CultureInfo? culture
     )
     {
-        return CommonValueConverter?.Convert(value, targetType, parameter, culture);
+        var result = CommonValueConverter?.Convert(value, targetType, parameter, culture);
+        if (ResultToString)
+            return result?.ToString();
+        return result;
     }
 
     /// <inheritdoc/>
@@ -50,7 +53,10 @@ public abstract class ValueConverterBase : ConverterBase, IValueConverter
         CultureInfo? culture
     )
     {
-        return CommonValueConverter?.ConvertBack(value, targetType, parameter, culture);
+        var result = CommonValueConverter?.ConvertBack(value, targetType, parameter, culture);
+        if (ResultToString)
+            return result?.ToString();
+        return result;
     }
 
     object? IValueConverter.Convert(

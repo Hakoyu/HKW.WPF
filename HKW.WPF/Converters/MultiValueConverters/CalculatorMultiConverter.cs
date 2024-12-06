@@ -13,17 +13,14 @@ public class CalculatorMultiConverter<T> : MultiValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.CalculatorMultiConverter<T>();
     }
-
-    /// <inheritdoc/>
-    public override void InitializeValueConverter(
-        CommonValueConverters.MultiValueConverterBase commonValueConverter
-    )
-    {
-        commonValueConverter.GetDefaultResult = () => T.Zero;
-    }
 }
 
 /// <summary>
-/// Double计算转换器
+/// Double 计算转换器
 /// </summary>
 public class DoubleCalculatorMultiConverter : CalculatorMultiConverter<double> { }
+
+/// <summary>
+/// Int32 计算转换器
+/// </summary>
+public class Int32CalculatorMultiConverter : CalculatorMultiConverter<int> { }
