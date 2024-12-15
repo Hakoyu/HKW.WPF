@@ -49,14 +49,11 @@ public class DialogManagerX : DialogManager
                         if (x is IPageLocator pageView)
                         {
                             if (
-                                pageView.PageLocatorByType?.TryGetValue(
-                                    pageDefinition.Value.ViewType,
-                                    out var page
-                                )
-                                is not true
+                                pageView.LocatePageByType?.Invoke(pageDefinition.Value.ViewType)
+                                is not FrameworkElement page
                             )
                                 return false;
-                            return page?.Invoke(x)?.DataContext == viewModel;
+                            return page.DataContext == viewModel;
                         }
                         return x.FindVisualChild<Page>()?.DataContext == viewModel;
                     })
@@ -76,14 +73,11 @@ public class DialogManagerX : DialogManager
                     if (x is IPageLocator pageView)
                     {
                         if (
-                            pageView.PageLocatorByType?.TryGetValue(
-                                pageDefinition.Value.ViewType,
-                                out var page
-                            )
-                            is not true
+                            pageView.LocatePageByType?.Invoke(pageDefinition.Value.ViewType)
+                            is not FrameworkElement page
                         )
                             return false;
-                        return page?.Invoke(x)?.DataContext == viewModel;
+                        return page.DataContext == viewModel;
                     }
                     return x.FindVisualChild<Page>()?.DataContext == viewModel;
                 })

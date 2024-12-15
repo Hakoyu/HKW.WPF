@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Version>1.1.2</Version>
+		<Version>1.1.3</Version>
     <Authors>HKW</Authors>
     <Company>HKW</Company>
     <PackageDescription>A dedicated WPF library providing Collections, TypeExtension, MVVMDialogs, and other features.</PackageDescription>
@@ -37,8 +37,8 @@
     </Reference>
   </ItemGroup>
 	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="HKW.Utils" Version="1.3.5" />
-		<PackageReference Include="HKW.ReactiveUI" Version="0.3.3" />
+		<PackageReference Include="HKW.Utils" Version="1.3.7" />
+		<PackageReference Include="HKW.ReactiveUI" Version="0.3.5" />
     <PackageReference Include="HKW.CommonValueConverters" Version="0.1.2" />
     <PackageReference Include="HKW.MVVMDialogs" Version="0.1.0" />
 	</ItemGroup>

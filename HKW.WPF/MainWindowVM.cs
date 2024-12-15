@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using DynamicData.Binding;
 using HanumanInstitute.MvvmDialogs;
 using HKW.HKWReactiveUI;
@@ -15,7 +18,7 @@ using HKW.WPF.Converters;
 using HKW.WPF.MVVMDialogs;
 using ReactiveUI;
 using Splat;
-
+#pragma warning disable CS1998 // 异步方法缺少 "await" 运算符，将以同步方式运行
 namespace HKW.WPF;
 
 internal partial class MainWindowVM : ReactiveObjectX
