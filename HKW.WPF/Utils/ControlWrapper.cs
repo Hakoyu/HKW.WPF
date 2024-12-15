@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using HKW.HKWReactiveUI;
+using HKW.HKWUtils;
 
 namespace HKW.WPF.Utils;
 
@@ -14,7 +15,7 @@ namespace HKW.WPF.Utils;
 /// 控件包装器
 /// </summary>
 /// <typeparam name="TControl">控件类型</typeparam>
-public partial class ControlWrapper<TControl> : ReactiveObjectX
+public partial class ControlWrapper<TControl> : ReactiveObjectX, IResettable
     where TControl : FrameworkElement
 {
     /// <summary>
@@ -72,7 +73,15 @@ public partial class ControlWrapper<TControl> : ReactiveObjectX
         if (_disposed)
             return;
         base.Dispose(disposing);
+        if (disposing)
+        {
+            Reset();
+        }
+    }
 
+    /// <inheritdoc/>
+    public void Reset()
+    {
         if (_control is not null)
         {
             if (_control.DataContext is IDisposable disposable)
