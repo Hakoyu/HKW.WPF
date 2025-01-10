@@ -17,6 +17,21 @@ namespace HKW.WPF.MVVMDialogs;
 public static partial class MVVMDialogExtensions
 {
     /// <summary>
+    /// 显示一个新视图模型的窗口并返回视图接口
+    /// </summary>
+    /// <param name="dialogService">对话框服务</param>
+    /// <param name="viewModel">视图模型</param>
+    /// <returns>视图接口</returns>
+    public static IView Show(this IDialogService dialogService, INotifyPropertyChanged viewModel)
+    {
+        dialogService.Show(null, viewModel);
+        if (dialogService.DialogManager is DialogManagerX managerX)
+            return managerX.FindLastViewByViewModel(viewModel)!;
+        else
+            return dialogService.DialogManager.FindViewByViewModel(viewModel)!;
+    }
+
+    /// <summary>
     /// 异步显示对话框
     /// </summary>
     /// <typeparam name="TViewModel">对话框视图模型类型</typeparam>

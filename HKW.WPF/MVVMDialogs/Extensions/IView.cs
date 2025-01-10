@@ -34,4 +34,21 @@ public static partial class MVVMDialogExtensions
         if (view.RefObj is Window window)
             window.ShowOrActivate();
     }
+
+    /// <summary>
+    /// 当自身关闭时显示目标视图
+    /// </summary>
+    /// <param name="view">自身视图</param>
+    /// <param name="targetView">目标视图</param>
+    public static void ShowViewOnSelfClose(this IView view, IView targetView)
+    {
+        view.Closed -= View_Closed;
+        view.Closed += View_Closed;
+
+        void View_Closed(object? sender, EventArgs e)
+        {
+            targetView.ShowOrActivate();
+            view.Closed -= View_Closed;
+        }
+    }
 }

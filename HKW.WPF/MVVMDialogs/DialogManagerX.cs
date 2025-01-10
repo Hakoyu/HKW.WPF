@@ -95,4 +95,74 @@ public class DialogManagerX : DialogManager
             );
         }
     }
+
+    /// <summary>
+    /// 从视图模型寻找视图
+    /// </summary>
+    /// <param name="viewModel">视图模型</param>
+    /// <returns>视图</returns>
+    public IView? FindLastViewByViewModel(INotifyPropertyChanged viewModel)
+    {
+        if (ViewLocator is not StrongViewLocatorX viewLocatorX)
+            return null;
+        (var pageDefinition, var windowDefinition) = viewLocatorX.LocateX(viewModel);
+        // 如果同时注册了页面和窗口,则先查找窗口然后查找页面
+        if (pageDefinition is not null && windowDefinition is not null)
+        {
+            var result = Windows.LastOrDefault(x => x.IsActive && x.DataContext == viewModel);
+
+            if (result is null)
+            {
+                return Windows
+                    .LastOrDefault(x =>
+                    {
+                        if (x is IPageLocator pageView)
+                        {
+                            if (
+                                pageView.LocatePageByType?.Invoke(pageDefinition.Value.ViewType)
+                                is not FrameworkElement page
+                            )
+                                return false;
+                            return page.DataContext == viewModel;
+                        }
+                        return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                    })
+                    .AsWrapper();
+            }
+            else
+            {
+                return result.AsWrapper();
+            }
+        }
+        // 如果是页面, 则搜索子元素
+        else if (pageDefinition is not null)
+        {
+            return Windows
+                .LastOrDefault(x =>
+                {
+                    if (x is IPageLocator pageView)
+                    {
+                        if (
+                            pageView.LocatePageByType?.Invoke(pageDefinition.Value.ViewType)
+                            is not FrameworkElement page
+                        )
+                            return false;
+                        return page.DataContext == viewModel;
+                    }
+                    return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                })
+                .AsWrapper();
+        }
+        else if (windowDefinition is not null)
+        {
+            // 如果不是页面, 则搜索窗口
+            return Windows.LastOrDefault(x => x.DataContext == viewModel).AsWrapper();
+        }
+        else
+        {
+            throw new NotImplementedException(
+                "No view was registered for view model " + viewModel.GetType().FullName + "."
+            );
+        }
+    }
 }
