@@ -15,7 +15,7 @@ namespace HKW.WPF.Utils;
 /// 控件包装器
 /// </summary>
 /// <typeparam name="TControl">控件类型</typeparam>
-public partial class ControlWrapper<TControl> : ReactiveObjectX, IResettable
+public partial class ControlWrapper<TControl> : ReactiveObjectX
     where TControl : FrameworkElement
 {
     /// <summary>

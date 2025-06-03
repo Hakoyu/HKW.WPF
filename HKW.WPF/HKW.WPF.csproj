@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Version>1.1.5</Version>
+		<Version>1.1.6</Version>
     <Authors>HKW</Authors>
     <Company>HKW</Company>
     <PackageDescription>A dedicated WPF library providing Collections, TypeExtension, MVVMDialogs, and other features.</PackageDescription>

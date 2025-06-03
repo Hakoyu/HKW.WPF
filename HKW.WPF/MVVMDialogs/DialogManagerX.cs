@@ -55,7 +55,14 @@ public class DialogManagerX : DialogManager
                                 return false;
                             return page.DataContext == viewModel;
                         }
-                        return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                        else if (x.FindVisualChild<UserControl>()?.DataContext == viewModel)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                        }
                     })
                     .AsWrapper();
             }
@@ -79,7 +86,14 @@ public class DialogManagerX : DialogManager
                             return false;
                         return page.DataContext == viewModel;
                     }
-                    return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                    else if (x.FindVisualChild<UserControl>()?.DataContext == viewModel)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                    }
                 })
                 .AsWrapper();
         }
@@ -125,7 +139,14 @@ public class DialogManagerX : DialogManager
                                 return false;
                             return page.DataContext == viewModel;
                         }
-                        return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                        else if (x.FindVisualChild<UserControl>()?.DataContext == viewModel)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                        }
                     })
                     .AsWrapper();
             }
@@ -149,7 +170,14 @@ public class DialogManagerX : DialogManager
                             return false;
                         return page.DataContext == viewModel;
                     }
-                    return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                    else if (x.FindVisualChild<UserControl>()?.DataContext == viewModel)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return x.FindVisualChild<Page>()?.DataContext == viewModel;
+                    }
                 })
                 .AsWrapper();
         }
