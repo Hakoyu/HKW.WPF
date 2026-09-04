@@ -4,14 +4,12 @@ using System.Globalization;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 第一个或默认转换器
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.FirstOrDefaultConverter"/>
 public class FirstOrDefaultConverter : ValueConverterBase
 {
     /// <inheritdoc/>
     public FirstOrDefaultConverter()
     {
-        CommonValueConverter = new CommonValueConverters.FirstOrDefaultResultConverter();
+        CommonValueConverter = new CommonValueConverters.FirstOrDefaultConverter();
     }
 }

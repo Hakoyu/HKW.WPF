@@ -13,10 +13,10 @@ namespace HKW.WPF;
 /// <summary>
 /// 系统参数
 /// </summary>
-public class SystemParametersX
+public class SystemParametersHelper
 {
     /// <inheritdoc/>
-    static SystemParametersX()
+    static SystemParametersHelper()
     {
         if (PInvoke.GetSystemAccentColor() is Color accentColor)
         {
@@ -27,7 +27,7 @@ public class SystemParametersX
         {
             // SystemParameters.WindowGlassColor 比实际主题色稍暗
             // 使用增强亮度的方式进行修改, 但无法保证修改后的颜色能与主题色一致
-            var color = AdjustBrightness(SystemParameters.WindowGlassColor, 1.08);
+            var color = AdjustBrightness(System.Windows.SystemParameters.WindowGlassColor, 1.08);
             SystemAccentColor = color;
             SystemAccentBrush = new SolidColorBrush(color);
         }

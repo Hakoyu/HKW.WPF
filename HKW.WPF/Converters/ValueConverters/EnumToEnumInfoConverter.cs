@@ -5,9 +5,7 @@ using HKW.HKWUtils;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 枚举到枚举信息转换器
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.EnumToEnumInfoConverter"/>
 public class EnumToEnumInfoConverter : ValueConverterBase
 {
     /// <inheritdoc/>

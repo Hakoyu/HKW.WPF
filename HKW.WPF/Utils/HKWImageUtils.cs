@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using HKW.HKWReactiveUI;
 using HKW.HKWUtils.Collections;
 using HKW.HKWUtils.Extensions;
 using Splat;
@@ -24,7 +23,7 @@ public static class HKWImageUtils
     /// <summary>
     /// 所有外部图像 (Path, BitmapImage)
     /// </summary>
-    public static BidirectionalDictionary<string, BitmapImage> ImageByPath { get; } = new([], []);
+    public static BidirectionalDictionary<string, BitmapImage> ImageByPath { get; } = new();
 
     /// <summary>
     /// 图像信息 (Path, BitmapImageInfo)
@@ -33,7 +32,7 @@ public static class HKWImageUtils
 
     internal static void AddImage(string file, BitmapImage image)
     {
-        ImageByPath.Add(file, image);
+        ImageByPath.TryAdd(file, image);
         InfoByPath.Add(file, new(file));
     }
 
@@ -286,7 +285,6 @@ public class BitmapImageInfo(string path) : IEquatable<BitmapImageInfo>
     /// <summary>
     /// 引用次数
     /// </summary>
-    [ReactiveProperty]
     public int ReferenceCount { get; set; } = 1;
 
     #region IEquatable

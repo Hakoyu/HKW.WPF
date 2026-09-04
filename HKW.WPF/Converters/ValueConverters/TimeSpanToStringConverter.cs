@@ -10,22 +10,11 @@ namespace HKW.WPF.Converters;
 /// </summary>
 public class TimeSpanToStringConverter : ValueConverterBase
 {
-    /// <summary>
-    /// 默认格式化
-    /// </summary>
-    protected const string DefaultFormat = "g";
-
-    /// <summary>
-    /// 默认最小值
-    /// </summary>
-    protected const string DefaultMinValueString = "";
-
     /// <inheritdoc/>
     public TimeSpanToStringConverter()
     {
         CommonValueConverter = new CommonValueConverters.TimeSpanToStringConverter()
         {
-            GetMinValueString = () => MinValueString,
             GetFormat = () => Format,
         };
     }
@@ -36,7 +25,7 @@ public class TimeSpanToStringConverter : ValueConverterBase
     public static readonly CommonDependencyProperty<string> FormatProperty =
         CommonDependencyProperty.Register<TimeSpanToStringConverter, string>(
             nameof(Format),
-            DefaultFormat
+            CommonValueConverters.TimeSpanToStringConverter.DefaultFormat
         );
 
     /// <summary>
@@ -49,23 +38,5 @@ public class TimeSpanToStringConverter : ValueConverterBase
     {
         get => GetValue(FormatProperty);
         set => SetValue(FormatProperty, value);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public static readonly CommonDependencyProperty<string> MinValueStringProperty =
-        CommonDependencyProperty.Register<TimeSpanToStringConverter, string>(
-            nameof(MinValueString),
-            DefaultMinValueString
-        );
-
-    /// <summary>
-    /// 最小值
-    /// </summary>
-    public string MinValueString
-    {
-        get => GetValue(MinValueStringProperty);
-        set => SetValue(MinValueStringProperty, value);
     }
 }

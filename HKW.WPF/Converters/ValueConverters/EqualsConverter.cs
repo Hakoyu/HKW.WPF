@@ -3,14 +3,7 @@ using HKW.CommonValueConverters;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 相等转换器
-/// <para>示例:
-/// <code><![CDATA[
-/// {Binding Value, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Null}}
-/// result: Value.Equals(ConverterParameter)
-/// ]]></code></para>
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.EqualsConverter{T}"/>
 public class EqualsConverter<T> : InvertibleValueConverterBase
 {
     /// <inheritdoc/>
@@ -18,7 +11,7 @@ public class EqualsConverter<T> : InvertibleValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.EqualsConverter<T>()
         {
-            GetIsStringEquals = () => IsStringEquals
+            GetIsStringEquals = () => IsStringEquals,
         };
     }
 
@@ -26,9 +19,7 @@ public class EqualsConverter<T> : InvertibleValueConverterBase
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<bool> IsStringEqualsProperty =
-        CommonDependencyProperty.Register<FirstEqualsSecondMultiConverter, bool>(
-            nameof(IsStringEquals)
-        );
+        CommonDependencyProperty.Register<EqualsConverter<T>, bool>(nameof(IsStringEquals));
 
     /// <summary>
     /// 是字符串比较

@@ -3,18 +3,10 @@ using System.Numerics;
 using System.Windows;
 using HKW.CommonValueConverters;
 using HKW.HKWUtils;
-using HKW.HKWUtils.Extensions;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 计算器转换器
-/// <para>示例:
-/// <code><![CDATA[
-/// <Binding Number,Converter="{StaticResource CalculatorConverter}",ConverterParameter="8"/>
-/// return: Number + 8
-/// ]]></code></para>
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.CalculatorConverter"/>
 public class CalculatorConverter : ValueConverterBase
 {
     /// <summary>
@@ -23,7 +15,7 @@ public class CalculatorConverter : ValueConverterBase
     public static readonly CommonDependencyProperty<NumberType> NumberTypeProperty =
         CommonDependencyProperty.Register<CalculatorConverter, NumberType>(
             nameof(NumberType),
-            NumberType.Double
+            CommonValueConverters.CalculatorConverter.DefaultNumberType
         );
 
     /// <summary>
@@ -41,7 +33,7 @@ public class CalculatorConverter : ValueConverterBase
     public static readonly CommonDependencyProperty<ArithmeticOperatorType> OperatorTypeProperty =
         CommonDependencyProperty.Register<CalculatorConverter, ArithmeticOperatorType>(
             nameof(OperatorType),
-            ArithmeticOperatorType.Addition
+            CommonValueConverters.CalculatorConverter.DefaultArithmeticOperatorType
         );
 
     /// <summary>
@@ -54,14 +46,12 @@ public class CalculatorConverter : ValueConverterBase
     }
 
     /// <inheritdoc/>
-    public override void CommonValueConverterInitialize(
-        CommonValueConverters.ValueConverterBase commonValueConverter
-    )
+    public CalculatorConverter()
     {
-        base.CommonValueConverterInitialize(commonValueConverter);
-        if (commonValueConverter is not CommonValueConverters.CalculatorConverter converter)
-            return;
-        converter.GetNumberType = () => NumberType;
-        converter.GetOperatorType = () => OperatorType;
+        CommonValueConverter = new CommonValueConverters.CalculatorConverter()
+        {
+            GetNumberType = () => NumberType,
+            GetOperatorType = () => OperatorType,
+        };
     }
 }

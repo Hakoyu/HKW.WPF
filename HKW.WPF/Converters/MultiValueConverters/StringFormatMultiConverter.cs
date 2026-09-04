@@ -4,22 +4,7 @@ using HKW.CommonValueConverters;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 字符串格式化转换器
-/// <para>示例:
-/// <code><![CDATA[
-/// <MultiBinding Converter="{StaticResource MarginConverter}">
-///   <Binding Path="StringFormat" />
-///   <Binding Path="Value1" />
-///   <Binding Path="Value2" />
-/// </MultiBinding>
-/// OR
-/// <MultiBinding Converter="{StaticResource MarginConverter}" ConverterParameter="{}{0}{1}">
-///   <Binding Path="Value1" />
-///   <Binding Path="Value2" />
-/// </MultiBinding>
-/// ]]></code></para>
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.StringFormatMultiConverter"/>
 public class StringFormatMultiConverter : MultiValueConverterBase
 {
     /// <inheritdoc/>
@@ -27,7 +12,7 @@ public class StringFormatMultiConverter : MultiValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.StringFormatMultiConverter()
         {
-            GetReplaceUnsetValue = () => ReplaceUnsetValue
+            GetReplaceUnsetValue = () => ReplaceUnsetValue,
         };
     }
 

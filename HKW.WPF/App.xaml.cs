@@ -17,18 +17,17 @@ internal partial class App : Application
 
         var build = Locator.CurrentMutable;
 
-        build.RegisterLazySingleton<IDialogService>(
-            () =>
-                new DialogService(
-                    new DialogManager(viewLocator: new ViewLocator()),
-                    viewModelFactory: x => Locator.Current.GetService(x)
-                )
+        build.RegisterLazySingleton<IDialogService>(() =>
+            new DialogService(
+                new DialogManager(viewLocator: new ViewLocator()),
+                viewModelFactory: x => Locator.Current.GetService(x)
+            )
         );
 
         build.Register<MainWindowVM>(() => new());
 
         build.InitializeSplat();
-        build.InitializeReactiveUI();
+        //build.InitializeReactiveUI();
 
         //SplatRegistrations.Register<MainWindowViewModel>();
         //SplatRegistrations.Register<CurrentTimeDialogViewModel>();

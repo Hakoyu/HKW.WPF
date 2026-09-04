@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HanumanInstitute.MvvmDialogs;
-using HKW.HKWReactiveUI;
+using ReactiveUI;
 
 namespace HKW.WPF;
 
-internal partial class TestWindowVM : ReactiveObjectX, IModalDialogViewModel
+internal partial class TestWindowVM : ReactiveObject, IModalDialogViewModel
 {
     public bool? DialogResult { get; set; }
 }

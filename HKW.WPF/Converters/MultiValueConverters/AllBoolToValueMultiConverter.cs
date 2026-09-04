@@ -6,8 +6,21 @@ using HKW.CommonValueConverters;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// 全部为布尔值到值转换器
+/// 全部为布尔值到能见度转换器
 /// </summary>
+public class AllBoolToVisibilityMultiConverter : AllBoolToValueMultiConverter<Visibility>
+{
+    /// <inheritdoc/>
+    public AllBoolToVisibilityMultiConverter()
+    {
+        TrueValue = Visibility.Visible;
+        FalseValue = Visibility.Collapsed;
+        NullValue = Visibility.Collapsed;
+        DefaultResult = Visibility.Collapsed;
+    }
+}
+
+/// <inheritdoc cref="CommonValueConverters.AllBoolToValueMultiConverter{T}"/>
 public class AllBoolToValueMultiConverter<T> : InvertibleMultiValueConverterBase
 {
     /// <inheritdoc/>
@@ -17,7 +30,7 @@ public class AllBoolToValueMultiConverter<T> : InvertibleMultiValueConverterBase
         {
             GetTrueValue = () => TrueValue,
             GetFalseValue = () => FalseValue,
-            GetNullValue = () => NullValue
+            GetNullValue = () => NullValue,
         };
     }
 
@@ -77,7 +90,7 @@ public class AllBoolToValueMultiConverter<T> : InvertibleMultiValueConverterBase
     /// <summary>
     ///
     /// </summary>
-    public new static readonly CommonDependencyProperty<T> DefaultResultProperty =
+    public static new readonly CommonDependencyProperty<T> DefaultResultProperty =
         CommonDependencyProperty.Register<AllBoolToValueMultiConverter<T>, T>(
             nameof(DefaultResult)
         );

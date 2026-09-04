@@ -3,9 +3,7 @@ using System.Globalization;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 枚举到布尔转换器
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.EnumEqualsConverter"/>
 public class EnumEqualsConverter : InvertibleValueConverterBase
 {
     /// <inheritdoc/>

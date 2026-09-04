@@ -3,15 +3,13 @@ using HKW.HKWUtils;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 枚举到枚举信息转换器
-/// </summary>
-public class EnumToEnumInfoTargetConverter : ValueConverterBase
+/// <inheritdoc cref="CommonValueConverters.EnumToEnumInfoDisplayConverter"/>
+public class EnumToEnumInfoDisplayConverter : ValueConverterBase
 {
     /// <inheritdoc/>
-    public EnumToEnumInfoTargetConverter()
+    public EnumToEnumInfoDisplayConverter()
     {
-        CommonValueConverter = new CommonValueConverters.EnumToEnumInfoTargetConverter()
+        CommonValueConverter = new CommonValueConverters.EnumToEnumInfoDisplayConverter()
         {
             GetEnumInfoDisplayTarget = () => EnumInfoDisplayTarget,
         };
@@ -21,9 +19,9 @@ public class EnumToEnumInfoTargetConverter : ValueConverterBase
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<EnumInfoDisplayTarget> EnumInfoDisplayTargetProperty =
-        CommonDependencyProperty.Register<EnumToEnumInfoConverter, EnumInfoDisplayTarget>(
+        CommonDependencyProperty.Register<EnumToEnumInfoDisplayConverter, EnumInfoDisplayTarget>(
             nameof(EnumInfoDisplayTarget),
-            EnumInfoDisplayTarget.Name
+            CommonValueConverters.EnumToEnumInfoDisplayConverter.DefaultEnumInfoDisplayTarget
         );
 
     /// <summary>

@@ -4,9 +4,7 @@ using HKW.CommonValueConverters;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// Guid到字符串转换器
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.GuidToStringConverter"/>
 public class GuidToStringConverter : ValueConverterBase
 {
     /// <inheritdoc/>
@@ -14,29 +12,24 @@ public class GuidToStringConverter : ValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.GuidToStringConverter()
         {
-            GetToUpper = () => ToUpper,
+            GetStringTo = () => StringTo,
             GetFormat = () => Format,
         };
     }
 
     /// <summary>
-    /// 默认格式化
-    /// </summary>
-    protected const string DefaultFormat = "D";
-
-    /// <summary>
     ///
     /// </summary>
-    public static readonly CommonDependencyProperty<bool> ToUpperProperty =
-        CommonDependencyProperty.Register<GuidToStringConverter, bool>(nameof(ToUpper));
+    public static readonly CommonDependencyProperty<bool?> StringToProperty =
+        CommonDependencyProperty.Register<GuidToStringConverter, bool?>(nameof(StringTo));
 
     /// <summary>
     /// 转换为大写
     /// </summary>
-    public bool ToUpper
+    public bool? StringTo
     {
-        get => GetValue(ToUpperProperty);
-        set => SetValue(ToUpperProperty, value);
+        get => GetValue(StringToProperty);
+        set => SetValue(StringToProperty, value);
     }
 
     /// <summary>
@@ -45,7 +38,7 @@ public class GuidToStringConverter : ValueConverterBase
     public static readonly CommonDependencyProperty<string> FormatProperty =
         CommonDependencyProperty.Register<GuidToStringConverter, string>(
             nameof(Format),
-            DefaultFormat
+            CommonValueConverters.GuidToStringConverter.DefaultFormat
         );
 
     /// <summary>

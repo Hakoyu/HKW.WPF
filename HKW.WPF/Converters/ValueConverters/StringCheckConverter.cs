@@ -8,14 +8,14 @@ namespace HKW.WPF.Converters;
 /// <summary>
 /// 字符串是null或空或空白转换器
 /// </summary>
-public class StringIsNullOrEmptyOrWhiteSpaceConverter : InvertibleValueConverterBase
+public class StringCheckConverter : InvertibleValueConverterBase
 {
     /// <inheritdoc/>
-    public StringIsNullOrEmptyOrWhiteSpaceConverter()
+    public StringCheckConverter()
     {
-        CommonValueConverter = new CommonValueConverters.StringIsNullOrEmptyOrWhiteSpaceConverter()
+        CommonValueConverter = new CommonValueConverters.StringCheckConverter()
         {
-            GetStringCheckType = () => StringCheckType
+            GetStringCheckType = () => StringCheckType,
         };
     }
 
@@ -23,10 +23,9 @@ public class StringIsNullOrEmptyOrWhiteSpaceConverter : InvertibleValueConverter
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<StringCheckType> StringCheckTypeProperty =
-        CommonDependencyProperty.Register<
-            StringIsNullOrEmptyOrWhiteSpaceConverter,
-            StringCheckType
-        >(nameof(StringCheckType));
+        CommonDependencyProperty.Register<StringCheckConverter, StringCheckType>(
+            nameof(StringCheckType)
+        );
 
     /// <summary>
     /// 为真时的值

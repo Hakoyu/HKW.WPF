@@ -3,9 +3,7 @@ using System.Diagnostics;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 调试转换器
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.DebugConverter"/>
 public class DebugConverter : ValueConverterBase
 {
     /// <inheritdoc/>

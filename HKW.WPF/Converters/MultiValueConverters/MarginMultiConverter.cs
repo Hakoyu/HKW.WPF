@@ -57,85 +57,95 @@ public class MarginMultiConverter : MultiValueConverterBase
         }
         if (HasRatio)
         {
-            if (values.Length == 1)
-            {
-                return new Thickness();
-            }
-            var ratio = System.Convert.ToDouble(values[0]);
-            if (values.Length == 2)
-            {
-                return new Thickness(
-                    System.Convert.ToDouble(values[1]) * ratio,
-                    default,
-                    default,
-                    default
-                );
-            }
-            else if (values.Length == 3)
-            {
-                return new Thickness(
-                    System.Convert.ToDouble(values[1]) * ratio,
-                    System.Convert.ToDouble(values[2]) * ratio,
-                    default,
-                    default
-                );
-            }
-            else if (values.Length == 4)
-            {
-                return new Thickness(
-                    System.Convert.ToDouble(values[1]) * ratio,
-                    System.Convert.ToDouble(values[2]) * ratio,
-                    System.Convert.ToDouble(values[3]) * ratio,
-                    default
-                );
-            }
-            else if (values.Length == 5)
-            {
-                return new Thickness(
-                    System.Convert.ToDouble(values[1]) * ratio,
-                    System.Convert.ToDouble(values[2]) * ratio,
-                    System.Convert.ToDouble(values[3]) * ratio,
-                    System.Convert.ToDouble(values[4]) * ratio
-                );
-            }
-            else
-                throw new NotImplementedException();
+            return GetHasRatioThickness(values);
         }
         else
         {
-            if (values.Length == 1)
-            {
-                return new Thickness(System.Convert.ToDouble(values[0]), default, default, default);
-            }
-            else if (values.Length == 2)
-            {
-                return new Thickness(
-                    System.Convert.ToDouble(values[0]),
-                    System.Convert.ToDouble(values[1]),
-                    default,
-                    default
-                );
-            }
-            else if (values.Length == 3)
-            {
-                return new Thickness(
-                    System.Convert.ToDouble(values[0]),
-                    System.Convert.ToDouble(values[1]),
-                    System.Convert.ToDouble(values[2]),
-                    default
-                );
-            }
-            else if (values.Length == 4)
-            {
-                return new Thickness(
-                    System.Convert.ToDouble(values[0]),
-                    System.Convert.ToDouble(values[1]),
-                    System.Convert.ToDouble(values[2]),
-                    System.Convert.ToDouble(values[3])
-                );
-            }
-            else
-                throw new NotImplementedException();
+            return GetThickness(values);
         }
+    }
+
+    private static Thickness GetHasRatioThickness(object?[] values)
+    {
+        if (values.Length == 1)
+        {
+            return new Thickness();
+        }
+        var ratio = System.Convert.ToDouble(values[0]);
+        if (values.Length == 2)
+        {
+            return new Thickness(
+                System.Convert.ToDouble(values[1]) * ratio,
+                default,
+                default,
+                default
+            );
+        }
+        else if (values.Length == 3)
+        {
+            return new Thickness(
+                System.Convert.ToDouble(values[1]) * ratio,
+                System.Convert.ToDouble(values[2]) * ratio,
+                default,
+                default
+            );
+        }
+        else if (values.Length == 4)
+        {
+            return new Thickness(
+                System.Convert.ToDouble(values[1]) * ratio,
+                System.Convert.ToDouble(values[2]) * ratio,
+                System.Convert.ToDouble(values[3]) * ratio,
+                default
+            );
+        }
+        else if (values.Length == 5)
+        {
+            return new Thickness(
+                System.Convert.ToDouble(values[1]) * ratio,
+                System.Convert.ToDouble(values[2]) * ratio,
+                System.Convert.ToDouble(values[3]) * ratio,
+                System.Convert.ToDouble(values[4]) * ratio
+            );
+        }
+        else
+            throw new NotImplementedException();
+    }
+
+    private static Thickness GetThickness(object?[] values)
+    {
+        if (values.Length == 1)
+        {
+            return new Thickness(System.Convert.ToDouble(values[0]), default, default, default);
+        }
+        else if (values.Length == 2)
+        {
+            return new Thickness(
+                System.Convert.ToDouble(values[0]),
+                System.Convert.ToDouble(values[1]),
+                default,
+                default
+            );
+        }
+        else if (values.Length == 3)
+        {
+            return new Thickness(
+                System.Convert.ToDouble(values[0]),
+                System.Convert.ToDouble(values[1]),
+                System.Convert.ToDouble(values[2]),
+                default
+            );
+        }
+        else if (values.Length == 4)
+        {
+            return new Thickness(
+                System.Convert.ToDouble(values[0]),
+                System.Convert.ToDouble(values[1]),
+                System.Convert.ToDouble(values[2]),
+                System.Convert.ToDouble(values[3])
+            );
+        }
+        else
+            throw new NotImplementedException();
     }
 }

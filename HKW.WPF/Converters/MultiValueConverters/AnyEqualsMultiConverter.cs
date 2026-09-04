@@ -15,7 +15,7 @@ public class AnyEqualsMultiConverter<T> : InvertibleMultiValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.AnyEqualsMultiConverter<T>()
         {
-            GetValue = () => Value
+            GetValue = () => Value,
         };
     }
 
@@ -23,7 +23,7 @@ public class AnyEqualsMultiConverter<T> : InvertibleMultiValueConverterBase
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<T> ValueProperty =
-        CommonDependencyProperty.Register<AllEqualsMultiConverter<T>, T>(nameof(Value));
+        CommonDependencyProperty.Register<AnyEqualsMultiConverter<T>, T>(nameof(Value));
 
     /// <summary>
     /// 值

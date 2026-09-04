@@ -6,8 +6,18 @@ using HKW.CommonValueConverters;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// 全部相等于值转换器
+/// 全部为真转换器
 /// </summary>
+public class AllIsTrueMultiConverter : AllEqualsMultiConverter<bool>
+{
+    /// <inheritdoc/>
+    public AllIsTrueMultiConverter()
+    {
+        Value = true;
+    }
+}
+
+/// <inheritdoc cref="CommonValueConverters.AllEqualsMultiConverter{T}"/>
 public class AllEqualsMultiConverter<T> : InvertibleMultiValueConverterBase
 {
     /// <inheritdoc/>
@@ -15,7 +25,7 @@ public class AllEqualsMultiConverter<T> : InvertibleMultiValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.AllEqualsMultiConverter<T>()
         {
-            GetValue = () => Value
+            GetValue = () => Value,
         };
     }
 

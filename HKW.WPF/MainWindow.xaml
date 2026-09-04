@@ -10,23 +10,24 @@
   xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
   xmlns:local="clr-namespace:HKW.WPF"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:pu="https://opensource.panuon.com/wpf-ui"
   Title="MainWindow"
   Width="800"
   Height="450"
   d:DataContext="{d:DesignInstance Type=local:MainWindowVM}"
   x:ClassModifier="internal"
   Background="Gray"
-  mc:Ignorable="d">
+  mc:Ignorable="d"
+>
   <Window.Resources>
     <c:SolidColorBrushToMediaColorConverter x:Key="SolidColorBrushToMediaColorConverter" />
     <!--<c:BoolToVisibilityConverter x:Key="FalseToCollapsedConverter" UnsetValue="{x:Null}" />-->
     <c:StringFormatMultiConverter
       x:Key="StringFormatMultiConverter"
       DefaultResult="null"
-      ReplaceUnsetValue="True" />
-    <c:EnumToEnumInfoTargetConverter x:Key="EnumToEnumInfoName" />
-    <c:EnumToEnumInfoTargetConverter x:Key="EnumToEnumInfoShortName" />
+      ReplaceUnsetValue="True"
+    />
+    <c:EnumToEnumInfoDisplayConverter x:Key="EnumToEnumInfoName" />
+    <c:EnumToEnumInfoDisplayConverter x:Key="EnumToEnumInfoShortName" />
     <c:CalculatorConverter x:Key="AdditionConverter" NumberType="Double" />
   </Window.Resources>
   <Grid>
@@ -36,12 +37,8 @@
     </Grid.ColumnDefinitions>
     <StackPanel>
       <TextBox Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
-      <pu:NumberInput Value="{Binding Number}" />
       <!--<TextBlock Text="{Binding Number, Converter={StaticResource AdditionConverter}, ConverterParameter={e:Double 0.1}}" />-->
-      <pu:ColorPicker
-        x:Name="ColorPicker_1"
-        Grid.Column="1"
-        ColorChannels="RGB" />
+      <ComboBox x:Name="ComboBox" ItemsSource="{Binding Strs}" />
     </StackPanel>
     <StackPanel Grid.Column="1">
       <Button Command="{Binding NextCommand}" Content="Next" />
@@ -52,7 +49,7 @@
         <ListBoxItem Content="2" />
         <ListBoxItem Content="3" />
       </ListBox>
-      <TextBlock Text="{Binding SelectedItem, ElementName=ListBox}" />
+      <TextBlock Text="{Binding Data[1]}" />
     </StackPanel>
   </Grid>
 </Window>

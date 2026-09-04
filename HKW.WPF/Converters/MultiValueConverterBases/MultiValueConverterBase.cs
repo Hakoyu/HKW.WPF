@@ -5,7 +5,7 @@ using HKW.CommonValueConverters;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// 多个值转换器
+/// 多值转换器
 /// </summary>
 public abstract class MultiValueConverterBase : ConverterBase, IMultiValueConverter
 {

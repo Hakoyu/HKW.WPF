@@ -6,16 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HKW.WPF.Converters.MultiValueConverter;
+namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 获取字典值
-/// </summary>
-public class GetDictionaryValueMulitiConverter : MultiValueConverterBase
+/// <inheritdoc cref="CommonValueConverters.GetDictionaryValueMultiConverter"/>
+public class GetDictionaryValueMultiConverter : MultiValueConverterBase
 {
     /// <inheritdoc/>
-    public GetDictionaryValueMulitiConverter()
+    public GetDictionaryValueMultiConverter()
     {
-        CommonValueConverter = new CommonValueConverters.GetDictionaryValueMulitiConverter();
+        CommonValueConverter = new CommonValueConverters.GetDictionaryValueMultiConverter();
     }
 }

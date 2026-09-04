@@ -1,51 +1,33 @@
 ﻿using System.Numerics;
 using HKW.CommonValueConverters;
+using HKW.HKWUtils;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 在范围里转换器
-/// </summary>
-public class NumberClampConverter<T> : ValueConverterBase
-    where T : struct, INumber<T>
+/// <inheritdoc cref="CommonValueConverters.NumberClampConverter"/>
+public class NumberClampConverter : ValueConverterBase
 {
     /// <inheritdoc/>
     public NumberClampConverter()
     {
-        CommonValueConverter = new CommonValueConverters.NumberClampConverter<T>()
+        CommonValueConverter = new CommonValueConverters.NumberClampConverter()
         {
-            GetMaxValue = () => MaxValue,
-            GetMinValue = () => MinValue,
+            GetNumberType = () => NumberType,
         };
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static readonly CommonDependencyProperty<T> MaxValueProperty =
-        CommonDependencyProperty.Register<GuidToStringConverter, T>(nameof(MaxValue));
+    public static readonly CommonDependencyProperty<NumberType> NumberTypeProperty =
+        CommonDependencyProperty.Register<NumberClampConverter, NumberType>(nameof(NumberType));
 
     /// <summary>
     /// 格式化
     /// </summary>
-    public T MaxValue
+    public NumberType NumberType
     {
-        get => GetValue(MaxValueProperty);
-        set => SetValue(MaxValueProperty, value);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public static readonly CommonDependencyProperty<T> MinValueProperty =
-        CommonDependencyProperty.Register<GuidToStringConverter, T>(nameof(MinValue));
-
-    /// <summary>
-    /// 格式化
-    /// </summary>
-    public T MinValue
-    {
-        get => GetValue(MinValueProperty);
-        set => SetValue(MinValueProperty, value);
+        get => GetValue(NumberTypeProperty);
+        set => SetValue(NumberTypeProperty, value);
     }
 }

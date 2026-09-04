@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using HKW.MVVMDialogs;
-using HKW.WPF.MVVMDialogs;
 using Splat;
 
 namespace HKW.WPF.Extensions;
@@ -105,9 +103,9 @@ public static partial class WPFExtensions
         window.Owner = owner;
         window.WindowStartupLocation = windowStartupLocation;
         var result = window.ShowDialog();
-        // 判断是否为单例对话框, 并收集结果
-        if (window is IInstanceDialog dialog)
-            result = dialog.InstanceDialogResult;
+        //// 判断是否为单例对话框, 并收集结果
+        //if (window is IInstanceDialog dialog)
+        //    result = dialog.InstanceDialogResult;
         return result;
     }
 
@@ -159,8 +157,8 @@ public static partial class WPFExtensions
     {
         if (window.IsLoaded is false)
             return;
-        var w = SystemParameters.WorkArea.Width;
-        var h = SystemParameters.WorkArea.Height;
+        var w = System.Windows.SystemParameters.WorkArea.Width;
+        var h = System.Windows.SystemParameters.WorkArea.Height;
         if (owner is null)
         {
             window.Left = Math.Clamp((w - window.Width) / 2, 0, w - window.Width);

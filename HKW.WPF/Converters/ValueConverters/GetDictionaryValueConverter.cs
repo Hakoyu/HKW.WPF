@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace HKW.WPF.Converters.ValueConverters;
 
-/// <summary>
-/// 获取字典值
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.GetDictionaryValueConverter"/>
 public class GetDictionaryValueConverter : ValueConverterBase
 {
     /// <inheritdoc/>

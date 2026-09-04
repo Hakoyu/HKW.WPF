@@ -6,42 +6,26 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using DynamicData.Binding;
 using HanumanInstitute.MvvmDialogs;
-using HKW.HKWReactiveUI;
-using HKW.HKWUtils;
-using HKW.HKWUtils.Collections;
-using HKW.HKWUtils.Extensions;
-using HKW.HKWUtils.Observable;
-using HKW.MVVMDialogs;
 using HKW.WPF.Converters;
-using HKW.WPF.MVVMDialogs;
 using ReactiveUI;
 using Splat;
 #pragma warning disable CS1998 // 异步方法缺少 "await" 运算符，将以同步方式运行
 namespace HKW.WPF;
 
-internal partial class MainWindowVM : ReactiveObjectX
+internal partial class MainWindowVM : ReactiveObject
 {
     private static readonly IDialogService _dialogService =
         Locator.Current.GetService<IDialogService>()!;
 
-    [ReactiveProperty]
     public string Title { get; set; } = string.Empty;
 
-    private readonly CyclicList<TestEnum> _enums =
-        new(EnumInfo<TestEnum>.Values) { AutoReset = true };
+    public List<string> Strs { get; } = new(Enumerable.Range(0, 10).Select(x => x.ToString()));
 
-    [ReactiveProperty]
     public double Number { get; set; } = 1.1;
-
-    [ReactiveProperty]
     public SolidColorBrush Brush { get; set; } = Brushes.White;
 
-    partial void OnBrushChanged(SolidColorBrush oldValue, SolidColorBrush newValue)
-    {
-        return;
-    }
+    //public Data Data { get; } = new();
 
     public MainWindowVM()
     {
@@ -51,11 +35,11 @@ internal partial class MainWindowVM : ReactiveObjectX
         //_enums.MoveNext();
     }
 
-    private int _count = 0;
+    //private int _count = 0;
 
-    [ReactiveCommand]
     private async void Next()
     {
+        //Data.Refresh();
         //var vm = await _dialogService.ShowDialogAsyncX<ItemSelectionVM>(
         //    this,
         //    new(_enums, new List<TestEnum>())
@@ -98,4 +82,16 @@ internal enum TestEnum
 //        get => _content;
 //        set => SetProperty(ref _content, value);
 //    }
+//}
+
+//public class Data : INotifyPropertyChanged
+//{
+//    public string this[int i] => Random.Shared.Next().ToString();
+
+//    public void Refresh()
+//    {
+//        PropertyChanged?.Invoke(this, new("Item[]"));
+//    }
+
+//    public event PropertyChangedEventHandler? PropertyChanged;
 //}

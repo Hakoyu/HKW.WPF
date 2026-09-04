@@ -1,4 +1,4 @@
-﻿using System.Reactive.Disposables;
+﻿using System.ComponentModel;
 using System.Windows;
 using HKW.WPF.Converters;
 using HKW.WPF.Extensions;
@@ -15,6 +15,8 @@ internal partial class MainWindow : Window, IViewFor<MainWindowVM>
     {
         InitializeComponent();
         DataContext = new MainWindowVM();
+        ComboBox.SelectedValue = "1";
+        ComboBox.SelectedValue = "a";
         //this.WhenActivated(d =>
         //{
         //    this.Bind(

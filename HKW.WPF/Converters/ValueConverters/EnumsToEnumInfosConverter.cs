@@ -3,9 +3,7 @@ using HKW.CommonValueConverters;
 
 namespace HKW.WPF.Converters;
 
-/// <summary>
-/// 枚举到枚举信息转换器
-/// </summary>
+/// <inheritdoc cref="CommonValueConverters.EnumsToEnumInfosConverter"/>
 public class EnumsToEnumInfosConverter : ValueConverterBase
 {
     /// <inheritdoc/>
@@ -13,7 +11,7 @@ public class EnumsToEnumInfosConverter : ValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.EnumsToEnumInfosConverter()
         {
-            GetOnlyValid = () => OnlyValid
+            GetOnlyValid = () => OnlyValid,
         };
     }
 
@@ -21,10 +19,7 @@ public class EnumsToEnumInfosConverter : ValueConverterBase
     ///
     /// </summary>
     public static readonly CommonDependencyProperty<bool> OnlyValidProperty =
-        CommonDependencyProperty.Register<EnumsToEnumInfosConverter, bool>(
-            nameof(OnlyValid),
-            false
-        );
+        CommonDependencyProperty.Register<EnumsToEnumInfosConverter, bool>(nameof(OnlyValid));
 
     /// <summary>
     /// 只显示有效值
