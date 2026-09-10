@@ -10,8 +10,5 @@ public class Int16Extension : MarkupExtension<short>
 {
     /// <inheritdoc/>
     public Int16Extension(short value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

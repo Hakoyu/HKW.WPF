@@ -1,90 +1,98 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using Splat;
 
 namespace HKW.WPF.Extensions;
 
 public static partial class WPFExtensions
 {
-    #region SetViewModel
     /// <summary>
-    /// 设置视图模型
+    /// 恢复并警报
     /// </summary>
-    /// <typeparam name="T">视图模型类型</typeparam>
     /// <param name="window">窗口</param>
-    /// <param name="closedEvent">关闭事件</param>
-    /// <returns>视图模型</returns>
-    public static T SetViewModel<T>(this Window window, EventHandler? closedEvent = null)
-        where T : INotifyPropertyChanged, new()
+    /// <param name="flashCount">闪烁次数</param>
+    public static void RestoredAndAlert(this Window window, uint flashCount = 3)
     {
-        if (window.DataContext is null)
-        {
-            var viewModel = new T();
-            window.DataContext = viewModel;
-            window.Closed += closedEvent;
-            window.Closed += (s, e) =>
-            {
-                try
-                {
-                    window.DataContext = null;
-                }
-                catch (Exception ex)
-                {
-                    if (viewModel is IEnableLogger logger)
-                        logger.Log().Warn(ex);
-                }
-            };
-        }
-        return (T)window.DataContext;
+        // 恢复
+        window.RestoredState();
+        // 居中
+        window.CenterOnScreen();
+        // 聚焦
+        window.Activate();
+        // 警报
+        window.PlayAlert(3);
     }
 
-    /// <summary>
-    /// 设置视图模型
-    /// </summary>
-    /// <typeparam name="T">视图模型类型</typeparam>
-    /// <param name="window">窗口</param>
-    /// <param name="viewModel">视图模型</param>
-    /// <param name="closedEvent">关闭事件</param>
-    /// <returns>视图模型</returns>
-    public static T SetViewModel<T>(
-        this Window window,
-        T viewModel,
-        EventHandler? closedEvent = null
-    )
-        where T : INotifyPropertyChanged
-    {
-        if (window.DataContext is null)
-        {
-            window.DataContext = viewModel;
-            window.Closed += closedEvent;
-            window.Closed += (s, e) =>
-            {
-                try
-                {
-                    window.DataContext = null;
-                }
-                catch (Exception ex)
-                {
-                    if (viewModel is IEnableLogger logger)
-                        logger.Log().Warn(ex);
-                }
-            };
-        }
-        return viewModel;
-    }
+    //#region SetViewModel
+    ///// <summary>
+    ///// 设置视图模型
+    ///// </summary>
+    ///// <typeparam name="T">视图模型类型</typeparam>
+    ///// <param name="window">窗口</param>
+    ///// <param name="closedEvent">关闭事件</param>
+    ///// <returns>视图模型</returns>
+    //public static T SetViewModel<T>(this Window window, EventHandler? closedEvent = null)
+    //    where T : INotifyPropertyChanged, new()
+    //{
+    //    if (window.DataContext is null)
+    //    {
+    //        var viewModel = new T();
+    //        window.DataContext = viewModel;
+    //        window.Closed += closedEvent;
+    //        window.Closed += (s, e) =>
+    //        {
+    //            try
+    //            {
+    //                window.DataContext = null;
+    //            }
+    //            catch { }
+    //        };
+    //    }
+    //    return (T)window.DataContext;
+    //}
 
-    /// <summary>
-    /// 设置视图模型
-    /// </summary>
-    /// <typeparam name="T">视图模型类型</typeparam>
-    /// <param name="page">页面</param>
-    public static T SetViewModel<T>(this UserControl page)
-        where T : INotifyPropertyChanged, new()
-    {
-        return (T)(page.DataContext ??= new T());
-    }
-    #endregion
+    ///// <summary>
+    ///// 设置视图模型
+    ///// </summary>
+    ///// <typeparam name="T">视图模型类型</typeparam>
+    ///// <param name="window">窗口</param>
+    ///// <param name="viewModel">视图模型</param>
+    ///// <param name="closedEvent">关闭事件</param>
+    ///// <returns>视图模型</returns>
+    //public static T SetViewModel<T>(
+    //    this Window window,
+    //    T viewModel,
+    //    EventHandler? closedEvent = null
+    //)
+    //    where T : INotifyPropertyChanged
+    //{
+    //    if (window.DataContext is null)
+    //    {
+    //        window.DataContext = viewModel;
+    //        window.Closed += closedEvent;
+    //        window.Closed += (s, e) =>
+    //        {
+    //            try
+    //            {
+    //                window.DataContext = null;
+    //            }
+    //            catch { }
+    //        };
+    //    }
+    //    return viewModel;
+    //}
+
+    ///// <summary>
+    ///// 设置视图模型
+    ///// </summary>
+    ///// <typeparam name="T">视图模型类型</typeparam>
+    ///// <param name="page">页面</param>
+    //public static T SetViewModel<T>(this UserControl page)
+    //    where T : INotifyPropertyChanged, new()
+    //{
+    //    return (T)(page.DataContext ??= new T());
+    //}
+    //#endregion
 
     #region Show
     /// <summary>
@@ -122,6 +130,7 @@ public static partial class WPFExtensions
         window.WindowStartupLocation = windowStartupLocation;
         if (window.IsVisible is false)
             window.Show();
+        window.WindowState = WindowState.Normal;
         window.Activate();
     }
 

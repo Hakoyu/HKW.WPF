@@ -15,8 +15,5 @@ public class Int32Extension : MarkupExtension<int>
 {
     /// <inheritdoc/>
     public Int32Extension(int value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

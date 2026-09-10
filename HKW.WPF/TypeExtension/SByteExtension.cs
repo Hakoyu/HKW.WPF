@@ -10,8 +10,5 @@ public class SByteExtension : MarkupExtension<sbyte>
 {
     /// <inheritdoc/>
     public SByteExtension(sbyte value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

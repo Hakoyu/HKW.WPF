@@ -10,8 +10,5 @@ public class DoubleExtension : MarkupExtension<double>
 {
     /// <inheritdoc/>
     public DoubleExtension(double value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

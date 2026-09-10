@@ -5,13 +5,12 @@ using HKW.CommonValueConverters;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// 相等字符串转换器
+/// 相等到可见性转换器
 /// <para>示例:
 /// <code><![CDATA[
-/// {Binding Value, Converter={StaticResource EqualsToVisibilityConverter}, ConverterParameter={x:Null}}
-/// result: Value.Equals(ConverterParameter) ? TrueValue : FalseValue
+/// {Binding Value, Converter={StaticResource EqualsToVisibilityConverter}}
+/// result: Value is null ? NullValue : (Value.Equals(ConverterParameter) ? TrueValue : FalseValue)
 /// ]]></code></para>
-/// </summary>
 public class EqualsToVisibilityConverter : EqualsToValueConverter<Visibility>
 {
     /// <inheritdoc/>
@@ -19,6 +18,7 @@ public class EqualsToVisibilityConverter : EqualsToValueConverter<Visibility>
     {
         TrueValue = Visibility.Visible;
         FalseValue = Visibility.Collapsed;
+        NullValue = Visibility.Collapsed;
     }
 }
 
@@ -33,12 +33,27 @@ public class EqualsToValueConverter<T> : InvertibleValueConverterBase
     {
         CommonValueConverter = new CommonValueConverters.EqualsToValueConverter<T>()
         {
+            GetOther = () => Other,
             GetTrueValue = () => TrueValue,
             GetFalseValue = () => FalseValue,
-            GetIsNullable = () => IsNullable,
             GetNullValue = () => NullValue,
             GetIsStringEquals = () => IsStringEquals,
         };
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public static readonly CommonDependencyProperty<T> OtherProperty =
+        CommonDependencyProperty.Register<EqualsToValueConverter<T>, T>(nameof(Other));
+
+    /// <summary>
+    /// 其他值
+    /// </summary>
+    public T Other
+    {
+        get => GetValue(OtherProperty);
+        set => SetValue(OtherProperty, value);
     }
 
     /// <summary>
@@ -69,21 +84,6 @@ public class EqualsToValueConverter<T> : InvertibleValueConverterBase
     {
         get => GetValue(FalseValueProperty);
         set => SetValue(FalseValueProperty, value);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    public static readonly CommonDependencyProperty<bool> IsNullableProperty =
-        CommonDependencyProperty.Register<EqualsToValueConverter<T>, bool>(nameof(IsNullable));
-
-    /// <summary>
-    /// 是可为空的
-    /// </summary>
-    public bool IsNullable
-    {
-        get => GetValue(IsNullableProperty);
-        set => SetValue(IsNullableProperty, value);
     }
 
     /// <summary>

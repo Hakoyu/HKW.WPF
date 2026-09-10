@@ -10,8 +10,5 @@ public class UInt64Extension : MarkupExtension<ulong>
 {
     /// <inheritdoc/>
     public UInt64Extension(ulong value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

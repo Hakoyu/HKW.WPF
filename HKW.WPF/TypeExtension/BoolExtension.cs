@@ -3,12 +3,12 @@
 namespace HKW.WPF.TypeExtension;
 
 /// <summary>
-/// Byte扩展
+/// Bool扩展
 /// </summary>
-[MarkupExtensionReturnType(typeof(byte))]
-public class ByteExtension : MarkupExtension<byte>
+[MarkupExtensionReturnType(typeof(bool))]
+public class BoolExtension : MarkupExtension<bool>
 {
     /// <inheritdoc/>
-    public ByteExtension(byte value)
+    public BoolExtension(bool value)
         : base(value) { }
 }

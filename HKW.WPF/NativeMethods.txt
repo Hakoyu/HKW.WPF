@@ -1,0 +1,7 @@
+FlashWindowEx
+MessageBeep
+GetWindowRect
+MoveWindow
+MonitorFromWindow
+GetMonitorInfo
+GetWindowPlacement

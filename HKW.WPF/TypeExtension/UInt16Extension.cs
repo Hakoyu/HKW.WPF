@@ -10,8 +10,5 @@ public class UInt16Extension : MarkupExtension<ushort>
 {
     /// <inheritdoc/>
     public UInt16Extension(ushort value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

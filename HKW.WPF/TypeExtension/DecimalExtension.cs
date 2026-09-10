@@ -10,8 +10,5 @@ public class DecimalExtension : MarkupExtension<decimal>
 {
     /// <inheritdoc/>
     public DecimalExtension(decimal value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

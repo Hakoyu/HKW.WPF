@@ -10,8 +10,5 @@ public class UInt32Extension : MarkupExtension<uint>
 {
     /// <inheritdoc/>
     public UInt32Extension(uint value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

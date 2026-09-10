@@ -11,15 +11,9 @@ public class CultureUIInfoExtension : MarkupExtension<CultureInfo>
 {
     /// <inheritdoc/>
     public CultureUIInfoExtension()
-        : base(CultureInfo.CurrentUICulture)
-    {
-        Value = CultureInfo.CurrentUICulture;
-    }
+        : base(CultureInfo.CurrentUICulture) { }
 
     /// <inheritdoc/>
     public CultureUIInfoExtension(CultureInfo value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

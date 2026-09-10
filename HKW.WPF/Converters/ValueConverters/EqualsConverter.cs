@@ -3,14 +3,27 @@ using HKW.CommonValueConverters;
 
 namespace HKW.WPF.Converters;
 
-/// <inheritdoc cref="CommonValueConverters.EqualsConverter{T}"/>
-public class EqualsConverter<T> : InvertibleValueConverterBase
+public class BoolInverter : InvertibleValueConverterBase
+{
+    /// <inheritdoc/>
+    public BoolInverter()
+    {
+        CommonValueConverter = new CommonValueConverters.EqualsConverter()
+        {
+            GetOther = () => false,
+        };
+    }
+}
+
+/// <inheritdoc cref="CommonValueConverters.EqualsConverter"/>
+public class EqualsConverter : InvertibleValueConverterBase
 {
     /// <inheritdoc/>
     public EqualsConverter()
     {
-        CommonValueConverter = new CommonValueConverters.EqualsConverter<T>()
+        CommonValueConverter = new CommonValueConverters.EqualsConverter()
         {
+            GetOther = () => Other,
             GetIsStringEquals = () => IsStringEquals,
         };
     }
@@ -18,8 +31,23 @@ public class EqualsConverter<T> : InvertibleValueConverterBase
     /// <summary>
     ///
     /// </summary>
+    public static readonly CommonDependencyProperty<object?> OtherProperty =
+        CommonDependencyProperty.Register<EqualsConverter, object?>(nameof(Other));
+
+    /// <summary>
+    /// 其他值
+    /// </summary>
+    public object? Other
+    {
+        get => GetValue(OtherProperty);
+        set => SetValue(OtherProperty, value);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
     public static readonly CommonDependencyProperty<bool> IsStringEqualsProperty =
-        CommonDependencyProperty.Register<EqualsConverter<T>, bool>(nameof(IsStringEquals));
+        CommonDependencyProperty.Register<EqualsConverter, bool>(nameof(IsStringEquals));
 
     /// <summary>
     /// 是字符串比较

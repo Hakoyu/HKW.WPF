@@ -10,8 +10,5 @@ public class Int64Extension : MarkupExtension<long>
 {
     /// <inheritdoc/>
     public Int64Extension(long value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using HKW.HKWUtils.Collections;
 using HKW.HKWUtils.Extensions;
-using Splat;
 
 namespace HKW.WPF;
 
@@ -61,11 +60,6 @@ public static class HKWImageUtils
     }
 
     /// <summary>
-    /// 日志记录器
-    /// </summary>
-    public static IFullLogger? Logger { get; set; }
-
-    /// <summary>
     /// 记录堆栈信息
     /// </summary>
     public static bool LogStackFrame { get; set; } = false;
@@ -83,23 +77,23 @@ public static class HKWImageUtils
         if (TryGetInfo(file, out var iimage, out var info))
         {
             info.ReferenceCount++;
-            if (LogStackFrame)
-            {
-                Logger?.Debug(
-                    "Image file {file}\nLoad again in\n{$StackFrame}\nReferenceCount : {ReferenceCount}",
-                    file,
-                    new StackFrame(1, true),
-                    info.ReferenceCount
-                );
-            }
-            else
-            {
-                Logger?.Debug(
-                    "Image file {file}\nLoad again, ReferenceCount : {ReferenceCount}",
-                    file,
-                    info.ReferenceCount
-                );
-            }
+            //if (LogStackFrame)
+            //{
+            //    Logger?.Debug(
+            //        "Image file {file}\nLoad again in\n{$StackFrame}\nReferenceCount : {ReferenceCount}",
+            //        file,
+            //        new StackFrame(1, true),
+            //        info.ReferenceCount
+            //    );
+            //}
+            //else
+            //{
+            //    Logger?.Debug(
+            //        "Image file {file}\nLoad again, ReferenceCount : {ReferenceCount}",
+            //        file,
+            //        info.ReferenceCount
+            //    );
+            //}
             return iimage;
         }
         var image = new BitmapImage();
@@ -116,7 +110,7 @@ public static class HKWImageUtils
         }
         catch (Exception ex)
         {
-            Logger?.Warn(ex);
+            //Logger?.Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
             image.EndInit();
@@ -134,18 +128,18 @@ public static class HKWImageUtils
         if (image is not null)
         {
             AddImage(file, image);
-            if (LogStackFrame)
-            {
-                Logger?.Debug(
-                    "Image file {file}\nFirst load in\n{$StackFrame}",
-                    file,
-                    new StackFrame(1, true)
-                );
-            }
-            else
-            {
-                Logger?.Debug("Image file {file}\nFirst load", file);
-            }
+            //if (LogStackFrame)
+            //{
+            //    Logger?.Debug(
+            //        "Image file {file}\nFirst load in\n{$StackFrame}",
+            //        file,
+            //        new StackFrame(1, true)
+            //    );
+            //}
+            //else
+            //{
+            //    Logger?.Debug("Image file {file}\nFirst load", file);
+            //}
         }
         return image;
     }
@@ -168,7 +162,7 @@ public static class HKWImageUtils
         }
         catch (Exception ex)
         {
-            Logger?.Warn(ex);
+            //Logger?.Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
             image.EndInit();
@@ -199,23 +193,23 @@ public static class HKWImageUtils
         if (TryGetInfo(file, out var iimage, out var info))
         {
             info.ReferenceCount++;
-            if (LogStackFrame)
-            {
-                Logger?.Debug(
-                    "Image file {file}\nLoad again in\n{$StackFrame}\nReferenceCount : {ReferenceCount}",
-                    file,
-                    new StackFrame(1, true),
-                    info.ReferenceCount
-                );
-            }
-            else
-            {
-                Logger?.Debug(
-                    "Image file {file}\nLoad again, ReferenceCount : {ReferenceCount}",
-                    file,
-                    info.ReferenceCount
-                );
-            }
+            //if (LogStackFrame)
+            //{
+            //    Logger?.Debug(
+            //        "Image file {file}\nLoad again in\n{$StackFrame}\nReferenceCount : {ReferenceCount}",
+            //        file,
+            //        new StackFrame(1, true),
+            //        info.ReferenceCount
+            //    );
+            //}
+            //else
+            //{
+            //    Logger?.Debug(
+            //        "Image file {file}\nLoad again, ReferenceCount : {ReferenceCount}",
+            //        file,
+            //        info.ReferenceCount
+            //    );
+            //}
             return iimage;
         }
         var image = new BitmapImage();
@@ -235,7 +229,7 @@ public static class HKWImageUtils
         }
         catch (Exception ex)
         {
-            Logger?.Warn(ex);
+            //Logger?.Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
             image.EndInit();
@@ -253,18 +247,18 @@ public static class HKWImageUtils
         if (image is not null)
         {
             AddImage(file, image);
-            if (LogStackFrame)
-            {
-                Logger?.Debug(
-                    "Image file {file}\nFirst load in\n{$StackFrame}",
-                    file,
-                    new StackFrame(1, true)
-                );
-            }
-            else
-            {
-                Logger?.Debug("Image file {file}\nFirst load", file);
-            }
+            //if (LogStackFrame)
+            //{
+            //    Logger?.Debug(
+            //        "Image file {file}\nFirst load in\n{$StackFrame}",
+            //        file,
+            //        new StackFrame(1, true)
+            //    );
+            //}
+            //else
+            //{
+            //    Logger?.Debug("Image file {file}\nFirst load", file);
+            //}
         }
         return image;
     }

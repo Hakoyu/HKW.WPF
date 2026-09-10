@@ -13,7 +13,6 @@ public abstract class MarkupExtension<T>(T value) : MarkupExtension
     /// <summary>
     /// 值
     /// </summary>
-    [ConstructorArgument("value")]
     public T Value { get; set; } = value;
 
     /// <inheritdoc/>

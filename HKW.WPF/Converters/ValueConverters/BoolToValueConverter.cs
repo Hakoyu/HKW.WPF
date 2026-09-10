@@ -6,7 +6,7 @@ using HKW.CommonValueConverters;
 namespace HKW.WPF.Converters;
 
 /// <summary>
-/// bool到可见度转换器
+/// Bool 到可见度转换器
 /// </summary>
 public class BoolToVisibilityConverter : BoolToValueConverter<Visibility>
 {

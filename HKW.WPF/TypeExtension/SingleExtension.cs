@@ -10,8 +10,5 @@ public class SingleExtension : MarkupExtension<float>
 {
     /// <inheritdoc/>
     public SingleExtension(float value)
-        : base(value)
-    {
-        Value = value;
-    }
+        : base(value) { }
 }
