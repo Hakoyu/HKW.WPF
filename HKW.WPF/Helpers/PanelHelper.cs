@@ -8,21 +8,21 @@ namespace HKW.WPF.Helpers;
 /// </summary>
 public static class PanelHelper
 {
-    #region ItemHeight
+    #region ChildHeight
     /// <summary>
     ///
     /// </summary>
     /// <param name="control"></param>
     /// <returns></returns>
-    public static double GetItemHeight(Panel control)
+    public static double GetChildHeight(Panel control)
     {
-        return (double)control.GetValue(ItemHeightProperty);
+        return (double)control.GetValue(ChildHeightProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static void SetItemHeight(Panel control, double value)
+    public static void SetChildHeight(Panel control, double value)
     {
         throw new Exception(
             "This property is read-only. To bind to it you must use 'Mode=OneWay'."
@@ -32,22 +32,22 @@ public static class PanelHelper
     /// <summary>
     /// 已选中项目属性
     /// </summary>
-    public static readonly DependencyProperty ItemHeightProperty =
+    public static readonly DependencyProperty ChildHeightProperty =
         DependencyProperty.RegisterAttached(
-            "ItemHeight",
+            "ChildHeight",
             typeof(double),
             typeof(PanelHelper),
-            new FrameworkPropertyMetadata(default(double), ItemHeightPropertyChanged)
+            new FrameworkPropertyMetadata(default(double), ChildHeightPropertyChanged)
         );
 
-    private static void ItemHeightPropertyChanged(
+    private static void ChildHeightPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
     {
         if (obj is not Panel panel)
             return;
-        var height = GetItemHeight(panel);
+        var height = GetChildHeight(panel);
         for (var i = 0; i < panel.Children.Count; i++)
         {
             var child = panel.Children[i];
@@ -55,23 +55,23 @@ public static class PanelHelper
                 element.Height = height;
         }
     }
-    #endregion ItemHeight
+    #endregion ChildHeight
 
-    #region ItemMargin
+    #region ChildMargin
     /// <summary>
     ///
     /// </summary>
     /// <param name="control"></param>
     /// <returns></returns>
-    public static Thickness GetItemMargin(Panel control)
+    public static Thickness GetChildMargin(Panel control)
     {
-        return (Thickness)control.GetValue(ItemMarginProperty);
+        return (Thickness)control.GetValue(ChildMarginProperty);
     }
 
     /// <summary>
     ///
     /// </summary>
-    public static void SetItemMargin(Panel control, Thickness value)
+    public static void SetChildMargin(Panel control, Thickness value)
     {
         throw new Exception(
             "This property is read-only. To bind to it you must use 'Mode=OneWay'."
@@ -81,22 +81,22 @@ public static class PanelHelper
     /// <summary>
     /// 已选中项目属性
     /// </summary>
-    public static readonly DependencyProperty ItemMarginProperty =
+    public static readonly DependencyProperty ChildMarginProperty =
         DependencyProperty.RegisterAttached(
-            "ItemMargin",
+            "ChildMargin",
             typeof(Thickness),
             typeof(PanelHelper),
-            new FrameworkPropertyMetadata(default(Thickness), ItemMarginPropertyChanged)
+            new FrameworkPropertyMetadata(default(Thickness), ChildMarginPropertyChanged)
         );
 
-    private static void ItemMarginPropertyChanged(
+    private static void ChildMarginPropertyChanged(
         DependencyObject obj,
         DependencyPropertyChangedEventArgs e
     )
     {
         if (obj is not Panel panel)
             return;
-        var margin = GetItemMargin(panel);
+        var margin = GetChildMargin(panel);
         for (var i = 0; i < panel.Children.Count; i++)
         {
             var child = panel.Children[i];
@@ -104,58 +104,60 @@ public static class PanelHelper
                 element.Margin = margin;
         }
     }
-    #endregion ItemMargin
+    #endregion ChildMargin
+
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="control"></param>
+    /// <returns></returns>
+    public static int GetShowChildByIndex(Panel control)
+    {
+        return (int)control.GetValue(ShowChildByIndexProperty);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public static void SetShowChildByIndex(Panel control, int value)
+    {
+        throw new Exception(
+            "This property is read-only. To bind to it you must use 'Mode=OneWay'."
+        );
+    }
+
+    /// <summary>
+    /// 已选中项目属性
+    /// </summary>
+    public static readonly DependencyProperty ShowChildByIndexProperty =
+        DependencyProperty.RegisterAttached(
+            "ShowChildByIndex",
+            typeof(int),
+            typeof(PanelHelper),
+            new FrameworkPropertyMetadata(default(int), ShowChildByIndexPropertyChanged)
+        );
+
+    private static void ShowChildByIndexPropertyChanged(
+        DependencyObject obj,
+        DependencyPropertyChangedEventArgs e
+    )
+    {
+        if (obj is not Panel panel)
+            return;
+        var index = GetShowChildByIndex(panel);
+        for (var i = 0; i < panel.Children.Count; i++)
+        {
+            if (panel.Children[i] is not UIElement element)
+                continue;
+            if (i == index)
+            {
+                element.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                element.Visibility = Visibility.Collapsed;
+            }
+        }
+    }
 }
-
-///// <summary>
-/////
-///// </summary>
-//public static class ItemsControlHelper
-//{
-//    /// <summary>
-//    ///
-//    /// </summary>
-//    /// <param name="control"></param>
-//    /// <returns></returns>
-//    public static double GetItemHeight(ItemsControl control)
-//    {
-//        return (double)control.GetValue(ItemHeightProperty);
-//    }
-
-//    /// <summary>
-//    ///
-//    /// </summary>
-//    public static void SetItemHeight(ItemsControl control, double value)
-//    {
-//        throw new Exception(
-//            "This property is read-only. To bind to it you must use 'Mode=OneWay'."
-//        );
-//    }
-
-//    /// <summary>
-//    /// 已选中项目属性
-//    /// </summary>
-//    public static readonly DependencyProperty ItemHeightProperty =
-//        DependencyProperty.RegisterAttached(
-//            "ItemHeight",
-//            typeof(double),
-//            typeof(ItemsControlHelper),
-//            new FrameworkPropertyMetadata(default(double), ItemHeightPropertyChanged)
-//        );
-
-//    private static void ItemHeightPropertyChanged(
-//        DependencyObject obj,
-//        DependencyPropertyChangedEventArgs e
-//    )
-//    {
-//        if (obj is not ItemsControl panel)
-//            return;
-//        var height = GetItemHeight(panel);
-//        for (var i = 0; i < panel.Items.Count; i++)
-//        {
-//            var child = panel.Items[i];
-//            if (child is FrameworkElement element)
-//                element.Height = height;
-//        }
-//    }
-//}

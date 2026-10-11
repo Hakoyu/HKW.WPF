@@ -19,50 +19,50 @@ namespace HKW.WPF;
 /// </summary>
 public static class HKWImageUtils
 {
-    /// <summary>
-    /// 所有外部图像 (Path, BitmapImage)
-    /// </summary>
-    public static BidirectionalDictionary<string, BitmapImage> ImageByPath { get; } = new();
+    ///// <summary>
+    ///// 所有外部图像 (Path, BitmapImage)
+    ///// </summary>
+    //public static BidirectionalDictionary<string, BitmapImage> ImageByPath { get; } = new();
 
-    /// <summary>
-    /// 图像信息 (Path, BitmapImageInfo)
-    /// </summary>
-    public static Dictionary<string, BitmapImageInfo> InfoByPath { get; } = [];
+    ///// <summary>
+    ///// 图像信息 (Path, BitmapImageInfo)
+    ///// </summary>
+    //public static Dictionary<string, BitmapImageInfo> InfoByPath { get; } = [];
 
-    internal static void AddImage(string file, BitmapImage image)
-    {
-        ImageByPath.TryAdd(file, image);
-        InfoByPath.Add(file, new(file));
-    }
+    //internal static void AddImage(string file, BitmapImage image)
+    //{
+    //    ImageByPath.TryAdd(file, image);
+    //    InfoByPath.Add(file, new(file));
+    //}
 
-    internal static bool TryGetInfo(
-        string file,
-        [MaybeNullWhen(false)] out BitmapImage image,
-        [MaybeNullWhen(false)] out BitmapImageInfo info
-    )
-    {
-        var result = ImageByPath.TryGetValue(file, out image);
-        result = InfoByPath.TryGetValue(file, out info);
-        return result;
-    }
+    //internal static bool TryGetInfo(
+    //    string file,
+    //    [MaybeNullWhen(false)] out BitmapImage image,
+    //    [MaybeNullWhen(false)] out BitmapImageInfo info
+    //)
+    //{
+    //    var result = ImageByPath.TryGetValue(file, out image);
+    //    result = InfoByPath.TryGetValue(file, out info);
+    //    return result;
+    //}
 
-    internal static bool TryGetInfo(
-        BitmapImage image,
-        [MaybeNullWhen(false)] out BitmapImageInfo info
-    )
-    {
-        info = null;
-        var result = ImageByPath.TryGetValue(image, out var path);
-        if (result is false)
-            return false;
-        result = InfoByPath.TryGetValue(path!, out info);
-        return result;
-    }
+    //internal static bool TryGetInfo(
+    //    BitmapImage image,
+    //    [MaybeNullWhen(false)] out BitmapImageInfo info
+    //)
+    //{
+    //    info = null;
+    //    var result = ImageByPath.TryGetValue(image, out var path);
+    //    if (result is false)
+    //        return false;
+    //    result = InfoByPath.TryGetValue(path!, out info);
+    //    return result;
+    //}
 
-    /// <summary>
-    /// 记录堆栈信息
-    /// </summary>
-    public static bool LogStackFrame { get; set; } = false;
+    ///// <summary>
+    ///// 记录堆栈信息
+    ///// </summary>
+    //public static bool LogStackFrame { get; set; } = false;
 
     /// <summary>
     /// 载入图片
@@ -74,28 +74,6 @@ public static class HKWImageUtils
     {
         if (File.Exists(file) is false)
             return null;
-        if (TryGetInfo(file, out var iimage, out var info))
-        {
-            info.ReferenceCount++;
-            //if (LogStackFrame)
-            //{
-            //    Logger?.Debug(
-            //        "Image file {file}\nLoad again in\n{$StackFrame}\nReferenceCount : {ReferenceCount}",
-            //        file,
-            //        new StackFrame(1, true),
-            //        info.ReferenceCount
-            //    );
-            //}
-            //else
-            //{
-            //    Logger?.Debug(
-            //        "Image file {file}\nLoad again, ReferenceCount : {ReferenceCount}",
-            //        file,
-            //        info.ReferenceCount
-            //    );
-            //}
-            return iimage;
-        }
         var image = new BitmapImage();
         image.BeginInit();
         try
@@ -110,7 +88,6 @@ public static class HKWImageUtils
         }
         catch (Exception ex)
         {
-            //Logger?.Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
             image.EndInit();
@@ -124,22 +101,6 @@ public static class HKWImageUtils
                 image?.EndInit();
                 image?.Freeze();
             }
-        }
-        if (image is not null)
-        {
-            AddImage(file, image);
-            //if (LogStackFrame)
-            //{
-            //    Logger?.Debug(
-            //        "Image file {file}\nFirst load in\n{$StackFrame}",
-            //        file,
-            //        new StackFrame(1, true)
-            //    );
-            //}
-            //else
-            //{
-            //    Logger?.Debug("Image file {file}\nFirst load", file);
-            //}
         }
         return image;
     }
@@ -162,7 +123,6 @@ public static class HKWImageUtils
         }
         catch (Exception ex)
         {
-            //Logger?.Warn(ex);
             image.StreamSource?.Close();
             image.StreamSource = null;
             image.EndInit();
@@ -190,28 +150,6 @@ public static class HKWImageUtils
     {
         if (File.Exists(file) is false)
             return null;
-        if (TryGetInfo(file, out var iimage, out var info))
-        {
-            info.ReferenceCount++;
-            //if (LogStackFrame)
-            //{
-            //    Logger?.Debug(
-            //        "Image file {file}\nLoad again in\n{$StackFrame}\nReferenceCount : {ReferenceCount}",
-            //        file,
-            //        new StackFrame(1, true),
-            //        info.ReferenceCount
-            //    );
-            //}
-            //else
-            //{
-            //    Logger?.Debug(
-            //        "Image file {file}\nLoad again, ReferenceCount : {ReferenceCount}",
-            //        file,
-            //        info.ReferenceCount
-            //    );
-            //}
-            return iimage;
-        }
         var image = new BitmapImage();
         image.BeginInit();
         try
@@ -244,22 +182,7 @@ public static class HKWImageUtils
                 image?.Freeze();
             }
         }
-        if (image is not null)
-        {
-            AddImage(file, image);
-            //if (LogStackFrame)
-            //{
-            //    Logger?.Debug(
-            //        "Image file {file}\nFirst load in\n{$StackFrame}",
-            //        file,
-            //        new StackFrame(1, true)
-            //    );
-            //}
-            //else
-            //{
-            //    Logger?.Debug("Image file {file}\nFirst load", file);
-            //}
-        }
+
         return image;
     }
 }
